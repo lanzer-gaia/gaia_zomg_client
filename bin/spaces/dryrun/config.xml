@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Config>
+	<Login path='spaces/shared'/>
+	<Registration type='shared'/>
+	<LoadScreen file="loadscreen.flv">
+		<background>Happy-Fun-Land.jpg</background>
+		<timer></timer>
+	</LoadScreen>
+	<Modules>		
+		<Module title='INFO'> 
+			<name>com.gaiaonline.battle.moduleManagers.ActorInfoModuleManager</name>
+			<path>ActorInfoModule/ActorInfoModule.swf</path>
+		</Module>
+		<Module title='ACTIONBAR'> 
+			<name>com.gaiaonline.battle.moduleManagers.ActionBarModuleManager</name>
+			<path>ActionBarModule/ActionBarModule.swf</path>
+			<params useUserSettingForWindowPosition='false' windowType='SideView'>
+				<windowSetting useUserSetting='true' windowType='SideView' x='0' y='800' width='300' height='26' minWidth='300' minHeight='26' maxWidth='300' maxHeight='26'/>
+				<chanels>
+					<chanel id='room' displayName='Talk' />
+					<chanel id='area' displayName='Shout' />
+					<chanel id='whisper' displayName='Whisper' />			
+				</chanels>
+			</params>
+		</Module>
+	</Modules>
+	
+	<MainWindow file="windows/sponsorshipwin.swf" maximize="true"/>
+	<GenericWindow file='windows/genericwin.swf' />
+</Config>

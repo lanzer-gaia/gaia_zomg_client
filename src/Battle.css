@@ -1,0 +1,70 @@
+/* CSS file */
+
+@font-face{
+	src:url("/fonts/Arial.TTF");
+	fontFamily: myArial;
+	advancedAntiAliasing: true;	
+	unicodeRange: U+0020-U+002F,
+				  U+0030-U+0039,
+				  U+003A-U+0040,
+				  U+0041-U+005A,
+				  U+005B-U+0060,
+				  U+0061-U+007A,
+				  U+007B-U+007E				  
+}
+
+@font-face{
+	src:url("/fonts/Arialbd.TTF");
+	fontFamily: myArialBold;
+	fontWeight: bold;
+	advancedAntiAliasing: true;	
+	unicodeRange: U+0020-U+002F,
+				  U+0030-U+0039,
+				  U+003A-U+0040,
+				  U+0041-U+005A,
+				  U+005B-U+0060,
+				  U+0061-U+007A,
+				  U+007B-U+007E				  
+}
+
+@font-face{
+	src:url("/fonts/verdana.TTF");
+	fontFamily: myVerdana;
+	advancedAntiAliasing: true;	
+	unicodeRange: U+0020-U+002F,
+				  U+0030-U+0039,
+				  U+003A-U+0040,
+				  U+0041-U+005A,
+				  U+005B-U+0060,
+				  U+0061-U+007A,
+				  U+007B-U+007E				  
+}
+
+@font-face{
+	src:url("/fonts/verdanaB.TTF");
+	fontFamily: myVerdanaBold;
+	fontWeight: bold;
+	advancedAntiAliasing: true;	
+	unicodeRange: U+0020-U+002F,
+				  U+0030-U+0039,
+				  U+003A-U+0040,
+				  U+0041-U+005A,
+				  U+005B-U+0060,
+				  U+0061-U+007A,
+				  U+007B-U+007E				  
+}
+
+@font-face{
+	src:url("/fonts/verdanai.ttf");
+	fontFamily: myVerdanaItalic;
+	fontWeight: normal;
+	fontStyle: italic;
+	advancedAntiAliasing: true;	
+	unicodeRange: U+0020-U+002F,
+				  U+0030-U+0039,
+				  U+003A-U+0040,
+				  U+0041-U+005A,
+				  U+005B-U+0060,
+				  U+0061-U+007A,
+				  U+007B-U+007E				  
+}

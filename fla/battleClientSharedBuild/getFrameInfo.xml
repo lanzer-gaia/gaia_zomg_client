@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <project name="bitmaps" default="default">
+ 
+ 	<taskdef resource="net/sf/antcontrib/antcontrib.properties"/> 	
+
+	<condition property="rootDir" value="${setRootDir}" else="${ant.file}/../.." >
+		<isset property="setRootDir"/>
+	</condition>
+ 	<property name="buildRootLoc" location="${buildRoot}"/>	
+
+	<target name="getFrameInfo">
+		<delete file="getFrameInfo.jsfl"/>
+ 		<copy file="${buildRootLoc}/getFrameInfo_template.jsfl" tofile="getFrameInfo.jsfl" overwrite="true"/>
+			<echo message="${file}"/>
+		<waitfor maxwait="60" maxwaitunit="second">
+			<available file="${buildRootLoc}/getFrameInfo.jsfl"/>
+		</waitfor>
+		<replace file="${buildRoot}/getFrameInfo.jsfl">
+			<replaceFilter token="%FLAPATH%" value="file:///${file}"/>												
+			<replaceFilter token="\" value="/"/>
+	  </replace>
+	  <exec executable="cmd" dir=".">		
+			<arg value="/c"/>
+			<arg value="${buildRootLoc}/getFrameInfo.jsfl" />
+		</exec>	  
+	</target>
+
+	<target name="getFrameInfos">
+			<foreach param="file" target="getFrameInfo">
+				<path>
+					<fileset dir="${rootDir}" includes="**/maps/*.fla" casesensitive="no">
+					</fileset>
+				</path>
+			</foreach>				
+ 	</target>
+	
+	<target name="default" depends="getFrameInfos" />
+</project>

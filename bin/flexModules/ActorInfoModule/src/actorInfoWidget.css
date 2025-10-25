@@ -1,0 +1,184 @@
+/* CSS file */
+.targetInfo {
+    borderColor: #7C7C7C;
+    borderThickness: 1;
+}
+
+.nameText {
+	fontFamily: myVerdana;
+	leaderColor: #F5E48B;
+	followerColor: #FFFFFF;	
+	color: #FFFFFF;
+	fontSize: 10;
+}
+
+.nameTextDisabled {
+	fontFamily: myVerdana;
+	leaderColor: #818181;
+	followerColor: #818181;	
+	color: #818181;
+	fontSize: 10;
+}
+
+.healthMeterText {
+	fontFamily: myArial;	
+	fontWeight: normal;
+	fontThickness: 0;
+	color: #FFFFFF;
+	fontSize: 11;
+	fontAntiAliasType: advanced;
+	fontGridFitType: pixel;
+	fontSharpness: 400;	
+}
+
+.staminaMeterText {
+	fontFamily: myArial;
+	fontThickness: 0;
+	fontWeight: normal;
+	color: #FFFFFF;
+	fontSize: 10;
+	fontAntiAliasType: advanced;
+	fontGridFitType: pixel;
+	fontSharpness: 400;	
+}
+
+.zoneNameText {
+	fontFamily: myVerdanaItalic;
+	color: #C0C0C0;
+	fontSize: 10;
+	fontStyle: italic;
+}
+
+.zoneLabelText {
+	fontFamily: myVerdanaItalic;
+	color: #818181;
+	fontSize: 10;
+	fontStyle: italic;
+}
+
+.pendingResponseText {
+	fontFamily: myVerdanaItalic;
+	color: #818181;
+	fontSize: 9;
+	fontStyle: italic;
+}
+
+.clText {
+	fontFamily: myVerdana;
+	color: #FAE88C;
+	fontSize: 10;
+	fontThickness: 0;
+	fontWeight: normal;
+	fontAntiAliasType: advanced;
+	fontGridFitType: pixel;
+	fontSharpness: 400;	
+}
+
+.imageBackEmpty {
+	backgroundSize: "100%";
+	backgroundImage: Embed("../../flexAssets/uiAssets.swf#target_portrait_pending");
+}	
+
+.imageMiddleBack {
+	backgroundSize: "100%";
+	backgroundImage: Embed("../../flexAssets/uiAssets.swf#target_portrait_middle");
+}	
+
+.actorInfoPopUp{
+	upSkin: Embed("../../flexAssets/uiAssets.swf#target_dropdown_up");
+	overSkin: Embed("../../flexAssets/uiAssets.swf#target_dropdown_over");
+	downSkin: Embed("../../flexAssets/uiAssets.swf#target_dropdown_down");	
+	disabledSkin: Embed("../../flexAssets/uiAssets.swf#target_dropdown_disable");
+	
+	popUpUpSkin: Embed("../../flexAssets/uiAssets.swf#target_dropdown_up");	
+	popUpOverSkin: Embed("../../flexAssets/uiAssets.swf#target_dropdown_over");
+	popUpDownSkin: Embed("../../flexAssets/uiAssets.swf#target_dropdown_down");
+	popUpDisabledSkin: Embed("../../flexAssets/uiAssets.swf#target_dropdown_disable");	
+
+	popUpGap: 0;
+	
+	fontFamily: myVerdana;
+	fontThickness: 0;
+	fontWeight: normal;
+	fontAntiAliasType: advanced;
+	fontGridFitType: pixel;
+	fontSharpness: 400;	
+	
+	fontWeight: bold;
+	fontSize: 10;
+	
+	arrowButtonWidth: 0;
+	paddingLeft: 6;	
+	
+	userRollover: false;
+}
+
+@font-face{
+	src:url("/fonts/Arial.TTF");
+	fontFamily: myArial;
+	advancedAntiAliasing: true;
+	unicodeRange: U+0020-U+002F,
+				  U+0030-U+0039,
+				  U+003A-U+0040,
+				  U+0041-U+005A,
+				  U+005B-U+0060,
+				  U+0061-U+007A,
+				  U+007B-U+007E				  
+}
+
+@font-face{
+	src:url("/fonts/Arialbd.TTF");
+	fontFamily: myArialBold;
+	advancedAntiAliasing: true;	
+	fontWeight: bold;
+	unicodeRange: U+0020-U+002F,
+				  U+0030-U+0039,
+				  U+003A-U+0040,
+				  U+0041-U+005A,
+				  U+005B-U+0060,
+				  U+0061-U+007A,
+				  U+007B-U+007E				  
+}
+
+
+@font-face{
+	src:url("/fonts/verdana.TTF");
+	fontFamily: myVerdana;
+	advancedAntiAliasing: true;	
+	unicodeRange: U+0020-U+002F,
+				  U+0030-U+0039,
+				  U+003A-U+0040,
+				  U+0041-U+005A,
+				  U+005B-U+0060,
+				  U+0061-U+007A,
+				  U+007B-U+007E				  
+}
+
+@font-face{
+	src:url("/fonts/verdanaB.TTF");
+	fontFamily: myVerdanaBold;
+	fontWeight: bold;
+	advancedAntiAliasing: true;	
+	unicodeRange: U+0020-U+002F,
+				  U+0030-U+0039,
+				  U+003A-U+0040,
+				  U+0041-U+005A,
+				  U+005B-U+0060,
+				  U+0061-U+007A,
+				  U+007B-U+007E				  
+}
+
+@font-face{
+	src:url("/fonts/verdanai.ttf");
+	fontFamily: myVerdanaItalic;
+	fontWeight: normal;
+	fontStyle: italic;
+	advancedAntiAliasing: true;	
+	unicodeRange: U+0020-U+002F,
+				  U+0030-U+0039,
+				  U+003A-U+0040,
+				  U+0041-U+005A,
+				  U+005B-U+0060,
+				  U+0061-U+007A,
+				  U+007B-U+007E				  
+}

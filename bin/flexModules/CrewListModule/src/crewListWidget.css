@@ -1,0 +1,10 @@
+/* CSS file */
+.crewListWidget {
+	/*
+	backgroundSize: "100%";
+	backgroundImage : Embed("../../flexAssets/uiAssets.swf#crew_list_back");
+	*/
+    borderColor: #7C7C7C;
+    borderThickness: 1;
+}
+

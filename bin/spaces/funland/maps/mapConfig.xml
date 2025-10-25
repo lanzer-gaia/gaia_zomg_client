@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MapsInfo>
+  <GlobalMapInfo xscale="1.25" yscale="2.50"/>
+  <ZonesInfo>
+    <Zone id="FunLand" name="Fun Land" swf="funland" startRoom="FunLand_1" areaname="Z01_Barton_Town">
+      <SplashScreen url="splashscreen/bartonTown.jpg"/>
+    </Zone>    
+  </ZonesInfo>
+  <MimiMapsInfo>      
+    <MiniMap id="NoMap" file="nomap.jpg" scale="5" showGlobal="0" showLocal="0">
+      <GlobalPos x="0" y="0"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+  </MimiMapsInfo>
+  <MusicZones>
+    <Zone id="FunLand">
+      <Combat/>
+      <Normal>
+        <Song title="Andre Caplet, Children's Corner Suite - Serenade for the Doll" file="lvQt55bxRP.aem"/>
+        <Song title="Barton Town 2" file="B7IYHXQcCO.aem"/>
+        <Song title="Barton Town" file="Xdgas6EcYX.aem"/>
+      </Normal>
+    </Zone>    
+  </MusicZones>
+  <Rooms zoneId="FunLand" miniMapId="NoMap" scale="75" musicZoneId="FunLand">FunLand_1,FunLand_2,FunLand_101,FunLand_102</Rooms>
+
+ 
+</MapsInfo>

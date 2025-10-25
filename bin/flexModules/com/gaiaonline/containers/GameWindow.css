@@ -1,0 +1,19 @@
+.GameWindow
+{
+	color: #ffffff;
+	headerHeight: 22;
+	titleStyleName: "GameWindowTitle";
+	controlBarStyleName: "GameWindowControlBar";	
+}
+.GameWindowTitle
+{
+	fontFamily: Arial;
+	fontSize: 12;
+	fontWeight: bold;
+}
+.GameWindowControlBar
+{
+	paddingLeft: 2;
+	paddingTop: 0;
+	paddingBottom: 0;
+}

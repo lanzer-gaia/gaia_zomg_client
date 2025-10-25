@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <project name="bitmaps" default="default">
+ 
+ 	<taskdef resource="net/sf/antcontrib/antcontrib.properties"/> 	
+
+	<condition property="rootDir" value="${setRootDir}" else="${ant.file}/../.." >
+		<isset property="setRootDir"/>
+	</condition>
+ 	<property name="buildRootLoc" location="${buildRoot}"/>	
+
+	<target name="getBitmap">
+ 		<copy file="${buildRootLoc}/getBitmapFiles_template.jsfl" tofile="getBitmapFiles.jsfl" overwrite="true"/>
+			<echo message="${file}"/>
+		
+		<replace file="${buildRootLoc}/getBitmapFiles.jsfl">
+			<replaceFilter token="%FLAPATH%" value="file:///${file}"/>												
+			<replaceFilter token="\" value="/"/>
+	  </replace>
+	  <exec executable="cmd" dir=".">		
+			<arg value="/c"/>
+			<arg value="${buildRootLoc}/getBitmapFiles.jsfl" />
+		</exec>	  
+	</target>
+
+	<target name="getBitmaps">
+			<foreach param="file" target="getBitmap">
+				<path>
+					<fileset dir="${rootDir}" includes="**/*.fla" casesensitive="no">
+						<exclude name="**/*backup*/**"/>							
+						<exclude name="**/battle_local.fla"/>
+						<exclude name="**/monsterplayer/**"/>
+						<exclude name="**/RingPlayer/**"/>
+						<exclude name="**/maps/**"/>
+					</fileset>
+				</path>
+			</foreach>				
+ 	</target>
+	
+	<target name="default" depends="getBitmaps" />
+</project>

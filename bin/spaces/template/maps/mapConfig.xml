@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MapsInfo>
+  <GlobalMapInfo xscale="1.25" yscale="2.50"/>
+  
+  <ZonesInfo>
+    
+  </ZonesInfo>
+  
+  <MimiMapsInfo>      
+    <MiniMap id="NoMap" file="nomap.jpg" scale="5" showGlobal="0" showLocal="0">
+      <GlobalPos x="0" y="0"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+  </MimiMapsInfo>
+  
+  <MusicZones>
+  	
+ </MusicZones>
+ 
+
+ 
+</MapsInfo>

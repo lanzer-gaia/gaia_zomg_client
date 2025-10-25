@@ -1,0 +1,1 @@
+ant  -buildfile=createSwc.xml -DflaPath=..\ui\uimanager2.fla -DbuildRoot=. -DsetBattleSrcRoot="c:\source\battle\project_as3\mmo\battle\src" -DsetAs3SrcRoot="c:\source\battle\project_as3\src" -DsetPropertyFileName=..\battleMain\build\swclocalBuild.pc.properties

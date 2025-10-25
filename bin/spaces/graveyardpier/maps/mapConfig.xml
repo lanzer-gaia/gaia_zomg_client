@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MapsInfo>
+  <GlobalMapInfo xscale="1.25" yscale="2.50"/>
+  <ZonesInfo>
+    <Zone id="GraveyardPier" name="Graveyard Pier" swf="graveyardpier" startRoom="GraveyardPier_101" areaname="GraveyardPier">
+      <SplashScreen url="splashscreen/GraveyardPier.jpg"/>
+    </Zone>
+  </ZonesInfo>
+  <MusicZones>
+    <Zone id="GraveyardPier">
+      <normal/>
+    </Zone>
+  </MusicZones>
+  <Rooms zoneId="GraveyardPier" miniMapId="NoMap" scale="75" musicZoneId="GraveyardPier">GraveyardPier_101,GraveyardPier_201,GraveyardPier_1</Rooms>
+</MapsInfo>

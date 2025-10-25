@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MapsInfo>
+  <GlobalMapInfo xscale="1.25" yscale="2.50"/>
+  <ZonesInfo>
+	<!-- COPY THE LINES BELOW FOR ADDING A NEW AREA
+	<Zone id="" name="" swf="" startRoom="" areaname="">
+      <SplashScreen url=""/>
+	-->
+	
+    <Zone id="BARTON" name="Barton Town" swf="barton_town" startRoom="BARTON_202" areaname="Z01_Barton_Town" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_bartonTown.png">
+      <SplashScreen url="splashscreen/bartonTown.jpg"/> 
+      <SplashScreen url="splashscreen/bartonTown_03.jpg"/>
+    </Zone>
+    <Zone id="VILLAGE" name="Village Greens" swf="the_village" startRoom="VILLAGE_202" areaname="Z02_The_Village" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_village.png">
+      <SplashScreen url="splashscreen/village.jpg" />
+      <SplashScreen url="splashscreen/village_01.jpg" />
+      <SplashScreen url="splashscreen/village_02.jpg" />
+    </Zone>
+    <Zone id="BF1" name="Bill's Ranch" swf="bills_ranch" startRoom="BF1_106" areaname="Z03_Bills_Ranch" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_rancherbill.png">
+      <SplashScreen url="splashscreen/rancherbill.jpg"/>
+      <SplashScreen url="splashscreen/rancherbill_01.jpg"/>
+    </Zone>
+    <Zone id="BASSKEN" name="Bass'ken Lake" swf="bassken_lake" startRoom="BASSKEN_202" areaname="Z06_Bassken_Lake" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_basskenlake.png">
+      <SplashScreen url="splashscreen/basskenlake.jpg"/>
+      <SplashScreen url="splashscreen/basskenlake_01.jpg"/>
+      <SplashScreen url="splashscreen/basskenlake_01.jpg"/>
+      <SplashScreen url="splashscreen/basskenlake_02.jpg"/>
+      <SplashScreen url="splashscreen/basskenlake_03.jpg"/>
+      <SplashScreen url="splashscreen/basskenlake_04.jpg"/>
+      <SplashScreen url="splashscreen/basskenlake_04.jpg"/>
+    </Zone>
+    <Zone id="ZENGARDEN" name="Zen Gardens" swf="zen_garden" startRoom="ZENGARDEN_202" areaname="Z05_Zen_Garden" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_zenGarden.png">
+      <SplashScreen url="splashscreen/zenGarden.jpg"/>
+      <SplashScreen url="splashscreen/zenGarden_01.jpg"/>
+      <SplashScreen url="splashscreen/zenGarden_02.jpg"/>
+      <SplashScreen url="splashscreen/zenGarden_03.jpg"/>
+      <SplashScreen url="splashscreen/zenGarden_04.jpg"/>
+      <SplashScreen url="splashscreen/zenGarden_05.jpg"/>
+      <SplashScreen url="splashscreen/zenGarden_06.jpg"/>
+    </Zone>
+    <Zone id="M1" name="Deadman's Pass" swf="house_on_hill" startRoom="M1_407" areaname="Z04_House_on_Hill" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_deadmanpass.png">
+      <SplashScreen url="splashscreen/deadmanpass.jpg"/>
+      <SplashScreen url="splashscreen/deadmanpass_01.jpg"/>
+      <SplashScreen url="splashscreen/deadmanpass_02.jpg"/>
+      <SplashScreen url="splashscreen/deadmanpass_03.jpg"/>
+    </Zone>
+    <Zone id="OtRuins" name="Otami Ruins" swf="otami_ruins" startRoom="OtRuins_105" areaname="Z10_Otomi Ruins" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_jungleBottom.png">
+      <SplashScreen url="splashscreen/jungleBottom.jpg"/>
+      <SplashScreen url="splashscreen/jungleBottom_01.jpg"/>
+      <SplashScreen url="splashscreen/jungleBottom_02.jpg"/>
+      <SplashScreen url="splashscreen/jungleBottom_03.jpg"/>
+      <SplashScreen url="splashscreen/jungleTop.jpg"/>
+      <SplashScreen url="splashscreen/jungleTop_01.jpg"/>
+    </Zone>
+    <Zone id="Boardwalk" name="Buccaneer Boardwalk" swf="buccaneer_boardwalk" startRoom="Boardwalk_905" areaname="Z08_Buccaneer_Boardwalk" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_boardwalk.png">
+      <SplashScreen url="splashscreen/boardwalk.jpg"/>      
+    </Zone>
+    <Zone id="BuccFull" name="Buccaneer Boardwalk Full" swf="buccaneer_boardwalk_full" startRoom="BuccFull_706" areaname="Z34_Buccaneer_Boardwalk_Full" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_boardwalk.png">
+      <SplashScreen url="splashscreen/boardwalk_01.jpg"/>
+    </Zone>
+    <Zone id="Beach" name="Gold Beach" swf="gold_beach" startRoom="Beach_905" areaname="Z09_Gold_Beach" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_beach.png">
+      <SplashScreen url="splashscreen/beach.jpg"/>
+      <SplashScreen url="splashscreen/beach_01.jpg"/>
+      <SplashScreen url="splashscreen/beach_02.jpg"/>
+      <SplashScreen url="splashscreen/beach_03.jpg"/>
+      <SplashScreen url="splashscreen/beach_04.jpg"/>
+      <SplashScreen url="splashscreen/beach_05.jpg"/>
+      <SplashScreen url="splashscreen/beach_06.jpg"/>
+      <SplashScreen url="splashscreen/beach_07.jpg"/>
+    </Zone>
+    <Zone id="Aqueduct" name="Old Aqueduct" swf="old_aqueduct" startRoom="Aqueduct_202" areaname="Z07_Old_Aqueduct" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_aqueduct.png">
+      <SplashScreen url="splashscreen/aqueduct.jpg"/>
+      <SplashScreen url="splashscreen/aqueduct_01.jpg"/>
+      <SplashScreen url="splashscreen/aqueduct_03.jpg"/>
+    </Zone>
+    <Zone id="Hive" name="Hive World" swf="bug_world" startRoom="Hive_1" areaname="Z16_Bug_World" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_hive.png">
+      <SplashScreen url="splashscreen/hive.jpg"/>
+    </Zone>
+    <Zone id="OtCliffs" name="Otami Cliffs" swf="otami_cliffs" startRoom="OtCliffs_202" areaname="Z19_Otomi Cliffs" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_jungleTop.png">
+      <SplashScreen url="splashscreen/jungleTop.jpg"/>
+      <SplashScreen url="splashscreen/jungleBottom_01.jpg"/>
+      <SplashScreen url="splashscreen/jungleBottom_02.jpg"/>
+      <SplashScreen url="splashscreen/jungleBottom_03.jpg"/>
+      <SplashScreen url="splashscreen/jungleTop.jpg"/>      
+    </Zone>
+    <Zone id="Shallow" name="Shallow Sea" swf="shallow_sea" startRoom="Shallow_303" areaname="Z11_Shallow_Sea" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_shallowUnderwater.png">
+      <SplashScreen url="splashscreen/shallowUnderwater.jpg"/>
+      <SplashScreen url="splashscreen/shallowUnderwater_01.jpg"/>
+      <SplashScreen url="splashscreen/shallowUnderwater_02.jpg"/>
+      <SplashScreen url="splashscreen/shallowUnderwater_03.jpg"/>
+      <SplashScreen url="splashscreen/shallowUnderwater_04.jpg"/>
+      <SplashScreen url="splashscreen/shallowUnderwater_05.jpg"/>
+    </Zone>
+    <Zone id="Ledge" name="Undersea Ledge" swf="undersea_cliffs" startRoom="Ledge_102" areaname="Z12_Undersea_Cliffs" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_seasidecliff.png">
+      <SplashScreen url="splashscreen/seasidecliff.jpg"/>
+      <SplashScreen url="splashscreen/seasidecliff_01.jpg"/>
+      <SplashScreen url="splashscreen/seasidecliff_01.jpg"/>
+      <SplashScreen url="splashscreen/seasidecliff_01.jpg"/>
+      <SplashScreen url="splashscreen/seasidecliff_01.jpg"/>
+    </Zone>
+    <Zone id="nullChamber1" name="Null Chamber" swf="null_chamber1" startRoom="nullChamber1_1" nullChamber="1" areaname="Z21_Null_Chamber1" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_nullchamber.png">
+      <SplashScreen url="splashscreen/nullchamber.jpg"/>
+    </Zone>
+    <Zone id="Throne" name="Otami Throne Room" swf="otami_throne_room" startRoom="Throne_1" areaname="Z18_Otami_Throne_Room" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_throne.png">
+      <SplashScreen url="splashscreen/throne.jpg"/>
+      <SplashScreen url="splashscreen/throne_01.jpg"/>
+      <SplashScreen url="splashscreen/throne_01.jpg"/>
+      <SplashScreen url="splashscreen/throne_01.jpg"/>
+      <SplashScreen url="splashscreen/throne_02.jpg"/>
+      <SplashScreen url="splashscreen/throne_03.jpg"/>
+    </Zone>
+    <Zone id="Sealab" name="Sealab Compound" swf="sealab_x" startRoom="Sealab_1" areaname="Z13_Sealab_X" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_sealabXArea.png">
+      <SplashScreen url="splashscreen/sealabXArea.jpg"/>
+      <SplashScreen url="splashscreen/underwaterCave_01.jpg"/>
+      <SplashScreen url="splashscreen/seasidecliff_01.jpg"/>
+    </Zone>
+    <Zone id="Ninja" name="Ninja Meadow" swf="ninja_meadow" startRoom="Ninja_1" areaname="Z17_Ninja_Meadow" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/ninjaMeadow.png">
+      <SplashScreen url="splashscreen/ninjaMeadow.jpg"/>
+    </Zone>
+    <Zone id="Sewers" name="Waterworks" swf="sewers" startRoom="Sewers_302" areaname="Z14_Sewers" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_sewer.png">
+      <SplashScreen url="splashscreen/sewer.jpg"/>
+    </Zone>
+    <Zone id="TrainStation" name="Old Station" swf="train_station" startRoom="TrainStation_1" areaname="Z22_Train_Station" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_trainstation.png">
+      <SplashScreen url="splashscreen/trainstation.jpg"/>
+    </Zone>
+    <Zone id="Training" name="The Train" swf="training" startRoom="Training_1" areaname="Z23_Training">
+      <!-- <SplashScreen url=""/> -->
+    </Zone>
+    <Zone id="Bar" name="Barton Bar" swf="bar" startRoom="Bar_1" areaname="Z24_Bar" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_barinterior.png">
+      <SplashScreen url="splashscreen/barinterior.jpg"/>
+    </Zone>
+    <Zone id="SewersTraining" name="Waterworks Tunnels" swf="sewers_training" startRoom="SewersTraining_1" areaname="Z25_Sewers_Training" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_sewew.png">
+      <SplashScreen url="splashscreen/sewer.jpg"/>
+    </Zone>
+    <Zone id="KatsumisDoll" name="Katsumi's Doll" swf="katsumis_doll" startRoom="KatsumisDoll_1" areaname="Z26_Katsumis_Doll" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_katsumi_doll.png">
+      <SplashScreen url="splashscreen/katsumi_doll.jpg"/>
+      <SplashScreen url="splashscreen/zenGarden_02.jpg"/>
+      <SplashScreen url="splashscreen/zenGarden_02.jpg"/>
+      <SplashScreen url="splashscreen/zenGarden_02.jpg"/>
+      <SplashScreen url="splashscreen/zenGarden_03.jpg"/>
+      <SplashScreen url="splashscreen/zenGarden_04.jpg"/>
+      <SplashScreen url="splashscreen/zenGarden_05.jpg"/>
+      <SplashScreen url="splashscreen/zenGarden_06.jpg"/>
+    </Zone>
+    <Zone id="WolfDen" name="Shewolf Den" swf="wolf_den" startRoom="WolfDen_1" areaname="Z27_Wolf_Den" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_she_wolf.png">
+      <SplashScreen url="splashscreen/she_wolf.jpg"/>
+      <SplashScreen url="splashscreen/basskenlake_01.jpg"/>
+      <SplashScreen url="splashscreen/basskenlake_01.jpg"/>
+      <SplashScreen url="splashscreen/basskenlake_01.jpg"/>
+      <SplashScreen url="splashscreen/basskenlake_02.jpg"/>
+      <SplashScreen url="splashscreen/basskenlake_02.jpg"/>
+      <SplashScreen url="splashscreen/basskenlake_03.jpg"/>
+      <SplashScreen url="splashscreen/basskenlake_04.jpg"/>
+      <SplashScreen url="splashscreen/basskenlake_04.jpg"/>
+    </Zone>
+    <Zone id="SawMill" name="Bassken Saw Mill" swf="saw_mill" startRoom="SawMill_1" areaname="Z28_Saw_Mill" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_papa_saw.png">
+      <SplashScreen url="splashscreen/papa_saw.jpg"/>
+    </Zone>
+    <Zone id="TestIsland1" name="Test Island 1" swf="test_island_1" startRoom="TestIsland1_1" areaname="Z99_Test_Island_1">
+      <!-- <SplashScreen url="splashscreen/tlauixcalpantecuhtliopolis.jpg"/> -->
+    </Zone>
+    <Zone id="DuneSlam" name="Gold Beach Island" swf="dune_slam" startRoom="DuneSlam_1" areaname="Z29_Dune_Slam" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_duneslam.png">
+      <SplashScreen url="splashscreen/duneslam.jpg"/>
+    </Zone>
+    <Zone id="Under" name="Deadman's Shadow" swf="under_mountain" startRoom="Under_1" areaname="Z30_Undermountain" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_deadmanshadow.png">
+      <SplashScreen url="splashscreen/deadmanpass.jpg"/>
+      <SplashScreen url="splashscreen/deadmanpass_01.jpg"/>
+      <SplashScreen url="splashscreen/deadmanpass_02.jpg"/>
+      <SplashScreen url="splashscreen/deadmanpass_03.jpg"/>      
+    </Zone>
+	<Zone id="Under2" name="Deadman's Shadow" swf="under_mountain_2" startRoom="Under2_401" areaname="Z35_Undermountain2" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_deadmanshadow.png">
+      <SplashScreen url="splashscreen/deadmanpass.jpg"/>
+      <SplashScreen url="splashscreen/deadmanpass_01.jpg"/>
+      <SplashScreen url="splashscreen/deadmanpass_02.jpg"/>
+      <SplashScreen url="splashscreen/deadmanpass_03.jpg"/>
+    </Zone>
+	<Zone id="Under3" name="Deadman's Shadow" swf="under_mountain_3" startRoom="Under3_1" areaname="Z36_Undermountain3" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_deadmanshadow.png">
+      <SplashScreen url="splashscreen/deadmanpass.jpg"/>
+      <SplashScreen url="splashscreen/deadmanpass_01.jpg"/>
+      <SplashScreen url="splashscreen/deadmanpass_02.jpg"/>
+      <SplashScreen url="splashscreen/deadmanpass_03.jpg"/>
+    </Zone>
+	<Zone id="Under4" name="Deadman's Shadow" swf="under_mountain_4" startRoom="Under4_5" areaname="Z37_Undermountain4" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_deadmanshadow.png">
+      <SplashScreen url="splashscreen/deadmanpass.jpg"/>
+      <SplashScreen url="splashscreen/deadmanpass_01.jpg"/>
+      <SplashScreen url="splashscreen/deadmanpass_02.jpg"/>
+      <SplashScreen url="splashscreen/deadmanpass_03.jpg"/>
+    </Zone>
+	<Zone id="Under5" name="Deadman's Shadow" swf="under_mountain_5" startRoom="Under5_1" areaname="Z38_Undermountain5" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_deadmanshadow.png">
+      <SplashScreen url="splashscreen/deadmanpass.jpg"/>
+      <SplashScreen url="splashscreen/deadmanpass_01.jpg"/>
+      <SplashScreen url="splashscreen/deadmanpass_02.jpg"/>
+      <SplashScreen url="splashscreen/deadmanpass_03.jpg"/>
+    </Zone>
+    <Zone id="VillageTraining" name="Village Training" swf="village_training" startRoom="VillageTraining_2" areaname="Z31_Village_Training" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_village.png">
+      <SplashScreen url="splashscreen/villageTraining.jpg"/>
+    </Zone>
+    <Zone id="VillageGeneral" name="Village Greens" swf="village_general" startRoom="VillageGeneral_1" areaname="Z32_Village_General" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_gnome_general.png">
+      <SplashScreen url="splashscreen/gnome_general.jpg"/>
+    </Zone>
+    <Zone id="BartonColiseum" name="Barton Coliseum" swf="barton_coliseum" startRoom="BartonColiseum_1" areaname="Z33_Barton_Coliseum" useSharedSplashScreen="false" titleImgUrl="splashscreen/title/title_bartonTown.png">
+      <SplashScreen url="splashscreen/bartonTown.jpg"/>
+    </Zone>
+  </ZonesInfo>
+  
+  <!-- Splash Screen chared across all zone -->
+  <SharedSplashScreen> 
+  
+  	<!-- ************************** -->  	
+  	<!-- basskenlake_01  -->
+  	<SplashScreen url="splashscreen/basskenlake_01.jpg"/>
+  	<SplashScreen url="splashscreen/basskenlake_01.jpg"/>
+  	<SplashScreen url="splashscreen/basskenlake_01.jpg"/>
+  	<SplashScreen url="splashscreen/basskenlake_01.jpg"/>
+  	<SplashScreen url="splashscreen/basskenlake_01.jpg"/>
+  	<SplashScreen url="splashscreen/basskenlake_01.jpg"/>
+  	
+  	<!-- beach_01  -->
+  	<SplashScreen url="splashscreen/beach_01.jpg"/>
+	<SplashScreen url="splashscreen/beach_01.jpg"/>
+	<SplashScreen url="splashscreen/beach_01.jpg"/>
+	<SplashScreen url="splashscreen/beach_01.jpg"/>
+	<SplashScreen url="splashscreen/beach_01.jpg"/>
+	<SplashScreen url="splashscreen/beach_01.jpg"/>
+  	
+  	<!-- rancherbill_01  -->
+  	<SplashScreen url="splashscreen/rancherbill_01.jpg"/>
+	<SplashScreen url="splashscreen/rancherbill_01.jpg"/>
+	<SplashScreen url="splashscreen/rancherbill_01.jpg"/>
+	<SplashScreen url="splashscreen/rancherbill_01.jpg"/>
+	<SplashScreen url="splashscreen/rancherbill_01.jpg"/>
+	<SplashScreen url="splashscreen/rancherbill_01.jpg"/>
+	
+	<!-- throne_01  -->
+	<SplashScreen url="splashscreen/throne_01.jpg"/>
+	<SplashScreen url="splashscreen/throne_01.jpg"/>
+	<SplashScreen url="splashscreen/throne_01.jpg"/>
+	<SplashScreen url="splashscreen/throne_01.jpg"/>
+	<SplashScreen url="splashscreen/throne_01.jpg"/>
+	<SplashScreen url="splashscreen/throne_01.jpg"/>
+	
+	
+	<!-- ************************** -->	
+	<!-- zenGarden_01  -->
+	<SplashScreen url="splashscreen/zenGarden_01.jpg"/>
+	<SplashScreen url="splashscreen/zenGarden_01.jpg"/>
+	<SplashScreen url="splashscreen/zenGarden_01.jpg"/>
+	<SplashScreen url="splashscreen/zenGarden_01.jpg"/>
+	
+	<!-- jungleTop_01  -->
+	<SplashScreen url="splashscreen/jungleTop_01.jpg"/>
+	<SplashScreen url="splashscreen/jungleTop_01.jpg"/>
+	<SplashScreen url="splashscreen/jungleTop_01.jpg"/>
+	<SplashScreen url="splashscreen/jungleTop_01.jpg"/>
+	
+	
+	
+	<!-- ************************** -->
+	<!-- beach_05  -->
+	<SplashScreen url="splashscreen/beach_05.jpg"/>
+	<SplashScreen url="splashscreen/beach_05.jpg"/>
+	
+	<!-- beach_06  -->
+	<SplashScreen url="splashscreen/beach_06.jpg"/>
+	<SplashScreen url="splashscreen/beach_06.jpg"/>
+	
+	<!-- seasidecliff_01  -->
+	<SplashScreen url="splashscreen/seasidecliff_01.jpg"/>
+	<SplashScreen url="splashscreen/seasidecliff_01.jpg"/>
+	
+	<!-- zenGarden_04  -->
+	<SplashScreen url="splashscreen/zenGarden_04.jpg"/>
+	<SplashScreen url="splashscreen/zenGarden_04.jpg"/>
+	
+	
+  	<!-- ************************** -->
+  	
+  	<SplashScreen url="splashscreen/aqueduct_01.jpg"/>
+  	<SplashScreen url="splashscreen/aqueduct_02.jpg"/>
+  	<SplashScreen url="splashscreen/aqueduct_03.jpg"/>  	
+  	<SplashScreen url="splashscreen/bartonTown_03.jpg"/>  	
+	<SplashScreen url="splashscreen/basskenlake_02.jpg"/>
+	<SplashScreen url="splashscreen/basskenlake_03.jpg"/>
+	<SplashScreen url="splashscreen/basskenlake_04.jpg"/>
+	<SplashScreen url="splashscreen/beach_02.jpg"/>
+	<SplashScreen url="splashscreen/beach_03.jpg"/>
+	<SplashScreen url="splashscreen/beach_04.jpg"/>
+	<SplashScreen url="splashscreen/beach_07.jpg"/>
+	<SplashScreen url="splashscreen/deadmanpass_01.jpg"/>
+	<SplashScreen url="splashscreen/deadmanpass_02.jpg"/>
+	<SplashScreen url="splashscreen/deadmanpass_03.jpg"/>
+	<SplashScreen url="splashscreen/jungleBottom_01.jpg"/>
+	<SplashScreen url="splashscreen/jungleBottom_02.jpg"/>
+	<SplashScreen url="splashscreen/jungleBottom_03.jpg"/>
+	<SplashScreen url="splashscreen/shallowUnderwater_01.jpg"/>
+	<SplashScreen url="splashscreen/shallowUnderwater_02.jpg"/>
+	<SplashScreen url="splashscreen/shallowUnderwater_03.jpg"/>
+	<SplashScreen url="splashscreen/shallowUnderwater_04.jpg"/>
+	<SplashScreen url="splashscreen/shallowUnderwater_05.jpg"/>
+	<SplashScreen url="splashscreen/throne_02.jpg"/>
+	<SplashScreen url="splashscreen/throne_03.jpg"/>
+	<SplashScreen url="splashscreen/underwaterCave_01.jpg"/>
+	<SplashScreen url="splashscreen/village_01.jpg"/>
+	<SplashScreen url="splashscreen/village_02.jpg"/>
+	<SplashScreen url="splashscreen/zenGarden_02.jpg"/>
+	<SplashScreen url="splashscreen/zenGarden_03.jpg"/>
+	<SplashScreen url="splashscreen/zenGarden_05.jpg"/>
+	<SplashScreen url="splashscreen/zenGarden_06.jpg"/>
+
+  </SharedSplashScreen>
+  
+  
+  <MiniMapsInfo>
+	<!-- COPY THE LINES BELOW FOR ADDING A NEW AREA
+	<MiniMap id="" file="" scale="" showGlobal="" showLocal="">
+      <GlobalPos x="0" y="0"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+	-->
+	
+    <MiniMap id="Barton" file="barton.jpg" scale="5" showGlobal="1" showLocal="1">
+      <GlobalPos x="241" y="328"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+    <MiniMap id="Village" file="village.jpg" scale="5" showGlobal="1" showLocal="1">
+      <GlobalPos x="214.5" y="436.5"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+    <MiniMap id="BillsRanch" file="billsranch.jpg" scale="5" showGlobal="1" showLocal="1">
+      <GlobalPos x="136.5" y="479.5"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+    <MiniMap id="Bassken" file="bassken.jpg" scale="5" showGlobal="1" showLocal="1">
+      <GlobalPos x="202" y="212"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+    <MiniMap id="ZenGarden" file="zengarden.jpg" scale="5" showGlobal="1" showLocal="1">
+      <GlobalPos x="175.5" y="328"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+    <MiniMap id="DeadManPass" file="deadmeanpass.jpg" scale="5" showGlobal="1" showLocal="1">
+      <GlobalPos x="108" y="530"/>
+      <StartPos col="1" row="0"/>
+    </MiniMap>
+    <MiniMap id="HouseOnHill" file="nomap.jpg" scale="5" showGlobal="1" showLocal="0">
+      <GlobalPos x="63" y="475"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+    <MiniMap id="OtRuins" file="otruins.jpg" scale="5" showGlobal="1" showLocal="1">
+      <GlobalPos x="64" y="-7"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+    <MiniMap id="Boardwalk" file="boardwalk.jpg" scale="5" showGlobal="1" showLocal="1">
+      <GlobalPos x="227" y="176"/>
+      <StartPos col="1" row="8"/>
+    </MiniMap>
+    <MiniMap id="BuccFull" file="boardwalkfull.jpg" scale="5" showGlobal="1" showLocal="1">
+      <GlobalPos x="215" y="25"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+
+    <MiniMap id="BuccFull2" file="nomap.jpg" scale="5" showGlobal="1" showLocal="0">
+      <GlobalPos x="227" y="176"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+
+    <MiniMap id="BuccFull3" file="nomap.jpg" scale="5" showGlobal="1" showLocal="0">
+      <GlobalPos x="227" y="176"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+
+
+    <MiniMap id="Beach" file="beach.jpg" scale="5" showGlobal="1" showLocal="1">
+      <GlobalPos x="150.5" y="3.5"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+    <MiniMap id="Aqueduct" file="aqueduct.jpg" scale="5" showGlobal="1" showLocal="1">
+      <GlobalPos x="111" y="211"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+    <MiniMap id="Aqueduct2" file="nomap.jpg" scale="5" showGlobal="1" showLocal="0">
+      <GlobalPos x="97" y="187"/>
+      <StartPos col="1" row="6"/>
+    </MiniMap>
+    <MiniMap id="OtCliffs" file="otcliffs.jpg" scale="5" showGlobal="1" showLocal="1">
+      <GlobalPos x="64" y="-19"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+    <MiniMap id="OtCliffs2" file="nomap.jpg" scale="5" showGlobal="1" showLocal="0">
+      <GlobalPos x="76" y="29"/>
+      <StartPos col="2" row="5"/>
+    </MiniMap>
+    <MiniMap id="Shallow" file="shallow.jpg" scale="5" showGlobal="0" showLocal="1">
+      <GlobalPos x="0" y="0"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+    <MiniMap id="Ledge" file="ledge.jpg" scale="5" showGlobal="0" showLocal="1">
+      <GlobalPos x="0" y="0"/>
+      <StartPos col="0" row="1"/>
+    </MiniMap>
+    <MiniMap id="Throne" file="nomap.jpg" scale="5" showGlobal="1" showLocal="0">
+      <GlobalPos x="66" y="41"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+    <MiniMap id="Sealab" file="sealab.jpg" scale="5" showGlobal="0" showLocal="1">
+      <GlobalPos x="0" y="0"/>
+      <StartPos col="0" row="6"/>
+    </MiniMap>
+    <MiniMap id="Sewers" file="sewers.jpg" scale="5" showGlobal="1" showLocal="1">
+      <GlobalPos x="233" y="338"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+    <MiniMap id="TrainStation" file="nomap.jpg" scale="5" showGlobal="1" showLocal="0">
+      <GlobalPos x="285" y="333"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+    <MiniMap id="Training" file="training.jpg" scale="20" showGlobal="0" showLocal="1">
+      <GlobalPos x="0" y="0"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+    <MiniMap id="Bar" file="nomap.jpg" scale="5" showGlobal="1" showLocal="0">
+      <GlobalPos x="267" y="360"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+    <MiniMap id="SewersTraining" file="sewerstraining.jpg" scale="10" showGlobal="1" showLocal="1">
+      <GlobalPos x="280" y="350"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>    
+    <MiniMap id="VillageTraining" file="villagetraining.jpg" scale="20" showGlobal="0" showLocal="1">
+      <GlobalPos x="0" y="0"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+	<MiniMap id="BartonColiseum" file="nomap.jpg" scale="20" showGlobal="1" showLocal="0">
+      <GlobalPos x="290" y="312"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>    
+    <MiniMap id="NoMap" file="nomap.jpg" scale="5" showGlobal="0" showLocal="0">
+      <GlobalPos x="0" y="0"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+  </MiniMapsInfo>
+  
+  <MusicZones>
+	<!-- COPY THE LINES BELOW FOR ADDING A NEW AREA
+	<Zone id="">
+      <Combat/>
+      <Normal>
+        <Song title="" file=""/>
+      </Normal>
+    </Zone>
+	-->
+	
+    <Zone id="Barton">
+      <Combat/>
+      <Normal>
+        <Song title="Barton Town 2" file="bartontown2.aem"/>
+        <Song title="Barton Town" file="bartontown.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="Village">
+      <Combat/>
+      <Normal>
+        Village Green 3|Village Greens|Village Greens Alt
+        <Song title="Village Greens" file="villagegreens.aem"/>
+        <Song title="Village Greens 2" file="villagegreens2.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="BillsRanch">
+      <Combat/>
+      <Normal>
+        Bill's Ranch|Bill's Ranch 2|Bill's Ranch 3
+        <Song title="Bill's Ranch" file="billsranch.aem"/>
+        <Song title="Bill's Ranch Action" file="billsranchaction.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="BasskenLake">
+      <Combat>
+        <Song title="Bass'ken Lake Combat" file="basskenlakeaction.aem"/>
+      </Combat>
+      <Normal>
+        Bassken Lake
+        <Song title="Bass'ken Lake" file="basskenlake.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="ZenGarden">
+      <Combat/>
+      <Normal>
+        Zen Garden Alt|Zen Theme
+        <Song title="Zen Theme" file="zentheme.aem"/>
+        <Song title="Zen Garden 2" file="zengarden2.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="DeadManPass">
+      <Combat/>
+      <Normal>
+        Dead Man's Pass
+        <Song title="House on the Hill" file="houseonthehill.aem"/>
+        <Song title="Deadman's Pass" file="deadmanspass.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="OtamiRuins">
+      <Combat/>
+      <Normal>
+        Otami Ruins
+        <Song title="Otami Ruins" file="otamiruins.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="BuccaneerBoardwalk">
+      <Combat/>
+      <Normal>
+        Buccaneer Boardwalk
+        <Song title="Buccaneer Boardwalk" file="buccaneerboardwalk.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="BuccaneerBoardwalkFull">
+      <Combat/>
+      <Normal>
+        Buccaneer Boardwalk
+        <Song title="Buccaneer Boardwalk" file="buccaneerboardwalk.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="GoldBeach">
+      <Combat/>
+      <Normal>
+        Gold Beach|Gold Beach Waves
+        <Song title="Gold Beach Pina Colada" file="goldbeachpinacolada.aem"/>
+        <Song title="Gold Beach Surf's Up!" file="goldbeachsurfsup.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="OldAqueduct">
+      <Combat/>
+      <Normal>
+        Old Aqueduct
+        <Song title="Old Aqueduct" file="oldaqueduct.aem"/>
+        <Song title="Gaia Combat Two" file="gaiacombattwo.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="BugWorld">
+      <Combat/>
+      <Normal>
+        Bug World|Bug World
+        <Song title="The Hive" file="thehive.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="UndewaterCaves">
+      <Combat/>
+      <Normal>
+        Underwater Cave
+        <Song title="Underwater Cave" file="underwatercave.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="UnderwaterCliffs">
+      <Combat/>
+      <Normal>
+        Underwater Cliffs
+        <Song title="Underwater Cliffs" file="underwatercliffs.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="CoatlThroneRoom">
+      <Combat/>
+      <Normal>
+        Coatl Throne Room
+        <Song title="Coatl Throne Room" file="coatlthroneroom.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="SealabX">
+      <Combat/>
+      <Normal>
+        Sealab X
+        <Song title="Sealab X" file="sealabx.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="SealabXBoss">
+      <Combat/>
+      <Normal>
+        Sealab X Boss
+        <Song title="Chapter One Finale" file="chapteronefinale.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="BartonSubway">
+      <Combat/>
+      <Normal>
+        Barton Sewer
+        <Song title="Barton Sewer" file="bartonsewer.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="">
+      <Combat/>
+      <Normal/>
+    </Zone>
+    <Zone id="nullChambers">
+      <Combat/>
+      <Normal>
+        Null Chamber
+        <Song title="Null Chamber" file="nullchamber.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="HouseOnHill">
+      <Combat/>
+      <Normal>
+        <Song title="House on the Hill" file="houseonthehill.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="BillsRanch2">
+      <Combat/>
+      <Normal>
+        <Song title="Bill's Ranch Sunrise" file="billsranchsunrise.aem"/>
+         <!-- <Song title="The Nightingale" file="thenightingale.aem"/> -->
+      </Normal>
+    </Zone>
+    <Zone id="ShallowSea">
+      <Combat/>
+      <Normal>
+        <Song title="The Shallow Sea" file="theshallowsea.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="VillageDanger">
+      <Combat/>
+      <Normal>
+        <Song title="Village Greens Frenzy" file="villagegreensfrenzy.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="Training">
+      <Combat/>
+      <Normal>
+        <Song title="Train" file="train.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="BasskenQuiet">
+      <Combat/>
+      <Normal>
+        <Song title="Bass'ken Lake" file="basskenlake.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="notAssigned">
+      <Combat/>
+      <Normal/>
+    </Zone>
+    <Zone id="KatsumisDoll">
+      <Combat/>
+      <Normal>
+        <Song title="Katsumi Kombat" file="katsumikombat.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="WolfDen">
+      <Combat/>
+      <Normal>
+        <Song title="The Wolf Den" file="thewolfden.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="SawMill">
+      <Combat/>
+      <Normal>
+        <Song title="The Saw Mill" file="thesawmill.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="DuneslamIsland">
+      <Combat/>
+      <Normal>
+        <Song title="Duneslam Island" file="duneslamisland.aem"/>
+      </Normal>
+    </Zone>
+    <Zone id="Undermountain">
+      <Combat/>
+      <Normal>
+        <Song title="3 Types of Horror" file="3_types_of_horror.flv"/>
+      </Normal>
+    </Zone>
+    <Zone id="Undermountain2">
+      <Combat/>
+      <Normal>
+        <Song title="3 Types of Horror" file="3_types_of_horror.flv"/>
+      </Normal>
+    </Zone>
+    <Zone id="Undermountain3">
+      <Combat/>
+      <Normal>
+        <Song title="Ghostpocalypse" file="ghostpocalypse_the_call.flv"/>
+      </Normal>
+    </Zone>
+    <Zone id="Undermountain4">
+      <Combat/>
+      <Normal>
+        <Song title="Gothica" file="gothica.flv"/>
+      </Normal>
+    </Zone>
+    <Zone id="Undermountain5">
+      <Combat/>
+      <Normal>
+        <Song title="Skies of Fire" file="skies_of_fire.flv"/>
+      </Normal>
+    </Zone>
+  </MusicZones>
+
+  <!-- Room Zone IDs -->
+  <!-- COPY THE LINE BELOW FOR ADDING A NEW AREA
+  <Rooms zoneId="" miniMapId="" scale="" musicZoneId=""></Rooms>
+  -->
+
+  <Rooms zoneId="BARTON" miniMapId="Barton" scale="50" musicZoneId="Barton">BARTON_1,BARTON_2,BARTON_3,BARTON_4,BARTON_101,BARTON_102,BARTON_103,BARTON_104,BARTON_201,BARTON_202,BARTON_203,BARTON_204,BARTON_301,BARTON_302,BARTON_303,BARTON_304</Rooms>
+  <Rooms zoneId="VILLAGE" miniMapId="Village" scale="75" musicZoneId="Village">VILLAGE_3,VILLAGE_4,VILLAGE_5,VILLAGE_6,VILLAGE_103,VILLAGE_104,VILLAGE_105,VILLAGE_106,VILLAGE_203,VILLAGE_204,VILLAGE_205,VILLAGE_206,VILLAGE_304,VILLAGE_305,VILLAGE_306,VILLAGE_405,VILLAGE_406</Rooms>
+  <Rooms zoneId="VILLAGE" miniMapId="Village" scale="75" musicZoneId="VillageDanger">VILLAGE_201,VILLAGE_202,VILLAGE_301,VILLAGE_302,VILLAGE_303,VILLAGE_401,VILLAGE_402,VILLAGE_403,VILLAGE_404,VILLAGE_501,VILLAGE_502,VILLAGE_503,VILLAGE_504,VILLAGE_601,VILLAGE_602,VILLAGE_603,VILLAGE_604,VILLAGE_701,VILLAGE_702,VILLAGE_703,VILLAGE_704,VILLAGE_801,VILLAGE_802,VILLAGE_803,VILLAGE_804,VILLAGE_901,VILLAGE_902,VILLAGE_903,VILLAGE_904,VILLAGE_1001,VILLAGE_1002,VILLAGE_1003,VILLAGE_1004</Rooms>
+  <Rooms zoneId="BF1" miniMapId="BillsRanch" scale="75" musicZoneId="BillsRanch2">BF1_2,BF1_3,BF1_101,BF1_102,BF1_103,BF1_201,BF1_202,BF1_203,BF1_301,BF1_302,BF1_303,BF1_401,BF1_402,BF1_403</Rooms>
+  <Rooms zoneId="BF1" miniMapId="BillsRanch" scale="75" musicZoneId="BillsRanch">BF1_502,BF1_503,BF1_603,BF1_4,BF1_5,BF1_6,BF1_104,BF1_105,BF1_106,BF1_204,BF1_205,BF1_206,BF1_304,BF1_305,BF1_306,BF1_404,BF1_405,BF1_406,BF1_504,BF1_505,BF1_506,BF1_604,BF1_605,BF1_606,BF1_706,BF1_705,BF1_803,BF1_804,BF1_805,BF1_806</Rooms>
+  <Rooms zoneId="BASSKEN" miniMapId="Bassken" scale="75" musicZoneId="BasskenLake">BASSKEN_1,BASSKEN_2,BASSKEN_3,BASSKEN_4,BASSKEN_5,BASSKEN_6,BASSKEN_7,BASSKEN_101,BASSKEN_102,BASSKEN_103,BASSKEN_104,BASSKEN_105,BASSKEN_106,BASSKEN_107,BASSKEN_201,BASSKEN_202,BASSKEN_203,BASSKEN_204,BASSKEN_205,BASSKEN_206,BASSKEN_207,BASSKEN_301,BASSKEN_302,BASSKEN_305,BASSKEN_306,BASSKEN_307,BASSKEN_402,BASSKEN_405,BASSKEN_406,BASSKEN_407,BASSKEN_501,BASSKEN_502,BASSKEN_503,BASSKEN_504,BASSKEN_505</Rooms>
+  <Rooms zoneId="BASSKEN" miniMapId="Bassken" scale="75" musicZoneId="BasskenQuiet">BASSKEN_303,BASSKEN_304,BASSKEN_401,BASSKEN_403,BASSKEN_404,BASSKEN_506,BASSKEN_507,BASSKEN_601,BASSKEN_602,BASSKEN_603,BASSKEN_604,BASSKEN_605,BASSKEN_606,BASSKEN_607</Rooms>
+  <Rooms zoneId="ZENGARDEN" miniMapId="ZenGarden" scale="75" musicZoneId="ZenGarden">ZENGARDEN_1,ZENGARDEN_2,ZENGARDEN_3,ZENGARDEN_4,ZENGARDEN_5,ZENGARDEN_101,ZENGARDEN_102,ZENGARDEN_103,ZENGARDEN_104,ZENGARDEN_105,ZENGARDEN_201,ZENGARDEN_202,ZENGARDEN_203,ZENGARDEN_204,ZENGARDEN_205,ZENGARDEN_301,ZENGARDEN_302,ZENGARDEN_303,ZENGARDEN_304,ZENGARDEN_305,ZENGARDEN_401,ZENGARDEN_402,ZENGARDEN_403,ZENGARDEN_404,ZENGARDEN_405,ZENGARDEN_501,ZENGARDEN_502,ZENGARDEN_503,ZENGARDEN_504,ZENGARDEN_505,ZENGARDEN_601,ZENGARDEN_602,ZENGARDEN_603,ZENGARDEN_604,ZENGARDEN_605,ZENGARDEN_701,ZENGARDEN_702,ZENGARDEN_703,ZENGARDEN_704,ZENGARDEN_705</Rooms>
+  <Rooms zoneId="M1" miniMapId="DeadManPass" scale="75" musicZoneId="DeadManPass">M1_2,M1_4,M1_102,M1_103,M1_104,M1_204,M1_205,M1_303,M1_304,M1_305,M1_306,M1_403,M1_404,M1_405,M1_406,M1_407</Rooms>
+  <Rooms zoneId="M1" miniMapId="HouseOnHill" scale="20" musicZoneId="HouseOnHill">M1_1</Rooms>
+  <Rooms zoneId="OtRuins" miniMapId="OtRuins" scale="75" musicZoneId="OtamiRuins">OtRuins_4,OtRuins_5,OtRuins_6,OtRuins_7,OtRuins_104,OtRuins_105,OtRuins_106,OtRuins_107,OtRuins_205,OtRuins_206,OtRuins_207,OtRuins_304,OtRuins_305,OtRuins_306,OtRuins_307,OtRuins_402,OtRuins_403,OtRuins_404,OtRuins_405,OtRuins_406,OtRuins_407,OtRuins_502,OtRuins_503,OtRuins_504,OtRuins_505,OtRuins_506,OtRuins_507,OtRuins_602,OtRuins_603,OtRuins_604,OtRuins_605,OtRuins_606,OtRuins_607,OtRuins_701,OtRuins_702,OtRuins_703,OtRuins_704,OtRuins_705,OtRuins_706,OtRuins_707,OtRuins_801,OtRuins_802,OtRuins_803,OtRuins_804,OtRuins_805,OtRuins_806,OtRuins_807,OtRuins_901,OtRuins_902,OtRuins_903,OtRuins_904,OtRuins_905,OtRuins_906</Rooms>
+  <Rooms zoneId="Boardwalk" miniMapId="Boardwalk" scale="75" musicZoneId="BuccaneerBoardwalk">Boardwalk_1,Boardwalk_2,Boardwalk_3,Boardwalk_4,Boardwalk_5,Boardwalk_6,Boardwalk_101,Boardwalk_102,Boardwalk_103,Boardwalk_104,Boardwalk_105,Boardwalk_106,Boardwalk_201,Boardwalk_202,Boardwalk_203,Boardwalk_204,Boardwalk_205,Boardwalk_206,Boardwalk_301,Boardwalk_302,Boardwalk_303,Boardwalk_304,Boardwalk_305,Boardwalk_306,Boardwalk_307,Boardwalk_401,Boardwalk_402,Boardwalk_403,Boardwalk_404,Boardwalk_405,Boardwalk_406,Boardwalk_407,Boardwalk_501,Boardwalk_502,Boardwalk_503,Boardwalk_504,Boardwalk_505,Boardwalk_506,Boardwalk_601,Boardwalk_602,Boardwalk_603,Boardwalk_604,Boardwalk_605,Boardwalk_606,Boardwalk_702,Boardwalk_703,Boardwalk_704,Boardwalk_705,Boardwalk_706,Boardwalk_802,Boardwalk_803,Boardwalk_804,Boardwalk_805,Boardwalk_806,Boardwalk_902,Boardwalk_903,Boardwalk_904,Boardwalk_905,Boardwalk_906</Rooms>
+  <Rooms zoneId="BuccFull" miniMapId="BuccFull" scale="75" musicZoneId="BuccaneerBoardwalkFull">BuccFull_205,BuccFull_202,BuccFull_201,BuccFull_301,BuccFull_302,BuccFull_303,BuccFull_305,BuccFull_306,BuccFull_403,BuccFull_405,BuccFull_406,BuccFull_502,BuccFull_503,BuccFull_505,BuccFull_506,BuccFull_603,BuccFull_604,BuccFull_204,BuccFull_705,BuccFull_706,BuccFull_803,BuccFull_804,BuccFull_805,BuccFull_806,BuccFull_203,BuccFull_606,BuccFull_407,BuccFull_501,BuccFull_703,BuccFull_704,BuccFull_602,BuccFull_802,BuccFull_702,BuccFull_601,BuccFull_903,BuccFull_904,BuccFull_905,BuccFull_906,BuccFull_902,BuccFull_402,BuccFull_401,BuccFull_206</Rooms>
+  <Rooms zoneId="BuccFull" miniMapId="BuccFull2" scale="33" musicZoneId="BuccaneerBoardwalkFull">BuccFull_1</Rooms>
+  <Rooms zoneId="BuccFull" miniMapId="BuccFull3" scale="15" musicZoneId="BuccaneerBoardwalkFull">BuccFull_7,BuccFull_4</Rooms>
+  <Rooms zoneId="Beach" miniMapId="Beach" scale="75" musicZoneId="GoldBeach">Beach_2,Beach_3,Beach_102,Beach_103,Beach_104,Beach_105,Beach_202,Beach_203,Beach_204,Beach_205,Beach_302,Beach_303,Beach_304,Beach_305,Beach_402,Beach_403,Beach_404,Beach_405,Beach_502,Beach_503,Beach_504,Beach_505,Beach_602,Beach_603,Beach_604,Beach_605,Beach_702,Beach_703,Beach_704,Beach_705,Beach_801,Beach_802,Beach_803,Beach_804,Beach_805,Beach_806,Beach_901,Beach_902,Beach_903,Beach_904,Beach_905,Beach_906,Beach_1001,Beach_1002,Beach_1003,Beach_1004,Beach_1005,Beach_1006</Rooms>
+  <Rooms zoneId="Aqueduct" miniMapId="Aqueduct" scale="75" musicZoneId="OldAqueduct">Aqueduct_1,Aqueduct_2,Aqueduct_4,Aqueduct_5,Aqueduct_6,Aqueduct_7,Aqueduct_102,Aqueduct_103,Aqueduct_104,Aqueduct_105,Aqueduct_106,Aqueduct_107,Aqueduct_202,Aqueduct_203,Aqueduct_204,Aqueduct_205,Aqueduct_206,Aqueduct_207,Aqueduct_303,Aqueduct_304,Aqueduct_305,Aqueduct_306,Aqueduct_307,Aqueduct_403,Aqueduct_404,Aqueduct_405,Aqueduct_406,Aqueduct_407,Aqueduct_504,Aqueduct_505,Aqueduct_506,Aqueduct_507</Rooms>
+  <Rooms zoneId="Aqueduct" miniMapId="Aqueduct2" scale="40" musicZoneId="OldAqueduct">Aqueduct_602</Rooms>
+  <Rooms zoneId="Hive" miniMapId="NoMap" scale="50" musicZoneId="BugWorld">Hive_1</Rooms>
+  <Rooms zoneId="OtCliffs" miniMapId="OtCliffs" scale="75" musicZoneId="OtamiRuins">OtCliffs_1,OtCliffs_2,OtCliffs_3,OtCliffs_101,OtCliffs_102,OtCliffs_103,OtCliffs_104,OtCliffs_201,OtCliffs_202,OtCliffs_203,OtCliffs_204,OtCliffs_301,OtCliffs_303,OtCliffs_304,OtCliffs_401,OtCliffs_501,OtCliffs_601</Rooms>
+  <Rooms zoneId="OtCliffs" miniMapId="OtCliffs2" scale="65" musicZoneId="OtamiRuins">OtCliffs_503</Rooms>
+  <Rooms zoneId="Shallow" miniMapId="Shallow" scale="75" musicZoneId="ShallowSea">Shallow_2,Shallow_102,Shallow_202,Shallow_203,Shallow_204,Shallow_302,Shallow_303,Shallow_304,Shallow_305,Shallow_402,Shallow_403,Shallow_404,Shallow_405,Shallow_501,Shallow_502,Shallow_503,Shallow_504,Shallow_505,Shallow_506,Shallow_601,Shallow_602,Shallow_603,Shallow_604,Shallow_605,Shallow_606,Shallow_701,Shallow_702,Shallow_703,Shallow_704,Shallow_705,Shallow_706,Shallow_801,Shallow_802,Shallow_803,Shallow_804,Shallow_805</Rooms>
+  <Rooms zoneId="Ledge" miniMapId="Ledge" scale="75" musicZoneId="UnderwaterCliffs">Ledge_102,Ledge_103,Ledge_104,Ledge_105,Ledge_107,Ledge_201,Ledge_202,Ledge_203,Ledge_204,Ledge_205,Ledge_207,Ledge_301,Ledge_302,Ledge_303,Ledge_304,Ledge_305,Ledge_306,Ledge_307,Ledge_406</Rooms>
+  <Rooms zoneId="Ledge" miniMapId="NoMap" scale="65" musicZoneId="UnderwaterCliffs">Ledge_6</Rooms>
+  <Rooms zoneId="nullChamber1" miniMapId="NoMap" scale="50" musicZoneId="nullChambers">nullChamber1_1</Rooms>
+  <Rooms zoneId="Throne" miniMapId="Throne" scale="50" musicZoneId="CoatlThroneRoom">Throne_1</Rooms>
+  <Rooms zoneId="Sealab" miniMapId="NoMap" scale="75" musicZoneId="UndewaterCaves">Sealab_1,Sealab_2,Sealab_102,Sealab_103,Sealab_203,Sealab_204,Sealab_304,Sealab_305,Sealab_401,Sealab_402,Sealab_403,Sealab_405,Sealab_406,Sealab_506,Sealab_507</Rooms>
+  <Rooms zoneId="Sealab" miniMapId="NoMap" scale="40" musicZoneId="SealabXBoss">Sealab_106</Rooms>
+  <Rooms zoneId="Sealab" miniMapId="Sealab" scale="50" musicZoneId="SealabX">Sealab_603,Sealab_604,Sealab_605,Sealab_606,Sealab_701,Sealab_702,Sealab_703,Sealab_704,Sealab_705,Sealab_706,Sealab_801,Sealab_802,Sealab_803,Sealab_804,Sealab_805,Sealab_806,Sealab_901,Sealab_902,Sealab_903,Sealab_904,Sealab_905,Sealab_906,Sealab_1001,Sealab_1002,Sealab_1003,Sealab_1004,Sealab_1005,Sealab_1006</Rooms>
+  <Rooms zoneId="Ninja" miniMapId="NoMap" scale="50" musicZoneId="ZenGarden">Ninja_1</Rooms>
+  <Rooms zoneId="Sewers" miniMapId="Sewers" scale="75" musicZoneId="BartonSubway">Sewers_2,Sewers_3,Sewers_5,Sewers_6,Sewers_102,Sewers_103,Sewers_104,Sewers_105,Sewers_106,Sewers_107,Sewers_202,Sewers_203,Sewers_204,Sewers_205,Sewers_206,Sewers_207,Sewers_301,Sewers_302,Sewers_303,Sewers_304,Sewers_305,Sewers_306,Sewers_402,Sewers_403,Sewers_404,Sewers_405,Sewers_406</Rooms>
+  <Rooms zoneId="TrainStation" miniMapId="TrainStation" scale="75" musicZoneId="Training">TrainStation_1</Rooms>
+  <Rooms zoneId="Training" miniMapId="Training" scale="75" musicZoneId="Training">Training_1</Rooms>
+  <Rooms zoneId="Training" miniMapId="Training" scale="75" musicZoneId="notAssigned">Training_2,Training_3,Training_4,Training_5</Rooms>
+  <Rooms zoneId="Bar" miniMapId="Bar" scale="50" musicZoneId="Barton">Bar_1</Rooms>
+  <Rooms zoneId="SewersTraining" miniMapId="SewersTraining" scale="75" musicZoneId="BartonSubway">SewersTraining_1,SewersTraining_101</Rooms>
+  <Rooms zoneId="SewersTraining" miniMapId="NoMap" scale="75" musicZoneId="BartonSubway">SewersTraining_103</Rooms>
+  <Rooms zoneId="KatsumisDoll" miniMapId="NoMap" scale="75" musicZoneId="KatsumisDoll">KatsumisDoll_1</Rooms>
+  <Rooms zoneId="WolfDen" miniMapId="NoMap" scale="50" musicZoneId="WolfDen">WolfDen_1</Rooms>
+  <Rooms zoneId="SawMill" miniMapId="NoMap" scale="60" musicZoneId="SawMill">SawMill_1</Rooms>
+  <Rooms zoneId="DuneSlam" miniMapId="NoMap" scale="50" musicZoneId="DuneslamIsland">DuneSlam_1</Rooms>
+  <Rooms zoneId="TestIsland1" miniMapId="NoMap" scale="75" musicZoneId="Barton">TestIsland1_1,TestIsland1_2,TestIsland1_3,TestIsland1_4,TestIsland1_5,TestIsland1_6,TestIsland1_7,TestIsland1_101,TestIsland1_102,TestIsland1_103,TestIsland1_104,TestIsland1_105,TestIsland1_106,TestIsland1_107,TestIsland1_201,TestIsland1_202,TestIsland1_203,TestIsland1_204,TestIsland1_205,TestIsland1_206,TestIsland1_207,TestIsland1_301,TestIsland1_302,TestIsland1_303,TestIsland1_304,TestIsland1_305,TestIsland1_306,TestIsland1_307,TestIsland1_401,TestIsland1_402,TestIsland1_403,TestIsland1_404,TestIsland1_405,TestIsland1_406,TestIsland1_407,TestIsland1_501,TestIsland1_502,TestIsland1_503,TestIsland1_504,TestIsland1_505,TestIsland1_506,TestIsland1_507,TestIsland1_601,TestIsland1_602,TestIsland1_603,TestIsland1_604,TestIsland1_605,TestIsland1_606,TestIsland1_607,TestIsland1_701,TestIsland1_702,TestIsland1_703,TestIsland1_704,TestIsland1_705,TestIsland1_706,TestIsland1_707,TestIsland1_801,TestIsland1_802,TestIsland1_803,TestIsland1_804,TestIsland1_805,TestIsland1_806,TestIsland1_807,TestIsland1_901,TestIsland1_902,TestIsland1_903,TestIsland1_904,TestIsland1_905,TestIsland1_906,TestIsland1_907,TestIsland1_1001,TestIsland1_1002,TestIsland1_1003,TestIsland1_1004,TestIsland1_1005,TestIsland1_1006,TestIsland1_1007</Rooms>
+  <Rooms zoneId="Under" miniMapId="NoMap" scale="50" musicZoneId="Undermountain">Under_1,Under_2,Under_5,Under_7,Under_101,Under_203,Under_205,Under_207,Under_401,Under_403,Under_405,Under_407,Under_601,Under_603,Under_605,Under_607,Under_801,Under_803,Under_805,Under_807,Under_1001,Under_1003,Under_1005,Under_1007</Rooms>
+  <Rooms zoneId="Village_Training" miniMapId="VillageTraining" scale="75" musicZoneId="Village">VillageTraining_1,VillageTraining_2</Rooms>
+  <Rooms zoneId="VillageGeneral" miniMapId="NoMap" scale="100" musicZoneId="Village">VillageGeneral_1</Rooms>
+  <Rooms zoneId="BartonColiseum" miniMapId="BartonColiseum" scale="50" musicZoneId="Barton">BartonColiseum_1</Rooms>
+  <Rooms zoneId="Under2" miniMapId="NoMap" scale="50" musicZoneId="Undermountain2">Under2_5,Under2_7,Under2_203,Under2_205,Under2_207,Under2_401,Under2_403,Under2_405,Under2_407,Under2_601,Under2_603,Under2_605,Under2_607,Under2_801,Under2_803,Under2_805,Under2_807,Under2_1001,Under2_1003,Under2_1005,Under2_1007</Rooms>
+  <Rooms zoneID="Under3" miniMapId="NoMap" scale="100" musicZoneId="Undermountain3">Under3_1,Under3_2,Under3_3,Under3_5,Under3_6,Under3_105,Under3_106</Rooms>
+  <Rooms zoneID="Under4" miniMapId="NoMap" scale="50" musicZoneId="Undermountain4">Under4_1,Under4_2,Under4_3,Under4_5,Under4_6,Under4_105,Under4_106</Rooms>
+  <Rooms zoneID="Under5" miniMapId="NoMap" scale="50" musicZoneId="Undermountain5">Under5_1</Rooms>
+
+</MapsInfo>

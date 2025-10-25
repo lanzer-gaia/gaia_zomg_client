@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="cc-antBootStrapper" basedir="." default="default">
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties"/> 	
+
+	<target name="bootstrapMain">
+		<exec executable="cmd">
+			<arg value="/c"/>
+			<arg value="svn"/>
+			<arg value="revert"/>
+			<arg value="--recursive"/>
+			<arg value="--quiet"/>			
+			<arg value="${svnClientPath}/*"/>
+			<arg value="--non-interactive"/>						
+		</exec>				
+		<exec executable="svn">
+			<arg value="co"/>
+			<arg value="--force"/>
+			<arg value="--revision"/>
+			<arg value="HEAD"/>
+			<arg value="${svnPath}"/>
+			<arg value="${svnClientPath}"/>			
+			<arg value="--non-interactive"/>			
+		</exec>
+
+		<exec executable="cmd">
+			<arg value="/c"/>
+			<arg value="svn"/>
+			<arg value="revert"/>
+			<arg value="--recursive"/>
+			<arg value="--quiet"/>			
+			<arg value="${svnSwcsClientPath}/*"/>
+			<arg value="--non-interactive"/>						
+		</exec>
+
+		<exec executable="svn">
+			<arg value="co"/>
+			<arg value="--force"/>
+			<arg value="--revision"/>
+			<arg value="HEAD"/>
+			<arg value="${svnSwcsPath}"/>
+			<arg value="${svnSwcsClientPath}"/>			
+			<arg value="--non-interactive"/>			
+		</exec>
+		
+		<condition property="doSyncHangoutSrc">
+			<equals arg1="${syncHangoutSrc}" arg2="true"/>
+		</condition>
+		
+		<condition property="doSyncBattleSrc">
+			<equals arg1="${syncBattleSrc}" arg2="true"/>
+		</condition>
+		<condition property="doSyncAs3Src">
+			<equals arg1="${syncAs3Src}" arg2="true"/>
+		</condition>
+		<condition property="doSyncModulesSrc">
+			<equals arg1="${syncModulesSrc}" arg2="true"/>
+		</condition>
+		<condition property="doSyncRegistrationSrc">
+			<equals arg1="${syncRegistrationSrc}" arg2="true"/>
+		</condition>
+	</target>
+	
+	<target name="bootstrapBattleSrc" if="doSyncBattleSrc">
+		<exec executable="cmd">
+			<arg value="/c"/>
+			<arg value="svn"/>
+			<arg value="revert"/> 
+			<arg value="--recursive"/>
+			<arg value="--quiet"/>			
+			<arg value="${srcRoot}/project_as3/mmo/Battle/src/*"/>
+			<arg value="--non-interactive"/>						
+		</exec>
+		<exec executable="svn">
+			<arg value="co"/>
+			<arg value="--force"/>
+			<arg value="--revision"/>
+			<arg value="HEAD"/>
+			<arg value="${svnBasePath}/project_as3/mmo/Battle/src"/>
+			<arg value="${srcRoot}/project_as3/mmo/Battle/src"/>
+			<arg value="--non-interactive"/>			
+		</exec>		
+	</target>
+
+	<target name="bootstrapHangoutSrc" if="doSyncHangoutSrc">
+		<exec executable="cmd">
+			<arg value="/c"/>
+			<arg value="svn"/>
+			<arg value="revert"/> 
+			<arg value="--recursive"/>
+			<arg value="--quiet"/>			
+			<arg value="${srcRoot}/project_as3/mmo/HangoutPlatform/*"/>
+			<arg value="--non-interactive"/>						
+		</exec>
+		<exec executable="svn">
+			<arg value="co"/>
+			<arg value="--force"/>
+			<arg value="--revision"/>
+			<arg value="HEAD"/>
+			<arg value="${svnBasePath}/project_as3/mmo/HangoutPlatform"/>
+			<arg value="${srcRoot}/project_as3/mmo/HangoutPlatform"/>
+			<arg value="--non-interactive"/>
+		</exec>			
+	</target>
+	
+	<target name="bootstrapAs3Src" if="doSyncAs3Src">
+		<exec executable="cmd">
+			<arg value="/c"/>
+			<arg value="svn"/>
+			<arg value="revert"/>
+			<arg value="--recursive"/>
+			<arg value="--quiet"/>			
+			<arg value="${srcRoot}/project_as3/src/*"/>
+			<arg value="--non-interactive"/>						
+		</exec>
+		<exec executable="svn">
+			<arg value="co"/>
+			<arg value="--force"/>
+			<arg value="--revision"/>
+			<arg value="HEAD"/>
+			<arg value="${svnBasePath}/project_as3/src"/>
+			<arg value="${srcRoot}/project_as3/src"/>
+			<arg value="--non-interactive"/>
+		</exec>				
+	</target>
+
+	<target name="bootstrapModulesSrc" if="doSyncModulesSrc">
+		<exec executable="cmd">
+			<arg value="/c"/>
+			<arg value="svn"/>
+			<arg value="revert"/>
+			<arg value="--recursive"/>
+			<arg value="--quiet"/>			
+			<arg value="${srcRoot}/project_as3/site/flexModules/*"/>
+			<arg value="--non-interactive"/>						
+		</exec>
+		<exec executable="svn">
+			<arg value="co"/>
+			<arg value="--force"/>
+			<arg value="--revision"/>
+			<arg value="HEAD"/>
+			<arg value="${svnBasePath}/project_as3/site/flexModules"/>
+			<arg value="${srcRoot}/project_as3/site/flexModules"/>
+			<arg value="--non-interactive"/>
+		</exec>				
+	</target>
+
+	<target name="bootstrapRegistrationSrc" if="doSyncRegistrationSrc">
+		<exec executable="cmd">
+			<arg value="/c"/>
+			<arg value="svn"/>
+			<arg value="revert"/>
+			<arg value="--recursive"/>
+			<arg value="--quiet"/>			
+			<arg value="${srcRoot}/project_as3/site/registration/*"/>
+			<arg value="--non-interactive"/>						
+		</exec>
+		<exec executable="svn">
+			<arg value="co"/>
+			<arg value="--force"/>
+			<arg value="--revision"/>
+			<arg value="HEAD"/>
+			<arg value="${svnBasePath}/project_as3/site/registration"/>
+			<arg value="${srcRoot}/project_as3/site/registration"/>
+			<arg value="--non-interactive"/>
+		</exec>				
+	</target>
+
+	<target name="default" depends="bootstrapMain, bootstrapBattleSrc, bootstrapAs3Src, bootstrapModulesSrc, bootstrapHangoutSrc, bootstrapRegistrationSrc"/>
+</project>

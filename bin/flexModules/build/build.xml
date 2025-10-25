@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <!-- Generic module build script -->   
+ <project name="${moduleRootDir}Module" default="default">
+ 	<property name="flexMainBinDir" location="${flexFrameworkDir}/bin"/> 
+ 	<property name="compc" location="${flexMainBinDir}/${compcExecutable}"/>
+ 	<property name="mxmlc" location="${flexMainBinDir}/${mxmlcExecutable}"/> 	 	 	
+	<property name="SharedModulesRootLoc" location="${SharedModulesRoot}"/>			
+	 	
+     <!--Building the main swf-->
+     <target name="buildSWF">
+     	<!--Don't fail on error.  Let the target that greps for Warnings and Failures do that.-->
+     	<property name="moduleRootDir" location="${SharedModulesRoot}/${baseFileName}"/>
+			 
+       <exec executable="${mxmlc}" dir="${flexMainBinDir}" failonerror="false">
+				<arg value="${moduleRootDir}/${baseFileName}.mxml"/> 
+          	<arg value="-output=${output}"/>
+           	<arg value="-load-config=${moduleRootDir}/build-config.xml"/>
+           	<arg value="-compiler.debug=${debugBuild}"/>
+			<arg value="-load-externs=${linkReport}"/>
+
+   			<!--Output so we can check for warnings or errors-->
+				<redirector output="compilerLog"/>
+        </exec>
+	 	<loadfile srcfile="compilerLog" property="compilerLog"/>
+ 		<echo message="${compilerLog}"/>
+ 		     	
+     	<!--Check for warnings or errors-->
+     	<antcall target="failOnWarningOrError">
+     		<param name="compilerLogName" value="compilerLog"/>
+     	</antcall>
+     </target>  
+
+ 	<target name="failOnWarningOrError">
+ 		<!--save the output in case there's an error and we want to output it-->
+ 		<loadfile srcfile="${compilerLogName}" property="compilerLog"/>
+ 		
+	 	<loadfile srcfile="${compilerLogName}" property="generatedWarning">
+			<filterchain>
+	 		    <linecontainsregexp>
+<!--
+	 		      <regexp pattern="Warning:|Error:" />
+-->
+	 		      <regexp pattern="Error:" />
+	 		    </linecontainsregexp>
+			</filterchain>
+		</loadfile>
+ 		
+	 	<fail if="generatedWarning" message="${compilerLog}"/>
+ 	</target>
+ 		
+ 	    
+     <!--The target that we try to build.  Change the depends value to one of the targets above to switch what you build.-->
+     <target name="default" depends="buildSWF"/> 
+ </project>

@@ -1,0 +1,211 @@
+/*
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING,
+ * BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ * PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * @license FREEWARE
+ * @copyright (c) 2003 sephiroth.it
+ *
+ * PHPSerializerClass is the base class for retreiving complex data type
+ * from and to PHP pages using the built-in serializer/unserializer
+ * php functions
+ * Thanks to Rainer Becker [rainer.becker@pixelmotive.de] for the string bug fixing
+ * Gavril Tarasoff for PHP5 stdObject addition
+ *
+ * @project : serializer
+ * @file :    PHPSerializer
+ * @author :  Alessandro Crugnola- alessandro@sephiroth.it/ www.sephiroth.it
+ * @version  $Id: PHPSerializer.as,v 1.19 2006/04/19 08:37:45 sephiroth_tmm Exp $
+ *
+*/
+package com.gaiaonline.serializers
+{
+	import mx.utils.StringUtil;
+	import flash.display.MovieClip;
+	
+	public class PHPSerializer
+	{
+		public static const encodeName: String = "phpobject";
+	    public static var enableMultiByte:Boolean;
+	
+	    // **************************
+	    // serialize
+	    // **************************
+	    public static function serialize(o:Object):String
+	    {
+	        return $_parseValue(o);
+	    }
+	
+	    // **************************
+	    // unserialize
+	    // **************************
+	    public static function unserialize(s:String):Object
+	    {
+	        return $_getValue( StringUtil.trim(s) )[0];
+	    }
+	    
+	    // **************************
+	    // get label and value
+	    // **************************
+	    private static function $_getNext(s:String):Array
+	    {
+	        var v:Array	= $_getValue(s);
+	        s = v[1];
+	        var d:Array	= $_getValue(s);
+	        s = d[1];
+	        return [v[0], d[0], s];
+	    }
+	
+	    // *****************************
+	    // parse the data
+	    // *****************************
+	    private static function $_getValue(s:String):Array
+	    {
+	        var len;
+	        var a;
+	        var t: String = s.charAt(0); // ** what is the type? **
+	        switch (t)
+	        {
+	            case 's' :
+	            	var sLen: String = s.substr(2, s.indexOf(':', 3)-2);
+	                len = parseInt(sLen);
+	                a = s.substr(sLen.length + 4, len);
+	                if (enableMultiByte)
+	                {
+	                    a = unescape(a); // ** to support multibyte strings **
+	                }
+	                // ** cast into a string **
+	                break;
+	            case 'i' :
+	                len = Number(s.substr(2, s.indexOf(';', 3)-2));
+	                a = parseInt(len);
+	                // ** cast into an integer **
+	                break;
+	            case 'd' :
+	                len = Number(s.substr(2, s.indexOf(';', 3)-2));
+	                a = parseFloat(len);
+	                // ** cast into a float **
+	                break;
+	            case 'b' :
+	                len = Number(s.substr(2, s.indexOf(';', 3)-2));
+	                a = ((len == "true") || (len == "1")) ? true : false;
+	                // ** cast into a boolean **
+	                break;
+	            case 'a' :
+	            case 'O' :
+	                len = Number(s.substr(2, s.indexOf(':', 3)-2));
+	                if (t == 'a')
+	                {
+	                    a = [];
+	                    s = s.substr(s.indexOf(len));
+	                }
+	                else
+	                {
+	                    a = {};
+	                    s = s.substr(length(s.substr(length(len)+4, len))+s.indexOf(s.substr(length(len)+4, len))+2);
+	                }
+	                var j = Number((s.substr(0, s.indexOf(':')))); // ** object length **
+	                var i = 0; // ** counter **
+	                s = s.substr(s.indexOf(':')+2);
+	                while (i<j)
+	                {
+	                    var v = $_getNext(s);
+	                    s = v[2];
+	                    a[v[0]] = v[1];
+	                    i++;
+	                }
+	                return [a, s.substr(s.indexOf("}")+1)];
+	            case 'N' :
+	                a = null;
+	                len = "";
+	                s = s.substr(1);
+	        }
+	        if (t != "s")
+	        {
+	            len = length(len);
+	        }
+	        s = s.substr(s.indexOf(";", len)+1);
+	        return [a, s];
+	    };
+	    
+	    // **************************
+	    // Get type of variable,
+	    // its length and the value
+	    // **************************
+	    private static function $_parseValue(v):String
+	    {
+	    	if (v is MovieClip) v.__proto__ = Object.prototype;
+	    	
+	        switch (v.__proto__)
+	        {
+	            case Array.prototype :
+	             var arrayValue="";
+	                for (var i=0; i< v.length; i++)
+	                {
+	                   var name = $_parseValue (i);
+	                   // arrayValue += name add $_parseValue (v[i]);
+						arrayValue += name + $_parseValue (v[i]);
+	                }
+	                return "a:" + i + ":{" + arrayValue + "}";                
+	                
+	            case Object.prototype :
+	                var i=0, arrayValue="";
+	                for (var a in v)
+	                {
+	                    if (typeof(v[a]) != "function")
+	                    {
+	                        var name = $_parseValue (a);
+	                        var value = $_parseValue (v[a]);
+	                      //  arrayValue += name add value;
+						  arrayValue += name + value;
+	                        i++;
+	                    }
+	                }
+	                return "O:8:\"stdClass\":" + i + ":{" + arrayValue + "}";
+	                
+	            case String.prototype :
+	                if (enableMultiByte)
+	                {
+	                    v = escape(v); // ** to support multibyte strings **
+	                }
+	            case undefined:	// ** variables (and elements in arrays) in flash can be 'undefined' **
+	            case Date.prototype :
+	                return "s:" + length (v) + ":\"" + (v) + "\";";
+	    
+	            case Number.prototype :
+	                if (isNaN(v))
+	                {
+	                    return "N;";
+	                }
+	                else
+	                {
+	                    v = Number (v);
+	                    if (v % 1 == 0)
+	                    {
+	                        return "i:" + v + ";";
+	                    }
+	                    return "d:" + v + ";";
+	                }
+	    
+	            case Boolean.prototype :
+	                return "b:" + (v == true ? 1 : 0) + ";";
+	    
+	            default: 
+	                return null;
+	        }
+	    }
+	    
+	    protected static function length(val): int
+	    {
+	    	var s: String = String(val);
+	    	return s.length;
+	    }
+	
+	}
+
+}

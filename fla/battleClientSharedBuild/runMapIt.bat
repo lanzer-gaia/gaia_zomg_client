@@ -1,0 +1,1 @@
+adl "c:\program files\CruiseControl\battleMapsRoot\project_as3\mmo\Battle\fla\maps\BattleMapItTool2\bin-debug\BattleMapItTool2-app.xml" -- "c:\program files\CruiseControl\battleMapsRoot\project_as3\mmo\Battle\bin\maps" "c:\program files\cruisecontrol\mapsinfo"

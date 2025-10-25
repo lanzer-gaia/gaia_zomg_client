@@ -1,0 +1,14 @@
+/* CSS file */
+.muteButtonUnmuted{
+	upSkin: Embed("../../flexAssets/uiAssets.swf#target_voiceon_up");
+	overSkin: Embed("../../flexAssets/uiAssets.swf#target_voiceon_up");
+	downSkin: Embed("../../flexAssets/uiAssets.swf#target_voiceon_up");	
+	disabledSkin: Embed("../../flexAssets/uiAssets.swf#target_voiceon_up");
+}
+
+.muteButtonMuted{
+	upSkin: Embed("../../flexAssets/uiAssets.swf#target_voiceoff_up");
+	overSkin: Embed("../../flexAssets/uiAssets.swf#target_voiceoff_up");
+	downSkin: Embed("../../flexAssets/uiAssets.swf#target_voiceoff_up");	
+	disabledSkin: Embed("../../flexAssets/uiAssets.swf#target_voiceoff_up");
+}

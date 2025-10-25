@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MapsInfo>
+  <GlobalMapInfo xscale="1.25" yscale="2.50"/>
+  
+  <ZonesInfo>
+  <Zone id="dryrun" name="Dry Run" swf="dryrun" startRoom="dryrun_2" areaname="dryrun">
+	<SplashScreen url="splashscreen/villageTraining.jpg"/>
+  </Zone>
+
+    
+  </ZonesInfo>
+  
+  <MimiMapsInfo>      
+    <MiniMap id="NoMap" file="nomap.jpg" scale="5" showGlobal="0" showLocal="0">
+      <GlobalPos x="0" y="0"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+  </MimiMapsInfo>
+  
+  <MusicZones>
+  <Zone id="dryrun">
+  	<Combat/>      <Normal><Song title="Testing Dry Run" file="thesawmill.aem"/>
+  	</Normal>
+  </Zone>
+
+ </MusicZones>
+ 
+	<Rooms zoneId="dryrun" miniMapId="dryrun" scale="75" musicZoneId="dryrun">dryrun_1,dryrun_2</Rooms>
+ 
+</MapsInfo>

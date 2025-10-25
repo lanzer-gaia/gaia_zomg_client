@@ -1,0 +1,1 @@
+﻿package com.gaiaonline.battle.ui{	import flash.display.MovieClip;	public class UiOptions extends MovieClip	{		public var preRender:UiCheckBox;				public function UiOptions():void		{			super();		}			}}

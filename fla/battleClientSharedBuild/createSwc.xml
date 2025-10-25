@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <project name="createSwc" default="default">
+ 
+	<condition property="rootDir" value="${setRootDir}" else="${ant.file}/../.." >
+		<isset property="setRootDir"/>
+	</condition>
+	<condition property="As3SrcRoot" value="${setAs3SrcRoot}" else="${syncRoot}/../${srcRoot}/project_as3/src" >
+		<isset property="setAs3SrcRoot"/>
+	</condition>
+	<property name="As3SrcRootLoc" location="${As3SrcRoot}"/>
+	<property name="frameworkRootLoc" location="${As3SrcRoot}/../site/sharedBuild/2.0.1/frameworks"/>
+	<condition property="BattleSrcRoot" value="${setBattleSrcRoot}" else="${syncRoot}/../${srcRoot}/project_as3/mmo/Battle/src" >
+		<isset property="setBattleSrcRoot"/>
+	</condition>
+	<property name="BattleSrcRootLoc" location="${BattleSrcRoot}"/>
+	<condition property="propertyFileName" value="${setPropertyFileName}" else="${rootDir}/battleMain/build/swcBuildMachineBuild.properties">
+		<isset property="setPropertyFileName"/>
+	</condition>
+
+ 	<property name="buildRootLoc" location="${buildRoot}"/>		
+	<property name="flaPathLoc" location="${flaPath}"/>
+	<basename file="${flaPathLoc}" property="filename" suffix="fla"/>
+	<dirname file="${flaPathLoc}" property="dirname"/>	
+
+	<target name="getTopLevelClasses">
+		<delete file="${buildRootLoc}/getTopLevelLinkageClasses.jsfl"/>
+ 		<copy file="${buildRootLoc}/getTopLevelLinkageClasses_template.jsfl" tofile="${buildRootLoc}/getTopLevelLinkageClasses.jsfl" overwrite="true" failonerror="true"/>
+		<waitfor maxwait="60" maxwaitunit="second">
+			<available file="${buildRootLoc}/getTopLevelLinkageClasses.jsfl"/>
+		</waitfor>
+		<replace file="${buildRootLoc}/getTopLevelLinkageClasses.jsfl">
+			<replaceFilter token="%FLAPATH%" value="file:///${flaPathLoc}"/>
+			<replaceFilter token="%OUTPUTFILE%" value="file:///${buildRootLoc}/TopLevelClasses.xml"/>
+			<replaceFilter token="%MANIFESTLOC%" value="file:///${BattleSrcRootLoc}/manifest.xml"/>					
+			<replaceFilter token="%FORMAT%" value="spaces"/>						
+			<replaceFilter token="\" value="/"/>
+			<replaceFilter token='/"' value='\"'/>
+			<replaceFilter token='/n' value='\n'/>						
+			<replaceFilter token='/t' value='\t'/>												
+		</replace>
+
+		<waitfor maxwait="60" maxwaitunit="second">
+			<available file="${buildRootLoc}/getTopLevelLinkageClasses.jsfl"/>
+		</waitfor>
+		
+		<exec executable="cmd" dir=".">		
+			<arg value="/c"/>
+			<arg value="${buildRootLoc}/getTopLevelLinkageClasses.jsfl" />
+		</exec>
+	</target>
+
+	<target name="compileBattleAsSwcWithTopLevels">
+		<antcall target="compileSwc">
+			<param name="linkReportFileName" value="linkReport.xml"/>
+		</antcall>
+	</target>
+
+	<target name="convertLinkReport">
+ 		<copy file="${buildRootLoc}/convertLinkReport_template.jsfl" tofile="${buildRootLoc}/convertLinkReport.jsfl" overwrite="true"/>
+		<replace file="${buildRootLoc}/convertLinkReport.jsfl">
+			<replaceFilter token="%TOPLEVELCLASSESLOC%" value="file:///${buildRootLoc}/TopLevelClasses"/>
+			<replaceFilter token="%LINKREPORTLOC%" value="file:///${buildRootLoc}/linkReport.xml"/>
+			<replaceFilter token="%MANIFESTLOC%" value="file:///${BattleSrcRootLoc}/manifest.xml"/>		
+			<replaceFilter token="%FORMAT%" value="spaces"/>						
+
+			<replaceFilter token="\" value="/"/>
+			<replaceFilter token='/"' value='\"'/>
+			<replaceFilter token='/n' value='\n'/>						
+			<replaceFilter token='/t' value='\t'/>									
+		</replace>
+
+		<exec executable="cmd" dir=".">		
+			<arg value="/c"/>
+			<arg value="${buildRootLoc}/convertLinkReport.jsfl" />
+		</exec>
+	</target>
+
+	<target name="compileBattleAsSwcWithDependencies">
+		<antcall target="compileSwc">
+			<param name="linkReportFileName" value="doNotUseMe"/>
+		</antcall>
+	</target>
+
+	<target name="compileSwc">
+		<property name="outputDirEcho" location="${rootDir}/../swcs"/>					
+  		<ant antfile="${rootDir}/battleMain/build/build.xml" dir="." target="buildAsSwc">
+			<property file="${propertyFileName}"/>
+			<property name="swcBaseName" value="${filename}"/>
+			<property name="As3SrcRootLoc" location='"${As3SrcRootLoc}"'/>
+			<property name="BattleSrcRootLoc" location='"${BattleSrcRootLoc}"'/>
+			<property name="outputDir" location="${rootDir}/../swcs"/>			
+			<property name="linkReport" location="${buildRootLoc}/${linkReportFileName}"/>
+			<property name="externalLibraryPath" value="${frameworkRootLoc}/libs/playerglobal.swc"/>
+			<property name="swcsLibraryPath" location="${rootDir}/../swcs/assets"/>
+			<property name="namespaceUri" value="http://gaiaonline.com/2008"/>
+			<property name="manifestLoc" value='"${BattleSrcRootLoc}\manifest.xml"'/>			
+			<property name="sourcePath" value="'${As3SrcRoot}' '${BattleSrcRootLoc}' '${As3SrcRoot}\..\site\sharedBuild\CS3_AS3_Classes'"/>
+		</ant>
+	</target>
+	
+	<target name="default" depends="getTopLevelClasses, compileBattleAsSwcWithTopLevels, convertLinkReport, compileBattleAsSwcWithDependencies"/>
+</project>

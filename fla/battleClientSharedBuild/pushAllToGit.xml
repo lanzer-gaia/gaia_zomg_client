@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <project name="pushAllToGit" default="default">
+
+   <taskdef name="stringutil" classname="ise.antelope.tasks.StringUtilTask"/>
+	<taskdef name="math" classname="ise.antelope.tasks.MathTask"/>	
+ 	<taskdef resource="net/sf/antcontrib/antcontrib.properties"/>	
+ 	
+ 	<property name="rootDir" location="${battleBinCopyRoot}"/>
+	<property name="guestRootLoc" location="${guestRoot}"/>
+ 	<property name="guestBinDirLoc" location="${guestBinCopyRoot}"/>	
+
+	<target name="cleanDir">
+		<delete quiet="true" includeemptydirs="true" dir="${dir}"/>
+		<sleep seconds="5"/>
+		<mkdir dir="${dir}"/>		
+	</target>
+	<target name="clean">
+		<antcall target="cleanDir">
+		  <param name="dir" value="${rootDir}"/>
+		</antcall>
+		
+	  <antcall target="cleanDir">
+		  <param name="dir" value="${guestBinDirLoc}"/>
+		</antcall>
+	</target>
+
+	<target name="doSync">
+		<exec executable="svn">
+			<arg value="co"/>
+			<arg value="--force"/>
+			<arg value="--revision"/>
+			<arg value="HEAD"/>
+			<arg value="${syncSvnPath}"/>						
+			<arg value="${clientWorkspacePath}"/>
+			<arg value="--non-interactive"/>			
+		</exec>		
+	</target>
+	
+	<target name="syncFiles">
+		<antcall target="doSync">
+			<param name="syncSvnPath" value="${svnBasePath}/project_as3/mmo/Battle/bin"/>
+			<param name="clientWorkspacePath" value="${rootDir}"/>			
+		</antcall>
+
+		<antcall target="doSync">
+			<param name="syncSvnPath" value="${svnBasePath}/project_as3/site/registration/production"/>
+			<param name="clientWorkspacePath" value="${guestBinDirLoc}"/>			
+		</antcall>		
+	</target>
+
+	<target name="getSVNInfo">
+		<!-- This stuff should have already been taken care of by the push.xml script, and since *that* script
+		does a check-in, we don't want to get the current revision number;we want the one the other
+		script wrote out. -->
+		<!--
+ 		<exec executable="cmd" dir="${rootDir}">
+ 			<arg value="/c"/>
+ 			<arg value="svn"/>
+ 			<arg value="info"/>
+ 			<redirector output="svnInfo"/>
+ 		</exec> 
+
+		<loadfile srcFile="svnInfo" property="svnRevisionNumberString">
+			<filterchain>
+	 		    <linecontainsregexp>
+	 		      <regexp pattern="Revision:" />
+	 		    </linecontainsregexp>
+			</filterchain>			
+		</loadfile>
+
+		<stringutil string="${svnRevisionNumberString}" property="len">
+			<length/>
+		</stringutil>
+		<math result="result" operand1="${len}" operation="-" operand2="1" datatype="int"/>		
+		<stringutil string="${svnRevisionNumberString}" property="svnRevisionNumber">
+			<substring beginindex="10" endindex="${result}"/>
+		</stringutil>
+
+		<echo message="${svnRevisionNumber}" file="revision.txt"/>
+-->
+		<loadfile srcFile="revision.txt" property="svnRevisionNumberString">
+		</loadfile>
+	</target>
+
+	<target name="pushFiles">
+		<exec executable="plink" dir=".">
+			<arg value="-batch"/>			
+			<arg value="autobuild@d.gaiaonline.com"/>
+			<arg value="mkdir ${remoteLoc}"/>
+		</exec>
+
+		<exec executable="plink" dir=".">
+			<arg value="-batch"/>			
+			<arg value="autobuild@d.gaiaonline.com"/>
+			<arg value="cd ${remoteLoc}; rm -rf ${remoteLoc}/*"/>
+		</exec>
+
+		<exec executable="pscp" dir=".">
+			<arg value="-batch"/>			
+			<arg value="-r"/>
+			<arg value="${localLoc}\*"/>
+			<arg value="autobuild@d.gaiaonline.com:${remoteLoc}"/>
+		</exec>
+	</target>
+
+	<target name="archive">
+		<if>
+			<equals arg1="${archive}" arg2="true"/>
+			<then>
+					<exec executable="plink" dir=".">
+						<arg value="-batch"/>
+						<arg value="autobuild@d.gaiaonline.com"/>
+						<arg value="mkdir /home/autobuild/${archiveRoot}/${svnRevisionNumberString}; cp -R ~/${battleBinScpLoc}/* /home/autobuild/${archiveRoot}/${svnRevisionNumberString}"/>			
+					</exec>
+				</then>
+		</if>
+	</target>
+	<target name="copy">
+		<exec executable="pscp" dir=".">
+			<arg value="-batch"/>
+			<arg value="${sharedBuildDir}\push_to_git.sh"/>
+			<arg value="autobuild@d.gaiaonline.com:"/>			
+		</exec>
+
+		<exec executable="pscp" dir=".">
+			<arg value="-batch"/>
+			<arg value="${sharedBuildDir}\tag_git.sh"/>
+			<arg value="autobuild@d.gaiaonline.com:"/>			
+		</exec>
+		
+		<exec executable="pscp" dir=".">
+			<arg value="-batch"/>			
+			<arg value="${sharedBuildDir}\clean_git.sh"/>
+			<arg value="autobuild@d.gaiaonline.com:"/>			
+		</exec>
+
+		<exec executable="pscp" dir=".">
+			<arg value="-batch"/>
+			<arg value="${sharedBuildDir}\createSymLink.sh"/>
+			<arg value="autobuild@d.gaiaonline.com:"/>			
+		</exec>
+		
+		<exec executable="plink" dir=".">
+			<arg value="-batch"/>
+			<arg value="autobuild@d.gaiaonline.com"/>
+			<arg value="chmod 755 ~/push_to_git.sh"/>			
+		</exec>
+
+		<exec executable="plink" dir=".">
+			<arg value="-batch"/>
+			<arg value="autobuild@d.gaiaonline.com"/>
+			<arg value="chmod 755 ~/tag_git.sh"/>			
+		</exec>
+		
+		<exec executable="plink" dir=".">
+			<arg value="-batch"/>			
+			<arg value="autobuild@d.gaiaonline.com"/>
+			<arg value="chmod 755 ~/clean_git.sh"/>			
+		</exec>
+		
+		<exec executable="plink" dir=".">
+			<arg value="-batch"/>			
+			<arg value="autobuild@d.gaiaonline.com"/>
+			<arg value="chmod 755 ~/createSymLink.sh"/>			
+		</exec>		
+
+		 <exec executable="cmd" dir="${rootDir}">
+			<arg value="/c"/>
+			<arg value="removeSVNDir.cmd"/>
+		</exec>
+
+		<move file="${rootDir}\Battle.swf" tofile="${rootDir}\battle_renameme.swf"/>
+		<delete file="${rootDir}\battle.swf"/>
+		<move file="${rootDir}\battle_renameme.swf" tofile="${rootDir}\battle.swf"/>		
+
+
+		<delete quiet="true" includeemptydirs="true">
+		  <fileset dir="${rootDir}" includes="*-debug*,BattleMaster*,Battle.html,MonsterPlayer*,RingPlayer*,UiExemple*,*.exe,bm.swf" />
+		</delete>
+
+		<delete quiet="true" includeemptydirs="true">
+		  <fileset dir="${guestBinDirLoc}" includes="**.html"/>
+		</delete>
+		
+		<antcall target="pushFiles">
+			<param name="remoteLoc" value="/home/autobuild/${battleBinScpLoc}"/>
+			<param name="localLoc" value="${rootDir}"/>			
+		</antcall>
+
+		<antcall target="pushFiles">
+			<param name="remoteLoc" value="/home/autobuild/${guestBinScpLoc}"/>
+			<param name="localLoc" value="${guestBinDirLoc}"/>
+		</antcall>
+
+		<exec executable="pscp" dir=".">
+			<arg value="-batch"/>			
+			<arg value="revision.txt"/>
+			<arg value="autobuild@d.gaiaonline.com:${battleBinScpLoc}"/>			
+		</exec>						
+	</target>
+
+	<target name="doGitSubmit">
+		<echo message="GIT SUBMIT: ${scpLoc} ${targetDir} ${svnRevisionNumber}"/>
+		
+		<exec executable="plink" dir="." failonerror="true">
+			<arg value="-batch"/>			
+			<arg value="autobuild@d.gaiaonline.com"/>
+			<arg value="~/push_to_git.sh"/>
+			<arg value="${scpLoc}"/>
+			<arg value="${targetDir}"/>
+			<arg value="${svnRevisionNumberString}"/>
+		</exec>		
+	</target>
+
+	<target name="createVersionSymLink">
+		<exec executable="plink" dir="."  failonerror="true">
+			<arg value="-batch"/>			
+			<arg value="autobuild@d.gaiaonline.com"/>
+			<arg value="~/createSymLink.sh"/>
+			<arg value="~/projects/${gitImageRoot}/Gaia_Flash/"/>
+			<arg value="${svnRevisionNumberString}"/>
+		</exec>		
+	</target>
+	
+	<target name="gitSubmit">
+		<!-- [rc] Moving the git pull to a separate script which will pull both repos for git -->
+		<echo message="GIT PULL: ~/projects/${gitRoot} ${gitPullLocation}"/>
+		<exec executable="plink" dir="."  failonerror="true">
+			<arg value="-batch"/>			
+			<arg value="autobuild@d.gaiaonline.com"/>
+			<arg value="~/pullWebAndImages.sh"/>
+			<arg value="~/projects/${gitRoot}"/>
+			<arg value="${gitPullLocation}"/>
+		</exec>		
+	
+		<antcall target="doGitSubmit">
+			<param name="scpLoc" value="~/${battleBinScpLoc}"/>
+			<param name="targetDir" value="~/projects/${gitImageRoot}/Gaia_Flash/BATTLE"/>
+			<param name="svnRevisionNumber" value="${svnRevisionNumberString}"/>
+		</antcall>
+
+		<antcall target="doGitSubmit">
+			<param name="scpLoc" value="~/${guestBinScpLoc}"/>
+			<param name="targetDir" value="~/projects/${gitImageRoot}/Gaia_Flash/guest"/>
+			<param name="svnRevisionNumber" value="${svnRevisionNumberString}"/>
+		</antcall>
+
+		<echo message="GIT TAG: ~/projects/${gitImageRoot}/Gaia_Flash/BATTLE ${svnRevisionNumberString}"/>
+		<exec executable="plink" dir="."  failonerror="true">
+			<arg value="-batch"/>			
+			<arg value="autobuild@d.gaiaonline.com"/>
+			<arg value="~/tag_git.sh"/>
+			<arg value="~/projects/${gitImageRoot}/Gaia_Flash/BATTLE"/>
+			<arg value="${svnRevisionNumberString}"/>
+		</exec>		
+		
+		<antcall target="createVersionSymLink"/>
+<!--
+		<if>
+			<equals arg1="${gitClean}" arg2="true"/>
+			<then>
+				<exec executable="plink" dir=".">
+					<arg value="-batch"/>					
+					<arg value="autobuild@d.gaiaonline.com"/>
+					<arg value="~/clean_git.sh"/>
+					<arg value="~/projects/${gitImageRoot}/Gaia_Flash/BATTLE"/>					
+				</exec>				
+			</then>
+		</if>
+		-->
+	</target>
+
+	<target name="cleanup">
+		<!--
+		<move file="${rootDir}\battle.swf" tofile="${rootDir}\battle_renameme.swf"/>
+		<delete file="${rootDir}\Battle.swf"/>
+		<move file="${rootDir}\battle_renameme.swf" tofile="${rootDir}\Battle.swf"/>
+		-->
+	</target>
+	
+		<target name="default" depends="clean, syncFiles, getSVNInfo, copy, gitSubmit, cleanup, archive"/>
+</project>

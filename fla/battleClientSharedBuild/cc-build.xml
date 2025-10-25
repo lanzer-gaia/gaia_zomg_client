@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <project name="ccBuild" basedir="." default="default">
+
+ 	<taskdef resource="net/sf/antcontrib/antcontrib.properties"/>	
+   <taskdef name="stringutil" classname="ise.antelope.tasks.StringUtilTask"/>
+	<taskdef name="math" classname="ise.antelope.tasks.MathTask"/>
+	 
+	<property name="prevlastgoodbuildtimestamp" value="${cclastgoodbuildtimestamp}"/>
+
+  	<target name="clean">
+		<delete file="${buildoot}/svn-clean.pl"/>
+		<delete file="${srcRoot}/../battleClientSharedBuild/svn-clean.pl"/>
+		
+		<exec executable="cmd" dir="${buildRoot}/.." failonerror="true">
+			<arg value="/c"/>
+			<arg value="svn-clean.pl"/>
+		</exec>
+
+		<exec executable="cmd" dir="${sharedBuildDir}">
+			<arg value="/c"/>
+			<arg value="svn-clean.pl"/>
+		</exec>
+  	</target>
+	  	  	
+	<target name="syncFiles" depends="clean">
+	<!-- For some reason, I can't get the svn task to work correctly all the time, so I'm resorting to the command line-->
+		<exec executable="svn">
+			<arg value="co"/>
+			<arg value="--force"/>
+			<arg value="--revision"/>
+			<arg value="HEAD"/>
+			<arg value="${svnPath}"/>
+			<arg value="${svnClientPath}"/>
+		</exec>
+
+		<exec executable="svn">
+			<arg value="co"/>
+			<arg value="--force"/>
+			<arg value="--revision"/>
+			<arg value="HEAD"/>
+			<arg value="${svnSwcsPath}"/>
+			<arg value="${svnSwcsClientPath}"/>						
+		</exec>
+<!--		
+		<exec executable="svn">
+			<arg value="co"/>			
+			<arg value="@@force"/>
+			<arg value="@@revision"/>
+			<arg value="HEAD"/>
+			<arg value="${svnBasePath}/project_as3/mmo/Battle/fla/battleClientSharedBuild"/>
+			<arg value="${sharedBuildDir}"/>
+			<arg value="@@non-interactive"/>
+		</exec>
+-->
+		
+		<if>
+			<not>
+				<equals arg1="${svnBinPath}" arg2=" "/>
+			</not>
+			<then>
+				<exec executable="svn">
+					<arg value="co"/>			
+					<arg value="--force"/>
+					<arg value="--revision"/>
+					<arg value="HEAD"/>
+					<arg value="${svnBasePath}/${svnBinPath}"/>
+					<arg value="${binDir}"/>
+					<arg value="--non-interactive"/>
+				</exec>
+			</then>
+		</if>
+
+		<condition property="doSyncBattleSrc">
+			<equals arg1="${syncBattleSrc}" arg2="true"/>
+		</condition>
+
+		<antcall target="syncBattleSrc">
+		</antcall>
+
+		<condition property="doSyncAs3Src">
+			<equals arg1="${syncAs3Src}" arg2="true"/>			
+		</condition>
+
+		<antcall target="syncAs3Src">
+		</antcall>
+		
+		<condition property="doSyncModulesSrc">
+			<equals arg1="${syncModulesSrc}" arg2="true"/>			
+		</condition>
+
+		<antcall target="syncModulesSrc">
+		</antcall>
+
+		<condition property="doSyncHangoutSrc">
+			<equals arg1="${syncHangoutSrc}" arg2="true"/>			
+		</condition>
+		
+		<antcall target="syncHangoutSrc">
+		</antcall>
+
+		<condition property="doSyncRegistrationSrc">
+			<equals arg1="${syncRegistrationSrc}" arg2="true"/>			
+		</condition>
+
+		<antcall target="syncRegistrationSrc">
+		</antcall>
+
+  	</target>
+
+	<target name="syncBattleSrc" if="doSyncBattleSrc">
+		<exec executable="cmd" dir="${srcRoot}/project_as3/mmo/Battle/src">
+			<arg value="/c"/>
+			<arg value="svn-clean.pl"/>
+		</exec>
+		
+		<exec executable="svn">
+			<arg value="co"/>
+			<arg value="--force"/>
+			<arg value="--revision"/>
+			<arg value="HEAD"/>
+			<arg value="${svnBasePath}/project_as3/mmo/Battle/src"/>
+			<arg value="${srcRoot}/project_as3/mmo/Battle/src"/>
+			<arg value="--non-interactive"/>
+		</exec>
+
+	</target>
+
+	<target name="syncHangoutSrc" if="doSyncHangoutSrc">
+		<exec executable="cmd" dir="${srcRoot}/project_as3/mmo/HangoutPlatform">
+			<arg value="/c"/>
+			<arg value="svn-clean.pl"/>
+		</exec>		
+		<exec executable="svn">
+			<arg value="co"/>
+			<arg value="--force"/>
+			<arg value="--revision"/>
+			<arg value="HEAD"/>
+			<arg value="${svnBasePath}/project_as3/mmo/HangoutPlatform"/>
+			<arg value="${srcRoot}/project_as3/mmo/HangoutPlatform"/>
+			<arg value="--non-interactive"/>
+		</exec>			
+	</target>
+	
+	<target name="syncAs3Src" if="doSyncAs3Src">
+		<exec executable="cmd" dir="${srcRoot}/project_as3">
+			<arg value="/c"/>
+			<arg value="svn-clean.pl"/>
+		</exec>		
+		
+		<exec executable="svn">
+			<arg value="co"/>
+			<arg value="--force"/>
+			<arg value="--revision"/>
+			<arg value="HEAD"/>
+			<arg value="${svnBasePath}/project_as3/src"/>
+			<arg value="${srcRoot}/project_as3/src"/>
+			<arg value="--non-interactive"/>
+		</exec>
+	</target>
+
+	<target name="syncModulesSrc" if="doSyncModulesSrc">
+		<exec executable="cmd" dir="${srcRoot}/project_as3/site/flexModules">
+			<arg value="/c"/>
+			<arg value="svn-clean.pl"/>
+		</exec>		
+
+		<exec executable="svn">
+			<arg value="co"/>
+			<arg value="--force"/>
+			<arg value="--revision"/>
+			<arg value="HEAD"/>
+			<arg value="${svnBasePath}/project_as3/site/flexModules"/>
+			<arg value="${srcRoot}/project_as3/site/flexModules"/>
+			<arg value="--non-interactive"/>
+		</exec>
+	</target>
+
+	<target name="syncRegistrationSrc" if="doSyncRegistrationSrc">
+		<exec executable="cmd" dir="${srcRoot}/project_as3/site/registration">
+			<arg value="/c"/>
+			<arg value="svn-clean.pl"/>
+		</exec>		
+
+		<exec executable="svn">
+			<arg value="co"/>
+			<arg value="--force"/>
+			<arg value="--revision"/>
+			<arg value="HEAD"/>
+			<arg value="${svnBasePath}/project_as3/site/registration"/>
+			<arg value="${srcRoot}/project_as3/site/registration"/>
+			<arg value="--non-interactive"/>
+		</exec>
+	</target>
+
+	<target name="prepareBuildFiles" depends="syncFiles">
+		<copy todir="${buildRoot}">
+			<fileset dir="${sharedBuildDir}">
+				<include name="*" />
+			</fileset>
+		</copy>
+
+		<delete file="${buildRoot}/svn-clean.pl"/>
+ 		<copy file="${sharedBuildDir}/build_template.xml" tofile="${buildRoot}/build.xml" overwrite="true"/>		
+
+		<replace file="${buildRoot}/build.xml">
+			<replaceFilter token="%PROJECTNAME%" value="${projectName}"/>
+       </replace>
+
+		 <condition property="doUpdateVersionNumber">
+			 <equals arg1="${updateVersionNumber}" arg2="true"/>
+		 </condition>
+	</target>
+
+	<target name="updateVersionNumber" if="doUpdateVersionNumber">
+		<exec executable="cmd" dir="${buildRoot}">
+ 			<arg value="/c"/>
+ 			<arg value="svn"/>
+ 			<arg value="info"/>
+ 			<redirector output="svnInfo"/>
+ 		</exec> 
+
+		<loadfile srcFile="svnInfo" property="svnRevisionNumberString">
+			<filterchain>
+	 		    <linecontainsregexp>
+	 		      <regexp pattern="Revision:" />
+	 		    </linecontainsregexp>
+			</filterchain>			
+		</loadfile>		
+
+		<stringutil string="${svnRevisionNumberString}" property="len">
+			<length/>
+		</stringutil>
+		<math result="result" operand1="${len}" operation="-" operand2="2" datatype="int"/>		
+		<stringutil string="${svnRevisionNumberString}" property="svnRevisionNumber">
+			<substring beginindex="10" endindex="${result}"/>
+		</stringutil>
+
+		<exec executable="cmd" dir="${buildRoot}">
+			<arg value="/c"/>
+			<arg value="echo"/>
+			<arg value="${svnRevisionNumber}"/>
+			<redirector output="${buildRoot}/svnRevisionNumber"/>
+		</exec>
+		
+		<replaceregexp file="${srcRoot}/project_as3/mmo/Battle/src/com/gaiaonline/battle/Globals.as"
+			match='revision:String = "(.*)"' replace='revision:String = "${svnRevisionNumber}"'/>
+	</target>
+	
+  	<target name="build" depends="prepareBuildFiles, updateVersionNumber">
+  		<ant antfile="${buildRoot}/${buildFileName}" dir="." target="default">
+			<property name="srcRootLoc" location="srcRoot"/>
+			<property name="guestRoot" location="${guestRoot}"/>			
+			<property file="${buildRoot}/buildMachineBuild.properties"/>
+			<property name="outputSVN" value="true"/>			
+			<property name="prevlastgoodbuildtimestamp" value="${prevlastgoodbuildtimestamp}"/>
+			<property name="cctimestamp" value="${cctimestamp}"/>
+			<property name="cclastgoodbuildtimestamp" value="${cclastgoodbuildtimestamp}"/>			
+  		</ant>
+  	</target>
+  	
+ 	<target name="onSuccess" depends="build" if="lastbuildsuccessful">
+		<!-- Get all sorts of svn info related to the time of build, revision number, etc. -->
+ 		<exec executable="cmd" dir="${buildRoot}">
+ 			<arg value="/c"/>
+ 			<arg value="dateFormatterForSVN.bat"/>
+ 			<arg value="${prevlastgoodbuildtimestamp}"/>
+ 			<arg value="${cctimestamp}"/> 			
+ 			<redirector output="${buildRoot}/svnRevisionSpec"/>
+ 		</exec>
+
+ 		<loadfile srcFile="${buildRoot}/svnRevisionSpec" property="svnRevisionSpec"/>
+		
+		<exec executable="cmd" dir="${buildRoot}">
+			<arg value="/c"/>
+			<arg value="svn"/>
+			<arg value="log"/>
+			<arg value="--verbose"/>			
+			<arg value="-r"/>	
+			<arg value="${svnRevisionSpec}"/>						
+			<arg value="--non-interactive"/>
+			<redirector output="${buildRoot}/svnRevisionLog"/>
+		</exec>
+
+		<!-- svn commit -->
+		<ant antfile="${pushScript}" dir="." target="default">
+			<property name="projectName" value="${projectName}"/>					 
+			<property name="buildRoot" value="${buildRoot}"/>					 
+			<property name="binDir" value="${binDir}"/>
+			<property name="commitPath" value="${commitPath}"/>
+			<property name="sharedBuildDir" value="${sharedBuildDir}"/>
+		 </ant>						
+
+		<!-- push to Git, if requested -->
+		<if>
+			<isset property="pushToGit"/>
+			<then>
+					<ant antfile="${srcRoot}/../pushAllToGit.xml" dir="." target="default">
+						 <property name="battleBinCopyRoot" value="${battleBinCopyRoot}"/>
+						 <property name="guestRoot" value="${guestRoot}"/>
+						 <property name="guestBinCopyRoot" value="${guestBinCopyRoot}"/>
+						 <property name="guestBinScpLoc" value="${guestBinScpLoc}"/>							 	 	 						 
+						 <property name="sharedBuildDir" value="${sharedBuildDir}"/>																		 
+						 <property name="gitRoot" value="${gitRoot}"/>
+						 <property name="gitImageRoot" value="${gitImageRoot}"/>
+						 <property name="gitPullLocation" value="${gitPullLocation}"/>
+						 <property name="gitClean" value="${gitClean}"/>							 							 						 
+					</ant>
+					
+			</then>
+		</if>
+
+		
+		<property name="problemsFileLoc" location="${buildRoot}/problemsList.txt" />		
+
+		<if>
+			<available file="${problemsFileLoc}" />
+			<then>
+ 				<loadfile srcFile="${problemsFileLoc}" property="problemsFileContents"/>
+				<mail from="frameProcessor@gaiaonline.com" replyto="mrubin@gaiaonline.com" failonerror="true"
+						tolist="${failureEmails}" message="${problemsFileContents}"
+						mailhost="10.50.26.50" subject="[ATTENTION: Client FLAs had problems!]"/>
+			</then>
+		</if>
+  	</target>
+  	
+	
+	<target name="default" depends="clean, syncFiles, build, onSuccess"/>
+  </project>

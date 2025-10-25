@@ -1,0 +1,1 @@
+ant  -buildfile createMacSwc.xml -DflaPath=../ui/uimanager2.fla -DbuildRoot=. -DsetBattleSrcRoot="/Users/bhalsted/src/other/gaia/trunk/src" -DsetAs3SrcRoot="/Users/bhalsted/src/other/gaia/trunk/mmo/Battle/src" -DsetPropertyFileName=../battleMain/build/swclocalBuild.mac.properties

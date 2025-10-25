@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Config>
+	<Login path='spaces/zomg'/>
+	<Registration type='zomg'>
+		<omnitureTag>zOMG_</omnitureTag>
+	</Registration>
+	<LoadScreen file='loadscreen.swf'/>
+	
+	<MainWindow file="windows/battlewin.swf"/>
+	<GenericWindow file='windows/genericwin.swf' />
+	
+	
+	<Modules>
+		<Module title='CHAT'>
+			<name>com.gaiaonline.battle.moduleManagers.ChatModuleManager</name>
+			<path>ChatModule/ChatModule.swf</path>
+			<params>
+				<windowSetting useUserSetting='true' windowType='Regular' x='0' y='555' width='218' height='200' minWidth='190' minHeight='50' />		
+				<chanels>
+					<chanel id='room' displayName='Talk' />
+					<chanel id='area' displayName='Shout' />
+					<chanel id='team' displayName='Crew' />
+					<chanel id='clan' displayName='Clan' />
+					<chanel id='whisper' displayName='Whisper' />			
+				</chanels>
+			</params>
+		</Module>
+		<Module title='TARGET'> 
+			<name>com.gaiaonline.battle.moduleManagers.TargetInfoModuleManager</name>
+			<path>TargetInfoModule/TargetInfoModule.swf</path>
+		</Module>
+		<Module title='CREW'> 
+			<name>com.gaiaonline.battle.moduleManagers.CrewListModuleManager</name>
+			<path>CrewListModule/CrewListModule.swf</path>
+		</Module>
+		<Module title='LEVEL'> 
+			<name>com.gaiaonline.battle.moduleManagers.ClCapModuleManager</name>
+			<path>ClCapModule/ClCapModule.swf</path>
+		</Module>
+		<Module title='Admin Panel'> 
+			<name>com.gaiaonline.battle.moduleManagers.AdminPanelModuleManager</name>
+			<path>AdminPanelModule/AdminPanelModule.swf</path>
+		</Module>
+	</Modules>
+	
+</Config>

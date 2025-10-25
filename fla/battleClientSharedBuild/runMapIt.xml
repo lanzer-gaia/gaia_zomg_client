@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<project name="push" default="default">	
+	
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+	<target name="default" depends="clean, runMapIt, svnCommit"/>
+	
+	<target name="mapAll">
+		<antcall target="default">
+			<param name="mapItLoc" location="${syncRoot}/fla/spaces/zomg/maps/BattleMapItTool2"/>
+			<param name="targetMapItLoc" location="${syncRoot}/bin"/>							
+			<param name="binDirLoc" location="${syncRoot}/bin/spaces/zomg/maps"/>
+			<param name="mapsInfoLoc" location="./mapsInfoZomg"/>
+		</antcall>
+		<foreach param="binDirLoc" target="default">
+			<param name="mapItLoc" location="${syncRoot}/fla/spaces/zomg/maps/BattleMapItTool2"/>
+			<param name="targetMapItLoc" location="${syncRoot}/bin"/>							
+			<param name="mapsInfoLoc" location="./mapsInfoSponsorship"/>
+			<path>
+				<dirset dir="${syncRoot}/bin/spaces" casesensitive="no">
+					<include name="*/maps/"/>
+					<exclude name="*/maps/**/*"/>					
+					<exclude name="zomg/**"/>							
+					<exclude name="shared/**"/>
+					<exclude name="template/**"/>												
+				</dirset>
+			</path>
+		</foreach>	
+	</target>
+
+	<target name="clean">
+		<!-- take care of conflicts -->
+		<exec executable="cmd" dir="${mapsInfoLoc}">
+ 			<arg value="/c"/>
+ 			<arg value="svn"/>
+ 			<arg value="update"/>
+			<arg value="--force"/>						
+			<arg value="--non-interactive"/>			
+			<arg value="${mapsInfoLoc}"/>
+		</exec>
+
+		<exec executable="cmd" dir="${mapsInfoLoc}">
+ 			<arg value="/c"/>
+ 			<arg value="svn"/>
+ 			<arg value="resolve"/>
+ 			<arg value="--recursive"/>			
+ 			<arg value="--accept"/>
+ 			<arg value="mine-full"/>						
+			<arg value="--non-interactive"/>			
+			<arg value="${mapsInfoLoc}"/>
+		</exec>
+		<!--
+		<delete includeemptydirs="true">
+			<fileset dir="${mapsInfoLoc}" includes="**/*"/>
+		</delete>
+		-->
+	</target>
+	
+	<target name="runMapIt">
+		<echo message="BinDirLoc: ${binDirLoc}" />
+		<echo message="MapsInfoLoc: ${mapsInfoLoc}" />
+		<copy toDir="${targetMapItLoc}" overwrite="true" flatten="true">
+		  <fileset dir="${mapItLoc}/bin-debug" includes="BattleMapIt*" />			
+		</copy>
+
+		<exec executable="cmd" dir="${targetMapItLoc}">
+ 			<arg value="/c"/>
+			<arg value="adl"/>
+
+			<arg value="${targetMapItLoc}/BattleMapItTool2-app.xml"/>
+			<arg value="--"/>
+			<arg value="${binDirLoc}"/>
+			<arg value="${mapsInfoLoc}"/>
+		</exec>
+		
+		<delete>
+			<fileset dir="${targetMapItLoc}" includes="BattleMapIt*"/>
+		</delete>
+	</target>
+	
+	<target name="svnCommit">
+		<exec executable="cmd" dir="${mapsInfoLoc}">
+ 			<arg value="/c"/>
+ 			<arg value="svn"/>
+			<arg value="add"/>
+			<arg value="--quiet"/>
+			<arg value="--force"/>						
+			<arg value="--non-interactive"/>			
+			<arg value="*"/>
+		</exec>
+		<exec executable="cmd" dir="${mapsInfoLoc}">
+ 			<arg value="/c"/>
+ 			<arg value="svn"/>
+ 			<arg value="commit"/>
+			<arg value="--non-interactive"/>			
+			<arg value="--message"/>
+			<arg value="[autobuild] zOMG client MapIt results."/>
+			<arg value="${mapsInfoLoc}"/>
+		</exec>
+		
+	</target>
+</project>	

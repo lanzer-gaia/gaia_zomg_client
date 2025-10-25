@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NpcText>
+  <OutOfRange>
+    <npc NpcName="Generic">
+      <txt>What's that? I can't hear you way over there!</txt>
+      <txt>Come on over and we'll talk.</txt>
+      <txt>I can't hear you. Come closer!</txt>
+      <txt>Quit shouting and come over here where we can talk.</txt>
+      <txt>Step a little closer!</txt>
+    </npc>
+    <npc NpcName="William">
+      <txt>BEEEP !!!!</txt>
+      <txt>beep? beep?</txt>
+    </npc>
+  </OutOfRange>
+</NpcText>

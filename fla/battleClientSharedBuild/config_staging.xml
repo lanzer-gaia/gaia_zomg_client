@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cruisecontrol>
+    <property name="anthome" value="c:/program files/apache-ant-1.7.1"/>
+    <property name="svnTrunkBasePath" value="svn+ssh://autobuild@svn.gaiaonline.com/home/svn/gaia_flash/trunk"/>
+    <property name="svnStagingBasePath" value="svn+ssh://autobuild@svn.gaiaonline.com/home/svn/gaia_flash/branches/zOMG/staging"/>
+	 <property name="successEmails" value="bhalsted@benjaminhalsted.com, rcox@gaiaonline.com"/>
+	 <property name="failureEmails" value="bhalsted@benjaminhalsted.com, rcox@gaiaonline.com"/>
+
+   <plugin name="project">
+	<plugin name="svn" classname="net.sourceforge.cruisecontrol.sourcecontrols.SVN"/>
+
+	<log dir="logs/${project.name}"/>
+	<!--Can't figure out why CruiseControl doesn't seem to pick up changes when you use the normal svn task.  So instead
+		I'm seting it to compare against he local revision number; so I'm bootstrapping a sync to up the
+		revision number if a change has been commited-->
+	<bootstrappers>
+    		<antbootstrapper
+	 		anthome="${anthome}"
+         		buildfile="cc-antSvnBootstrapper.xml"
+         		target="default" >
+
+	     	<property name="syncRoot" value="${syncRoot}"/>
+	     	<property name="srcRoot" value="${srcRoot}"/>
+  			<property name="anthome" value="${anthome}"/>			
+			<property name="svnBasePath" value="${svnBasePath}"/>
+			<property name="svnPath" value="${svnPath}"/>
+			<property name="svnClientPath" value="${svnClientPath}"/>
+			<property name="svnSwcsPath" value="${svnSwcsPath}"/>
+			<property name="svnSwcsClientPath" value="${svnSwcsClientPath}"/>			
+			<property name="branchName" value="${branchName}"/> 					
+			<property name="syncBattleSrc" value="${syncBattleSrc}"/>
+			<property name="syncAs3Src" value="${syncAs3Src}"/>
+			<property name="syncModulesSrc" value="${syncModulesSrc}"/>
+			<property name="syncRegistrationSrc" value="${syncRegistrationSrc}"/>			
+			<property name="projectName" value="${projectName}"/>
+			<property name="buildFileName" value="${buildFileName}"/>
+    		 </antbootstrapper>
+	</bootstrappers>
+
+    <listeners>
+        <currentbuildstatuslistener file="logs/${project.name}/currentbuildstaus.txt"/>
+    </listeners>
+
+
+    <schedule interval="300">
+  		<ant anthome="${anthome}" buildfile="${ccBuildFile}" target="default" saveLogDir="logs/ant" uselogger="true" usedebug="false" usequiet="true">
+			<property name="svnRepoName" value="${svnRepoName}"/>
+			<property name="updateVersionNumber" value="true"/>			
+			<property name="sharedBuildDir" value="${sharedBuildDir}"/>						
+			<property name="syncRoot" value="${syncRoot}"/>
+	     	<property name="srcRoot" value="${srcRoot}"/>
+			<property name="buildRoot" value="${buildRoot}"/>  
+			<property name="svnBasePath" value="${svnBasePath}"/>
+			<property name="svnPath" value="${svnPath}"/> 	
+			<property name="svnClientPath" value="${svnClientPath}"/>
+			<property name="svnSwcsPath" value="${svnSwcsPath}"/>
+			<property name="svnSwcsClientPath" value="${svnSwcsClientPath}"/>
+			<property name="branchName" value="${branchName}"/> 								
+			<property name="syncBattleSrc" value="${syncBattleSrc}"/>
+			<property name="syncAs3Src" value="${syncAs3Src}"/>
+			<property name="syncModulesSrc" value="${syncModulesSrc}"/>
+			<property name="syncRegistrationSrc" value="${syncRegistrationSrc}"/>			
+			<property name="syncHangoutSrc" value="${syncHangoutSrc}"/>						
+			<property name="projectName" value="${projectName}"/>
+			<property name="anthome" value="${anthome}"/>
+			<property name="successEmails" value="${successEmails}"/>
+			<property name="failureEmails" value="${failureEmails}"/>			
+			<property name="commitPath" value="${commitPath}"/>
+			<property name="binDir" value="${binDir}"/>
+			<property name="svnBinPath" value="${svnBinPath}"/>
+			<property name="buildFileName" value="${buildFileName}"/>
+			<property name="pushScript" value="${pushScript}"/>
+			<property name="battleBinCopyRoot" value="${battleBinCopyRoot}"/>
+			<property name="battleBinScpLoc" value="${battleBinScpLoc}"/>
+			<property name="guestRoot" value="${guestRoot}"/>			
+			<property name="guestBinCopyRoot" value="${guestBinCopyRoot}"/>						
+			<property name="guestBinScpLoc" value="${guestBinScpLoc}"/>						
+			<property name="debugBuild" value="${debugBuild}"/>
+			<property name="buildMaps" value="${buildMaps}"/>
+  		</ant>
+	 </schedule>
+
+	<publishers>
+			<htmlemail
+				mailhost="mailhost.sv3.gaiaonline.com"
+				skipusers="true"
+				spamwhilebroken="true"
+				logdir="logs/${project.name}"
+				xsldir="c:\program files\cruisecontrol\webapps\cruisecontrol\xsl"
+				usessl="false"	
+				subjectprefix="[${projectName} Build] "		
+				returnaddress="${projectName}@gaiaonline.com"
+				>
+				<success address="${successEmails}"/>
+				<failure address="${failureEmails}" reportWhenFixed="true"/>
+			</htmlemail>		
+		</publishers>
+    </plugin>
+<!--
+	 <project name="stagingBuildAllNightly" buildafterfailed="false" requiremodification="false">
+  		<property name="anthome" value="${anthome}"/>
+	   <property name="svnBasePath" value="${svnStagingBasePath}"/>	 
+		<property name="projectName" value="stagingBuildAllNightly"/>
+	   <property name="srcRoot" value="battleAllStaging"/>
+		<property name="syncRoot" value="battleAllStaging/project_as3/mmo/Battle"/>
+		<property name="buildRoot" value="${syncRoot}/fla/buildAll"/>
+		<property name="sharedBuildDir" value="${syncRoot}/fla/battleClientSharedBuild"/>
+		<property name="svnBinPath" value="project_as3/mmo/Battle/bin"/>						
+	   <property name="binDir" value="${syncRoot}/bin"/>
+		<property name="commitPath" value="${syncRoot}/bin"/>	 
+		<property name="ccBuildFile" value="cc-build.xml"/>
+		<property name="pushScript" value="push.xml"/>
+		<property name="buildFileName" value="build.xml"/>
+		<property name="svnPath" value="${svnBasePath}/project_as3/mmo/Battle/fla@HEAD"/>
+		<property name="svnClientPath" value="${syncRoot}/fla"/>
+		<property name="svnSwcsPath" value="${svnBasePath}/project_as3/mmo/Battle/swcs@HEAD"/>
+		<property name="svnSwcsClientPath" value="${syncRoot}/swcs"/>
+		<property name="branchName" value="Staging"/> 									
+		<property name="successEmails" value="${successEmails}"/>
+		<property name="failureEmails" value="${failureEmails}"/>
+		<property name="forceAllBuild" value="true"/>
+		<property name="setRootDir" value="${syncRoot}/fla"/>
+		<property name="buildMaps" value="true"/>
+		<property name="syncBattleSrc" value="true"/>
+		<property name="syncAs3Src" value="true"/>
+		<property name="syncModulesSrc" value="true"/>
+		<property name="syncRegistrationSrc" value="true"/>			
+		<property name="syncHangoutSrc" value="true"/>
+		<property name="debugBuild" value="false"/>							
+		<property name="guestRoot" value="${srcRoot}/project_as3/site/registration/"/>
+		<property name="guestBinCopyRoot" value="${guestRoot}/production"/>				 
+		<property name="guestBinScpLoc" value="battleStagingGuestBuilt"/>
+		<property name="checkForGraphics" value="false"/>
+		<property name="checkForBadAs" value="false"/>		
+
+		 <schedule>
+			 <ant anthome="${anthome}" time="0300" buildfile="${ccBuildFile}" target="default" saveLogDir="logs/ant" uselogger="true" usedebug="false" usequiet="true">
+				<property name="anthome" value="${anthome}"/>				
+				<property name="projectName" value="${projectName}"/>
+				<property name="svnBasePath" value="${svnBasePath}"/>  		 	 
+				<property name="srcRoot" value="${srcRoot}"/>
+				<property name="syncRoot" value="${syncRoot}"/>
+				<property name="buildRoot" value="${buildRoot}"/>		
+				<property name="sharedBuildDir" value="${sharedBuildDir}"/>
+				<property name="svnBinPath" value="${svnBinPath}"/>										
+				<property name="binDir" value="${binDir}"/>				
+				<property name="commitPath" value="${commitPath}"/>	 		
+				<property name="ccBuildFile" value="${ccBuildFile}"/>
+				<property name="svnPath" value="${svnPath}"/>
+				<property name="svnClientPath" value="${svnClientPath}"/>
+				<property name="svnSwcsPath" value="${svnSwcsPath}"/>
+				<property name="svnSwcsClientPath" value="${svnSwcsClientPath}"/>
+				<property name="branchName" value="${branchName}"/> 									
+				<property name="successEmails" value="${successEmails}"/>
+				<property name="failureEmails" value="${failureEmails}"/>
+				<property name="pushScript" value="${pushScript}"/>
+				<property name="buildFileName" value="${buildFileName}"/>
+				<property name="forceAllBuild" value="${forceAllBuild}"/>
+         	<property name="setRootDir" value="${setRootDir}"/>
+				<property name="buildMaps" value="${buildMaps}"/>
+				<property name="syncBattleSrc" value="${syncBattleSrc}"/>
+				<property name="syncAs3Src" value="${syncAs3Src}"/>
+				<property name="syncModulesSrc" value="${syncModulesSrc}"/>						
+				 <property name="syncRegistrationSrc" value="${syncRegistrationSrc}"/>			
+				 <property name="syncHangoutSrc" value="${syncHangoutSrc}"/>							
+				<property name="debugBuild" value="${debugBuild}"/>
+				<property name="guestRoot" value="${guestRoot}"/>
+				<property name="guestBinCopyRoot" value="${guestBinCopyRoot}"/>				 
+				<property name="guestBinScpLoc" value="${guestBinScpLoc}"/>							 	 	 
+				<property name="checkForGraphics" value="${checkForGraphics}"/>
+				<property name="checkForBadAs" value="${checkForBadAs}"/>						
+
+ 				<property name="pushScript" value="${pushScript}"/>				
+				<property name="pushToGit" value="true"/>
+				<property name="battleBinCopyRoot" value=".\battleBinAllStagingCopyRoot"/>
+				<property name="battleBinScpLoc" value="battleStagingBuilt"/>
+				<property name="gitClean" value="true"/>							 						 				 				 				
+				<property name="gitRoot" value="staging"/>
+				<property name="gitImageRoot" value="staging/images"/>
+				<property name="gitPullLocation" value="origin"/>
+			</ant>
+		</schedule>
+			<publishers>
+				<onsuccess>
+					<antpublisher buildfile="runMapIt.xml" antWorkingDir="." target="mapAll" anthome="${anthome}">
+						<property name="syncRoot" value="${syncRoot}"/>
+					</antpublisher>
+				</onsuccess>
+					<htmlemail
+						mailhost="mailhost.sv3.gaiaonline.com"
+						skipusers="true"
+						spamwhilebroken="true"
+						logdir="logs/${project.name}"
+						xsldir="c:\program files\cruisecontrol\webapps\cruisecontrol\xsl"
+						usessl="false"
+						subjectprefix="[${projectName} Build] "		
+						returnaddress="${projectName}@gaiaonline.com"
+						>
+						<success address="${successEmails}"/>
+						<failure address="${failureEmails}" reportWhenFixed="true"/>
+					</htmlemail>
+			</publishers>				
+			<modificationset>
+			<svn localWorkingCopy="${syncRoot}/fla/buildAll/build" useLocalRevision="true"/>			 
+		 </modificationset>
+	</project>
+-->
+	 <project name="stagingBuildAll" buildafterfailed="false" requiremodification="true">
+  		<property name="anthome" value="${anthome}"/>			
+		<property name="svnBasePath" value="${svnStagingBasePath}"/>
+		<property name="projectName" value="stagingBuildAll"/>
+	   <property name="srcRoot" value="battleAllStaging"/>
+		<property name="syncRoot" value="battleAllStaging/project_as3/mmo/Battle"/>
+		<property name="buildRoot" value="${syncRoot}/fla/buildAll"/>
+		<property name="sharedBuildDir" value="${syncRoot}/fla/battleClientSharedBuild"/>
+		<property name="svnBinPath" value="project_as3/mmo/Battle/bin"/>						
+		<property name="binDir" value="${syncRoot}/bin"/>		
+		<property name="commitPath" value="${syncRoot}/bin"/>	 
+		<property name="ccBuildFile" value="cc-build.xml"/>
+		<property name="svnPath" value="${svnBasePath}/project_as3/mmo/Battle/fla@HEAD"/>
+		<property name="svnClientPath" value="${syncRoot}/fla"/>
+		<property name="svnSwcsPath" value="${svnBasePath}/project_as3/mmo/Battle/swcs@HEAD"/>
+		<property name="svnSwcsClientPath" value="${syncRoot}/swcs"/>
+		<property name="branchName" value="Staging"/> 											
+		<property name="successEmails" value="${successEmails}"/>
+		<property name="failureEmails" value="${failureEmails}"/>
+		<property name="pushScript" value="push.xml"/>
+		<property name="buildFileName" value="build.xml"/>
+		<property name="forceAllBuild" value="true"/>
+		<property name="setRootDir" value="${syncRoot}/fla"/>
+		<property name="syncBattleSrc" value="true"/>
+		<property name="syncAs3Src" value="true"/>
+		<property name="syncModulesSrc" value="true"/>
+		<property name="syncRegistrationSrc" value="true"/>			
+		<property name="syncHangoutSrc" value="true"/>
+		<property name="debugBuild" value="false"/>
+		<property name="checkForGraphics" value="false"/>
+		<property name="checkForBadAs" value="false"/>				
+
+		 <property name="guestRoot" value="${srcRoot}/project_as3/site/registration/"/>
+		 <property name="guestBinCopyRoot" value="${guestRoot}/production"/>				 			 
+		 <property name="guestBinScpLoc" value="battleStagingGuestBuilt"/>							 				 
+		
+
+		 <schedule interval="300">
+			<ant anthome="${anthome}" buildfile="${ccBuildFile}" target="default" saveLogDir="logs/ant" uselogger="true" usedebug="false" usequiet="true">
+				<property name="anthome" value="${anthome}"/>
+				<property name="svnBasePath" value="${svnBasePath}"/>  		 	 
+				<property name="projectName" value="${projectName}"/>
+				<property name="srcRoot" value="${srcRoot}"/>
+				<property name="syncRoot" value="${syncRoot}"/>
+				<property name="buildRoot" value="${buildRoot}"/>
+				<property name="sharedBuildDir" value="${sharedBuildDir}"/>
+				<property name="svnBinPath" value="${svnBinPath}"/>				
+				<property name="binDir" value="${binDir}"/>
+				<property name="commitPath" value="${commitPath}"/>	 		
+				<property name="ccBuildFile" value="${ccBuildFile}"/>
+				<property name="svnPath" value="${svnPath}"/>
+				<property name="svnClientPath" value="${svnClientPath}"/>
+				<property name="svnSwcsPath" value="${svnSwcsPath}"/>
+				<property name="svnSwcsClientPath" value="${svnSwcsClientPath}"/>
+				<property name="branchName" value="${branchName}"/> 									
+				<property name="successEmails" value="${successEmails}"/>
+				<property name="failureEmails" value="${failureEmails}"/>
+				<property name="pushScript" value="${pushScript}"/>
+				<property name="buildFileName" value="${buildFileName}"/>
+				<property name="forceAllBuild" value="${forceAllBuild}"/>
+				<property name="setRootDir" value="${setRootDir}"/>
+				<property name="syncBattleSrc" value="${syncBattleSrc}"/>
+				<property name="syncAs3Src" value="${syncAs3Src}"/>
+				<property name="syncModulesSrc" value="${syncModulesSrc}"/>
+				<property name="syncRegistrationSrc" value="${syncRegistrationSrc}"/>			
+				<property name="syncHangoutSrc" value="${syncHangoutSrc}"/>									
+				<property name="debugBuild" value="${debugBuild}"/>
+				<property name="checkForGraphics" value="${checkForGraphics}"/>
+				<property name="checkForBadAs" value="${checkForBadAs}"/>								
+
+				<property name="pushScript" value="${pushScript}"/>
+				<property name="pushToGit" value="true"/>
+				<property name="battleBinCopyRoot" value=".\battleBinAllStagingCopyRoot"/>
+				<property name="battleBinScpLoc" value="battleStagingBuilt"/>
+				<property name="guestRoot" value="${guestRoot}"/>
+				<property name="guestBinCopyRoot" value="${guestBinCopyRoot}"/>
+				<property name="guestBinScpLoc" value="${guestBinScpLoc}"/>				 
+				<property name="gitRoot" value="staging"/>
+				<property name="gitImageRoot" value="staging/images"/>
+				<property name="gitPullLocation" value="origin"/>				 
+			</ant>
+		</schedule>
+			<publishers>		
+					<htmlemail
+						mailhost="mailhost.sv3.gaiaonline.com"
+						skipusers="true"
+						spamwhilebroken="true"
+						logdir="logs/${project.name}"
+						xsldir="c:\program files\cruisecontrol\webapps\cruisecontrol\xsl"
+						usessl="false"	
+						subjectprefix="[${projectName} Build] "		
+						returnaddress="${projectName}@gaiaonline.com"
+						>
+						<success address="${successEmails}"/>
+						<failure address="${failureEmails}" reportWhenFixed="true"/>
+					</htmlemail>		
+			  </publishers>
+			  <modificationset quietperiod="60">
+				<svn localWorkingCopy="${srcRoot}/project_as3/mmo/HangoutPlatform/src" useLocalRevision="true"/>
+	  
+				<svn localWorkingCopy="${srcRoot}/project_as3/mmo/Battle/src/com/gaiaonline/battle" useLocalRevision="true"/>
+				<svn localWorkingCopy="${srcRoot}/project_as3/src/" useLocalRevision="true"/>
+
+				<svn localWorkingCopy="${srcRoot}/project_as3/mmo/HangoutPlatform" useLocalRevision="true"/>	
+				<svn localWorkingCopy="${srcRoot}/project_as3/site/registration/guestRegistration" useLocalRevision="true"/>
+				<svn localWorkingCopy="${srcRoot}/project_as3/site/TrackingManager" useLocalRevision="true"/>
+
+				<svn localWorkingCopy="${srcRoot}/project_as3/site/flexModules" useLocalRevision="true"/>
+				<svn localWorkingCopy="${srcRoot}/project_as3/src/com/gaiaonline/flexModulesAPIs" useLocalRevision="true"/>				  
+
+				<svn localWorkingCopy="${syncRoot}/fla/actorassets" useLocalRevision="true"/>
+				<svn localWorkingCopy="${syncRoot}/fla/bm" useLocalRevision="true"/>
+				<svn localWorkingCopy="${syncRoot}/fla/emotes" useLocalRevision="true"/>
+				<svn localWorkingCopy="${syncRoot}/fla/monsters" useLocalRevision="true"/>
+				<svn localWorkingCopy="${syncRoot}/fla/rings" useLocalRevision="true"/>
+				<svn localWorkingCopy="${syncRoot}/fla/spaces" useLocalRevision="true"/>
+				<svn localWorkingCopy="${syncRoot}/fla/sprites" useLocalRevision="true"/>
+				<svn localWorkingCopy="${syncRoot}/fla/ui" useLocalRevision="true"/>
+				<svn localWorkingCopy="${syncRoot}/fla/windows" useLocalRevision="true"/>
+				<svn localWorkingCopy="${syncRoot}/fla/wordbubbles" useLocalRevision="true"/>
+
+				<svn localWorkingCopy="${syncRoot}/fla/battleMain" useLocalRevision="true"/>
+
+				<svn localWorkingCopy="${syncRoot}/fla/buildAll/build" useLocalRevision="true"/>
+			  </modificationset>
+	 </project>
+
+</cruisecontrol>

@@ -1,0 +1,101 @@
+/* CSS file */
+.chatPopUpView{
+	upSkin: Embed("../../flexAssets/uiAssets.swf#default_button_up");
+	overSkin: Embed("../../flexAssets/uiAssets.swf#default_button_over");
+	downSkin: Embed("../../flexAssets/uiAssets.swf#default_button_down");	
+	disabledSkin: Embed("../../flexAssets/uiAssets.swf#default_button_disabled");
+
+	popUpUpSkin: Embed("../../flexAssets/uiAssets.swf#default_button_up");
+	popUpOverSkin: Embed("../../flexAssets/uiAssets.swf#default_button_over");
+	popUpDownSkin: Embed("../../flexAssets/uiAssets.swf#default_button_down");
+	popUpDisabledSkin: Embed("../../flexAssets/uiAssets.swf#default_button_disabled");
+
+	popUpGap: 0;
+	
+	fontFamily: myArialBold;
+	fontSize: 12;
+	
+	arrowButtonWidth: 0;
+	
+	paddingLeft: 8;
+	paddingRight: 0;	
+	
+	defaultTextColor: #FBEE97;		
+}
+
+.chatPopUpChannel{
+	upSkin: Embed("../../flexAssets/uiAssets.swf#default_button_up");
+	overSkin: Embed("../../flexAssets/uiAssets.swf#default_button_over");
+	downSkin: Embed("../../flexAssets/uiAssets.swf#default_button_down");	
+	disabledSkin: Embed("../../flexAssets/uiAssets.swf#default_button_disabled");
+
+	popUpUpSkin: Embed("../../flexAssets/uiAssets.swf#default_button_up");
+	popUpOverSkin: Embed("../../flexAssets/uiAssets.swf#default_button_over");
+	popUpDownSkin: Embed("../../flexAssets/uiAssets.swf#default_button_down");
+	popUpDisabledSkin: Embed("../../flexAssets/uiAssets.swf#default_button_disabled");
+	
+	popUpGap: 0;
+	
+	fontFamily: myArialBold;
+	fontSize: 12;
+	
+	arrowButtonWidth: 0;
+	paddingLeft: 6;
+	paddingRight: 0;
+	
+	defaultTextColor: #FBEE97;		
+}
+
+.historyArea {
+	backgroundColor: #000000;
+	verticalScrollBarStyleName: historyScrollBar;
+    borderStyle:none;
+}
+
+.historyScrollBar {
+	upArrowUpSkin: Embed("../../flexAssets/uiAssets.swf#scrollbar_up_arrow_up"); 	
+	upArrowOverSkin: Embed("../../flexAssets/uiAssets.swf#scrollbar_up_arrow_over"); 	
+	upArrowDownSkin: Embed("../../flexAssets/uiAssets.swf#scrollbar_up_arrow_down"); 	
+	upArrowDisabledSkin: Embed("../../flexAssets/uiAssets.swf#scrollbar_up_arrow_disabled");
+	 
+	downArrowUpSkin: Embed("../../flexAssets/uiAssets.swf#scrollbar_down_arrow_up"); 	
+	downArrowOverSkin: Embed("../../flexAssets/uiAssets.swf#scrollbar_down_arrow_over"); 	
+	downArrowDownSkin: Embed("../../flexAssets/uiAssets.swf#scrollbar_down_arrow_down"); 	
+	downArrowDisabledSkin: Embed("../../flexAssets/uiAssets.swf#scrollbar_down_arrow_disabled"); 	
+	
+	thumbUpSkin: Embed("../../flexAssets/uiAssets.swf#scrollbar_thumb_up"); 				
+	thumbOverSkin: Embed("../../flexAssets/uiAssets.swf#scrollbar_thumb_over"); 				
+	thumbDownSkin: Embed("../../flexAssets/uiAssets.swf#scrollbar_thumb_down");
+	
+	trackDisabledSkin: Embed("../../flexAssets/uiAssets.swf#scrollbar_track_disabled");						
+	trackUpSkin: Embed("../../flexAssets/uiAssets.swf#scrollbar_track_up");							
+	trackOverSkin: Embed("../../flexAssets/uiAssets.swf#scrollbar_track_up");								
+	trackDownSkin: Embed("../../flexAssets/uiAssets.swf#scrollbar_track_up");
+
+	thumbIcon: Embed("../../flexAssets/uiAssets.swf#scrollbar_thumb_icon");
+	
+	top: 10;
+	bottom: 10;									 				
+}
+
+.textInput {
+    borderColor: #4F4F4F;
+    borderThickness: 1;
+	borderStyle: solid;	
+}
+
+.emoticonsButton {
+	popUpStyleName: "emoticonTile";
+	popUpDownSkin: Embed("../../flexAssets/uiAssets.swf#emote_popup_button_down");
+	popUpOverSkin: Embed("../../flexAssets/uiAssets.swf#emote_popup_button_over");
+	skin: Embed("../../flexAssets/uiAssets.swf#emote_popup_button_up");
+}
+.emoticonTile {
+	borderSkin: Embed("../../flexAssets/uiAssets.swf#default_border_skin");
+	paddingTop: 5;
+	paddingBottom: 5;
+	paddingLeft: 5;
+	paddingRight: 5;
+	horizontalGap: 3;
+	verticalGap: 3;
+}

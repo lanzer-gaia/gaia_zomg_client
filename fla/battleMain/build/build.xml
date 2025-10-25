@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <!-- BattleMain build script -->   
+ <project name="BattleMain" default="default">
+ 	<property name="battleMainBinDir" location="${flexFrameworkDir}/bin"/> 
+ 	<property name="compc" location="${battleMainBinDir}/${compcExecutable}"/>
+ 	<property name="mxmlc" location="${battleMainBinDir}/${mxmlcExecutable}"/> 	 	 	
+ 	<property name="battleMainRootDir" location="${ant.file}/../.."/>
+	<property name="As3SiteParent" location="${As3SrcRoot}/.."/>
+	<property name="BattleSrcParent" location="${BattleSrcRoot}/.."/>	
+ 	
+     <!--Building the main swf-->
+     <target name="buildSWF">
+     	<!--Don't fail on error.  Let the target that greps for Warnings and Failures do that.-->
+     	<property name="battleMainSwfRootDir" location="${battleMainRootDir}/../.."/>
+			 
+			<replace file="${battleMainRootDir}/build-config.xml">
+				<replaceFilter token="..\..\..\.." value="${As3SiteParent}"/>
+			</replace>
+
+       <exec executable="${mxmlc}" dir="${battleMainBinDir}" failonerror="false">
+			<arg value="${BattleSrcParent}/src/Battle.mxml"/> 
+          	<arg value="-output=${battleMainSwfRootDir}/bin/Battle.swf"/>
+           	<arg value="-load-config=${battleMainRootDir}/build-config.xml"/>
+			<arg value="-link-report=${linkReport}"/>				
+           	<arg value="-compiler.debug=${debugBuild}"/>
+			<arg value="-compiler.library-path+=${swcsLibraryPath}"/>
+
+   			<!--Output so we can check for warnings or errors-->
+				<redirector output="compilerLog"/>
+        </exec>
+	 	<loadfile srcfile="compilerLog" property="compilerLog"/>
+ 		<echo message="${compilerLog}"/>
+ 		     	
+     	<!--Check for warnings or errors-->
+     	<antcall target="failOnWarningOrError">
+     		<param name="compilerLogName" value="compilerLog"/>
+     	</antcall>
+     </target>  
+
+     <target name="buildAsSwc">
+     	<!--Don't fail on error.  Let the target that greps for Warnings and Failures do that.-->
+     	<property name="battleMainSwfRootDir" location="${battleMainRootDir}/../.."/>
+			<exec executable="${compc}" dir="${battleMainBinDir}" failonerror="false">
+			<arg value="-output=${outputDir}/componentBases/${swcBaseName}.swc"/>
+			<arg value="-load-config=${battleMainRootDir}/build-config-swc.xml"/>
+			<arg value="-compiler.debug=false"/>
+			<arg value="-link-report=${linkReport}"/>
+			<arg value="-compiler.external-library-path+=${externalLibraryPath}"/>
+			<arg value="-compiler.library-path+=${swcsLibraryPath}"/>
+			<arg line="-compiler.namespaces.namespace ${namespaceUri} '${manifestLoc}'"/>
+			<arg line="-include-namespaces ${namespaceUri}"/>
+			<arg line="-compiler.source-path ${sourcePath}"/>
+			<arg value="--"/>
+
+			<!--Output so we can check for warnings or errors-->
+			<redirector output="compilerLog"/>
+	  </exec>
+	 	<loadfile srcfile="compilerLog" property="compilerLog"/>
+ 		<echo message="${compilerLog}"/>
+ 		     	
+     	<!--Check for warnings or errors-->
+     	<antcall target="failOnWarningOrError">
+     		<param name="compilerLogName" value="compilerLog"/>
+     	</antcall>
+     </target>  
+	  
+ 	<target name="failOnWarningOrError">
+ 		<!--save the output in case there's an error and we want to output it-->
+ 		<loadfile srcfile="${compilerLogName}" property="compilerLog"/>
+ 		
+	 	<loadfile srcfile="${compilerLogName}" property="generatedWarning">
+			<filterchain>
+	 		    <linecontainsregexp>
+<!--
+	 		      <regexp pattern="Warning:|Error:" />
+-->
+	 		      <regexp pattern="Error:" />
+	 		    </linecontainsregexp>
+			</filterchain>
+		</loadfile>
+ 		
+	 	<fail if="generatedWarning" message="${compilerLog}"/>
+ 	</target>
+ 		
+ 	    
+     <!--The target that we try to build.  Change the depends value to one of the targets above to switch what you build.-->
+     <target name="default" depends="buildSWF"/> 
+ </project>

@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <project name="%PROJECTNAME%" default="default">
+ 
+   <taskdef name="stringutil" classname="ise.antelope.tasks.StringUtilTask"/>
+ 	<taskdef resource="net/sf/antcontrib/antcontrib.properties"/> 	
+
+	<condition property="rootDir" value="${setRootDir}" else="${ant.file}/../.." >
+		<isset property="setRootDir"/>
+	</condition>
+ 	<property name="buildRootLoc" location="${buildRoot}"/>	
+	<property name="As3SrcRoot" location="${srcRoot}/project_as3/src"/>
+	<property name="As3SiteRoot" location="${srcRoot}/project_as3/site"/>
+	<property name="SharedModulesRoot" location="${srcRoot}/project_as3/site/flexModules"/>		
+	<property name="BattleSrcRoot" location="${srcRoot}/project_as3/mmo/Battle/src"/>
+	<property name="problemsList" location="${buildRootLoc}/problemsList.txt"/>
+
+	<condition property="doBuildHangoutSrc">
+		<equals arg1="${syncHangoutSrc}" arg2="true"/>
+	</condition>
+
+	<condition property="doBuildModules">
+		<equals arg1="${syncModulesSrc}" arg2="true"/>
+	</condition>
+
+	<target name="cleanOutOtherSwfs">
+		<delete quiet="true">
+		  <fileset dir="${rootDir}" includes="*.swf" />
+		</delete>
+		<property name="binLocation" location="${binDir}"/>		
+		<mkdir dir="${binLocation}"/>		
+
+		<exec executable="cmd" dir="${binLocation}">
+ 			<arg value="/c"/>
+ 			<arg value="svn"/>
+			<arg value="revert"/>
+			<arg value="--recursive"/>						
+			<arg value="${binLocation}"/>			
+ 		</exec> 
+
+		<delete includeemptydirs="true" quiet="true">
+		  <fileset dir="${binLocation}" includes="**/*.swf" />
+		</delete>
+
+		<!-- for guest reg -->
+		<property name="guestBinLoc" location="${guestBinCopyRoot}"/>				
+		<exec executable="cmd" dir="${binLocation}">
+ 			<arg value="/c"/>
+ 			<arg value="svn"/>
+			<arg value="revert"/>
+			<arg value="--recursive"/>									
+			<arg value="${guestBinLoc}"/>			
+ 		</exec> 
+		
+		<delete includeemptydirs="true" quiet="true">
+		  <fileset dir="${guestBinLoc}" includes="**/*.swf" />
+		</delete>		
+	</target>
+
+	<target name="buildAssetSwcs">
+		<echo message="BUILDING ASSET SWCS"/>		
+		<foreach param="file" target="buildFlaToSwc">
+			<path>
+				<fileset dir="${rootDir}" casesensitive="no">
+						<!-- asset flas go here-->						
+					<include name="**/uiactionbar.fla"/>							
+					<include name="**/wordbubble.fla"/>							
+					<include name="**/iconAssets.fla"/>												
+				</fileset>
+			</path>
+		</foreach>		
+	</target>
+
+	<target name="buildAssetSwfs">
+		<echo message="BUILDING ASSET SWFS"/>		
+		<foreach param="file" target="buildFlaToSwf">
+			<path>
+				<fileset dir="${rootDir}" casesensitive="no">
+					<include name="**/iconAssets.fla"/>												
+				</fileset>
+			</path>
+		</foreach>		
+	</target>
+
+ 	<target name="replaceVarsForBuild">
+		<condition property="useUiManager2Swc" value="true" else="false">
+			<or>
+				<equals arg1="${filename}" arg2="uimanager2"/>
+				<equals arg1="${filename}" arg2="actorassets"/>				
+			</or>
+		</condition>
+
+		<condition property="doQuit" value="true" else="false">
+			<equals arg1="${quit}" arg2="true"/>
+		</condition>
+ 	
+		<condition property="as3classpath" value=".;$(AppConfig)/ActionScript 3.0/Classes;${As3SrcRoot};${BattleSrcRoot};${rootDir}\..\swcs\componentBases;${rootDir}\..\swcs\assets"
+					  else=".;$(AppConfig)/ActionScript 3.0/Classes;${As3SrcRoot};${BattleSrcRoot}">
+			<equals arg1="${useUiManager2Swc}" arg2="true"/>
+		</condition>
+
+		<condition property="reallyDebugBuild" value="${debugBuild}" else="false">
+			<equals arg1="${isMapFile}" arg2="-1"/>
+		</condition>
+
+		<replace file="${buildRootLoc}/build${filename}.jsfl">
+			<replaceFilter token="%FLPPATH%" value="file:///${buildRootLoc}/build.flp"/>
+			<replaceFilter token="%LOGPATH%" value="file:///${buildRootLoc}/%PROJECTNAME%Log"/>
+			<replaceFilter token="%AS3CLASSPATH%" value="${as3classpath}"/>
+			<replaceFilter token="%QUIT%" value="${doQuit}"/>						
+			<replaceFilter token="%CURR_PROFILE_NAME%" value="file:///${buildRootLoc}/currProfile.xml"/>
+			<replaceFilter token="%NEW_PROFILE_NAME%" value="file:///${buildRootLoc}/newProfile.xml"/>
+			<replaceFilter token="%DEBUG_BUILD%" value="${reallyDebugBuild}"/>
+			<replaceFilter token="%BUILDTYPE%" value="${buildType}"/>			
+			<replaceFilter token="%FILENAME%" value="${filename}"/>												
+			<replaceFilter token="%CHECKFORGRAPHICS%" value="${checkForGraphics}"/>
+			<replaceFilter token="%CHECKFORBADAS%" value="${checkForBadAs}"/>			
+			<replaceFilter token="%PROCESSEVERYFRAMESCRIPT%" value="file:///${buildRootLoc}/processEveryFrame.jsfl"/>
+			<replaceFilter token="\" value="/"/>
+			<replaceFilter token="/r/n" value="\r\n"/>			
+	  </replace>	  		
+	</target>
+
+
+<target name="prepareJSFL">
+ 		<copy file="${buildRootLoc}/build_template.jsfl" tofile="${buildRootLoc}/build${filename}.jsfl" overwrite="true" failonerror="true"/>
+		<waitfor maxwait="60" maxwaitunit="second">
+			<available file="${buildRootLoc}/build${filename}.jsfl"/>
+		</waitfor>
+		<condition property="doPublish" value="true" else="false">
+			<or>
+				<equals arg1="true" arg2="${publish}"/>
+				<equals arg1="true" arg2="${forcePublish}"/>				
+			</or>
+		</condition>
+		
+ 		<antcall target="replaceVarsForBuild">
+			<param name="quit" value="${quit}"/>
+		</antcall>			
+	</target>
+
+	<target name="buildFlaToSwf">
+		<antcall target="buildFla">
+			<param name="buildType" value="swf"/>
+		</antcall>
+	</target>
+
+	<target name="buildFlaToSwc">
+		<antcall target="buildFla">		
+			<param name="buildType" value="swc"/>
+		</antcall>
+	</target>
+
+	<target name="buildFla">
+		<basename file="${file}" property="filename" suffix="fla"/>
+		<dirname file="${file}" property="dirname"/>
+
+		<stringutil string="${dirname}" property="isMapFile">
+			<indexof string="maps"/>
+		</stringutil>
+
+		<if>
+			<not>
+				<equals arg1="${isMapFile}" arg2="-1"/>
+			</not>
+			<then>
+				<antcall target="getMapDependencies"/>
+			</then>
+		</if>
+
+		<antcall target="writeFlaToFlp">
+			<param name="quit" value="${quit}"/>
+		</antcall>
+	</target>
+	<target name="getMapDependencies">
+ 		<copy file="${buildRootLoc}/getImportUrls_template.jsfl" tofile="${buildRootLoc}/getImportUrls.jsfl" overwrite="true"  failonerror="true"/>
+		<waitfor maxwait="60" maxwaitunit="second">
+			<available file="${buildRootLoc}/getImportUrls.jsfl"/>
+		</waitfor>
+		<property name="importsOutputFile" location="${rootDir}/../bin/maps/mapDependencies.xml"/>
+		<replace file="${buildRoot}/getImportUrls.jsfl">
+			<replaceFilter token="%OUTPUTFILE%" value="file:///${importsOutputFile}"/>
+			<replaceFilter token="%FLAPATH%" value="file:///${dirname}/${filename}.fla"/>
+			<replaceFilter token="%PROFILE_PATH%" value="file:///${buildRootLoc}/dependencyProfile.xml"/>			
+			<replaceFilter token="\" value="/"/>
+	  </replace>
+
+	  <exec executable="cmd" dir=".">		
+			<arg value="/c"/>
+			<arg value="${buildRootLoc}/getImportUrls.jsfl" />
+		</exec>
+	</target>
+	
+	<target name="writeFlaToFlp">
+		<basename file="${file}" property="filename" suffix="fla"/>
+		<dirname file="${file}" property="dirname"/>
+
+		<antcall target="prepareJSFL">
+			<param name="quit" value="${quit}"/>
+		</antcall>
+			
+		
+		<delete quiet="true">
+			  <fileset dir="${buildRootLoc}" includes="%PROJECTNAME%Log" />
+		</delete>
+
+		<!-- Echoing this so we can see in the ant log (and in the build emails) what we were building -->
+		<echo message="BUILDING: ${dirname}\${filename}.fla"/>
+
+		<!-- Write prolog of flp file -->
+		<echo message="&lt;flash_project name=&quot;temp&quot; version=&quot;1&quot;/>" file="${buildRootLoc}/build.flp"/>
+
+
+		<!-- Write a line to the flp file for this fla.  Flash is cool if we always set the file to
+		be the default; it just picks one, and we don't care which is the default. -->
+		<echo message="&lt;project_file path=&quot;${dirname}\${filename}.fla&quot; filetype=&quot;fla&quot; profile=&quot;&quot;&#xd;ef_file=&quot;true&quot; def_file=&quot;true&quot; />" file="${buildRootLoc}/build.flp" append="true"/>
+
+		<!-- Write epilog of flp file -->
+		<echo message="&lt;/flash_project>" file="${buildRootLoc}/build.flp" append="true"/>
+
+		<!--Sometimes, the Flash IDE is crashing, so this should help catch that-->
+		<parallel>
+			<sequential>
+	 		<exec executable="cmd" dir="." spawn="true">
+				<arg value="/c"/>
+	 			<arg value="${buildRootLoc}/build${filename}.jsfl" />
+	 		</exec>		
+			</sequential>
+			<sequential>
+				<var name="timeout" unset="true"/>
+				<waitfor maxwait="300" maxwaitunit="second" checkevery="5" checkeveryunit="second" timeoutproperty="timeout">
+				  <available file="%PROJECTNAME%Log" filepath="${buildRootLoc}"/>
+				</waitfor>
+				<antcallback target="ifNotDone" return="file, fla, timeout"/>
+			</sequential>
+		</parallel>
+
+		<antcall target="checkForErrors"/>				
+ 	</target>
+
+	<target name="buildExternals">
+		<if>
+			<not>
+				<equals arg1="${buildMaps}" arg2="true"/>
+			</not>
+			<then>
+				<!-- building guest reg first -->
+				<echo message="BUILDING GUEST REG"/>
+				<replace file="${guestRoot}/build/buildMachineBuild.properties" token="Program Files" value="Program Files (x86)"/>
+
+				<ant antfile="${guestRoot}/build/build.xml" dir="." target="default">
+					<property name="regRootDir" location="${guestRoot}"/>
+					<property file="${guestRoot}/build/buildMachineBuild.properties"/>
+				</ant>
+				<property name="TrackingManagerRoot" location="${srcRoot}/project_as3/site/TrackingManager"/>
+				<echo message="BUILDING TRACKING MANAGER: ${TrackingManagerRoot}"/>
+				
+				<ant antfile="${TrackingManagerRoot}/build/build.xml" dir="." target="default" inheritAll="true">
+					<property name="setTrackingRootDir" value="${TrackingManagerRoot}"/>
+					<property name="debugBuild" value="${debugBuild}"/>
+					<property name="flexFrameworkDir" location="c:\flex3.4.0_sdk"/>
+					<property name="mxmlcExecutable" value="mxmlc.exe"/>
+					<property name="battleBin" location="${rootDir}/../bin"/>
+				</ant>
+			
+				
+			</then>
+		</if>
+	</target>
+	
+	<target name="buildHangoutPlatform" if="doBuildHangoutSrc">
+		<echo message="BUILDING HANGOUT PLATFORM: ${syncHangoutSrc}"/>
+		
+		<property name="PlatformRoot" location="${srcRoot}/project_as3/mmo/HangoutPlatform"/>
+		<ant antfile="${PlatformRoot}/build/build.xml" dir="." target="default" inheritAll="true">
+
+           	<!--As3 source and battle src are being set in the build-config-->
+           							
+			<property name="setPlatformRootDir" value="${PlatformRoot}"/>
+			<property name="debugBuild" value="${debugBuild}"/>
+			<property name="flexFrameworkDir" location="c:\flex3.4.0_sdk"/>
+			<property name="mxmlcExecutable" value="mxmlc.exe"/>
+			<property name="battleBin" location="${rootDir}/../bin"/>
+			<property name="swcsLibraryPath" location="${rootDir}/../swcs/assets"/>			
+		</ant>
+	</target>
+
+		
+	<target name="buildSWFs">
+		<antcall target="buildExternals"/>
+
+		<antcall target="buildAssetSwfs"/>				
+		<antcall target="buildAssetSwcs"/>
+				
+		<antcall target="buildHangoutPlatform"/>
+		<antcall target="buildzOMG"/>
+	</target>
+
+	<target name="buildMainSWFWithMXMLC">
+  		<ant antfile="${rootDir}/battleMain/build/build.xml" dir="." target="default">
+			<property file="${rootDir}/battleMain/build/buildMachineBuild.properties"/>
+			<property name="As3SrcRoot" location="${As3SrcRoot}"/>
+			<property name="BattleSrcRoot" location="${BattleSrcRoot}"/>
+			<property name="swcsLibraryPath" location="${rootDir}/../swcs/assets"/>			
+			<property name="linkReport" location="${buildRootLoc}/linkReport.xml"/>						
+			<property name="debugBuild" value="${debugBuild}"/>
+		</ant>
+		<antcall target="buildModules"/>
+	</target>
+
+
+	<target name="buildComponentBasesSwcs">
+		<foreach param="file" target="buildSingleComponentBaseSwc">
+			<path>
+				<fileset dir="${rootDir}" includes="**/ui/uimanager2.fla" casesensitive="no">
+				</fileset>
+			</path>
+		</foreach>		
+	</target>
+
+	<target name="buildSingleComponentBaseSwc">
+		<echo message="BUILDING ${file} SWC TO COMPILE AGAINST"/>		
+  		<ant antfile="${buildRootLoc}/createSwc.xml" dir="." target="default">
+			<property name="flaPath" location="${file}"/>
+			<property name="buildRoot" location="${buildRootLoc}"/>
+			<property name="setBattleSrcRoot" value="${BattleSrcRoot}"/>
+			<property name="setAs3SrcRoot" value="${As3SrcRoot}"/>
+			<property name="propertyfile" value="${rootDir}/battleMain/build/swclocalBuild.pc.properties"/>			
+		</ant>				
+	</target>
+
+
+	<target name="buildModules" if="doBuildModules">
+		<!-- build the common flexAssets-->
+		<antcall target="buildFlexAssets">
+			<param name="location" location="${SharedModulesRoot}/flexAssets"/>
+		</antcall>
+
+		<!-- iterate through the module dirs -->		
+		<foreach param="moduleDir" target="buildSingleModule" inheritall="true">
+			<path>
+				<dirset dir="${SharedModulesRoot}" casesensitive="no">
+ 					<include name="*Module"/>				
+				</dirset>
+			</path>
+		</foreach>
+	</target>
+
+	<target name="buildSingleModule">
+		<!-- build flexAssets local to the single module-->
+		<echo message="MODULEDIR: ${moduleDir}"/>
+		<antcall target="buildFlexAssets">
+			<param name="location" location="${moduleDir}/flexAssets"/>
+		</antcall>
+		
+		<basename file="${moduleDir}" property="baseFileName"/>
+		
+  		<ant antfile="${SharedModulesRoot}/build/build.xml" dir="." target="default">
+			<property file="${rootDir}/battleMain/build/buildMachineBuild.properties"/>
+			<property name="output" location="${rootDir}/../bin/flexModules/${baseFileName}/${baseFileName}.swf"/>
+			<property name="linkReport" location="${buildRootLoc}/linkReport.xml"/>
+			<property name="debugBuild" value="${debugBuild}"/>
+			<property name="baseFileName" value="${baseFileName}"/>
+		</ant>
+	</target>
+		
+	<target name="buildFlexAssets">
+		<if>
+			<available file="${location}"/>
+			<then>
+				<property name="quit" value="true"/>
+				<foreach param="file" target="buildFlaToSwf" inheritall="true">
+					<path>
+						<fileset dir="${location}" includes="**/*.fla" casesensitive="no">
+						</fileset>
+					</path>
+				</foreach>
+			</then>
+		</if>
+	</target>
+	
+	<target name="buildzOMG">
+		<!-- now building zOMG -->
+		<echo message="BUILDING ZOMG"/>
+
+<!--
+		<delete quiet="true" file="${problemsList}" />
+		<delete file="${buildRootLoc}/processEveryFrame.jsfl" quiet="true" failonerror="false" />
+ 		<copy file="${buildRootLoc}/processEveryFrame_template.jsfl" tofile="${buildRootLoc}/processEveryFrame.jsfl" overwrite="true"  failonerror="true"/>
+		<waitfor maxwait="60" maxwaitunit="second">
+			<available file="${buildRootLoc}/processEveryFrame.jsfl"/>
+		</waitfor>
+		<replace file="${buildRoot}/processEveryFrame.jsfl">
+			<replaceFilter token="%OUTPUTFILE%" value="file:///${problemsList}"/>
+			<replaceFilter token="%CHECKFORGRAPHICS%" value="${checkForGraphics}"/>
+			<replaceFilter token="%CHECKFORBADAS%" value="${checkForBadAs}"/>				
+			<replaceFilter token="\" value="/"/>
+			<replaceFilter token="/r/n" value="\r\n"/>			
+		</replace>
+-->
+		<if>
+			<equals arg1="${forceAllBuild}" arg2="true"/>
+			<then>
+				<antcall target="buildMainSWFWithMXMLC"/>						
+				<antcall target="buildFlexAssets">
+					<param name="location" location="${rootDir}/../flexAssets"/>
+				</antcall>
+				<antcall target="buildMainSWFWithMXMLC"/>
+				<antcall target="buildComponentBasesSwcs"/>
+			</then>
+		</if>
+		
+		<if>
+			<equals arg1="${buildMaps}" arg2="true"/>			
+			<then>
+				<delete quiet="true">
+					  <fileset dir="${rootDir}/../bin/maps" includes="mapDependencies.xml" />
+				</delete>
+				
+				<foreach param="file" target="buildFlaToSwf">
+					<path>
+						<fileset dir="${rootDir}" includes="**/*.fla" casesensitive="no">
+							<exclude name="**/*backup*/**"/>							
+							<exclude name="**/battle_local.fla"/>
+							<exclude name="**/monsterplayer/**"/>
+							<exclude name="**/RingPlayer/**"/>
+							<!-- asset flas go here-->
+							<exclude name="**/uiactionbar.fla"/>							
+							<exclude name="**/wordbubble.fla"/>							
+							<exclude name="**/iconAssets.fla"/>														
+						</fileset>
+					</path>
+				</foreach>
+			</then>
+			<else>
+				<foreach param="file" target="buildFlaToSwf">
+					<path>
+						<fileset dir="${rootDir}" includes="**/*.fla" casesensitive="no">
+							<exclude name="**/*backup*/**"/>							
+							<exclude name="**/battle_local.fla"/>
+							<exclude name="**/monsterplayer/**"/>
+							<exclude name="**/RingPlayer/**"/>
+							<exclude name="**/maps/**"/>
+							<!-- asset flas go here-->							
+							<exclude name="**/uiactionbar.fla"/>														
+							<exclude name="**/wordbubble.fla"/>
+							<exclude name="**/iconAssets.fla"/>																																			
+						</fileset>
+					</path>
+				</foreach>				
+			</else>
+		</if>
+		<property name="doClose" value="true"/>
+		<antcall target="closeFlash"/>
+ 	</target>
+
+	<target name="closeFlash" if="doClose">
+	 		<exec executable="cmd" dir="." >		
+				<arg value="/c"/>
+	 			<arg value="${buildRootLoc}/closeFlash.jsfl" />
+	 		</exec>		
+	</target>
+	
+  	<target name="checkForErrors">
+ 		<!--save the output in case there's an error and we want to output it-->
+ 		<loadfile srcfile="${buildRootLoc}/%PROJECTNAME%Log" property="compilerLog"/>
+ 		
+	 	<loadfile srcfile="${buildRootLoc}/%PROJECTNAME%Log" property="generatedWarning">
+			<filterchain>
+	 		    <linecontainsregexp>
+	 		      <regexp pattern="Error" />
+	 		    </linecontainsregexp>
+			</filterchain>
+		</loadfile>
+
+		<condition property="doClose">
+			<isset property="generatedWarning"/>
+		</condition>
+
+		<antcall target="closeFlash"/>
+
+		<if>
+			<isset property="generatedWarning"/>
+			<then>
+				<echo message="${compilerLog}"/>
+			</then>
+		</if>
+	 	<fail if="generatedWarning" message="${compilerLog}"/>
+ 	</target>
+
+	<target name="ifNotDone" if="timeout">
+		<antcallback target="killFlash" return="file, fla"/>
+		<antcallback target="tryAgain" return="file, fla"/>
+	</target>
+	
+	<target name="tryAgain">
+		<if>
+			<isset property="secondTime"/>
+			<then>
+				<fail message="Unable to build ${file} due to Flash's crashing."/>
+			</then>
+			<else>
+				<property name="secondTime" value="true"/>
+				<antcallback target="buildFla" return="file"/>				
+			</else>
+		</if>
+	</target>
+ 	
+	<target name="killFlash">
+	   	  <exec executable="pskill" dir=".">
+	     	     <arg value="Flash.exe"/>
+	   	  </exec>
+
+			  <sleep seconds="10"/>
+
+			  <exec executable="pskill" dir=".">
+	     	     <arg value="dwwin.exe"/>
+	   	  </exec>
+		  <antcall target="reportFlaCrash">
+			  <param name="file" value="${file}"/>
+		   </antcall>
+	</target>
+ 	
+ 	<target name="reportFlaCrash" if="secondTime">
+	 	  <fail message="Flash never completed for fla ${file}: Flash probably crashed."/>
+ 	</target>
+	
+	<target name="default" depends="cleanOutOtherSwfs, buildSWFs" />
+</project>

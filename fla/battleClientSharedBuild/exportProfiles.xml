@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <project name="%PROJECTNAME%" default="default">
+
+ 	<taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+
+	<target name="default">
+		<foreach param="file" target="exportProfile">
+			<path>
+				<fileset dir="${dir}" includes="**/*.fla"/>
+			</path>
+		</foreach>
+	</target>
+
+	<target name="exportProfile">
+ 		<copy file="exportProfile_template.jsfl" tofile="exportProfile.jsfl" overwrite="true"/>
+
+		<basename file="${file}" property="filename" suffix="fla"/>
+		<dirname file="${file}" property="dirname"/>
+
+		<replace file="exportProfile.jsfl">
+			<replaceFilter token="%FLAPATH%" value="file:///${dirname}/${filename}.fla"/>
+			<replaceFilter token="%PROFILEPATH%" value="file:///${dirname}/IDEProfile_${filename}.xml"/>        	
+			<replaceFilter token="\" value="/"/>
+	  </replace>
+
+		<exec executable="cmd" dir=".">
+			<arg value="/c"/>
+			<arg value="exportProfile.jsfl" />
+		</exec>	  
+	</target>
+</project>

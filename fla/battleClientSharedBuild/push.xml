@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <project name="push" default="default">
+
+   <taskdef name="stringutil" classname="ise.antelope.tasks.StringUtilTask"/>
+	<taskdef name="math" classname="ise.antelope.tasks.MathTask"/>	
+ 	<taskdef resource="net/sf/antcontrib.properties"/>
+
+	<target name="svnCommit">
+ 		<exec executable="cmd" dir="${buildRoot}">
+ 			<arg value="/c"/>
+ 			<arg value="svn"/>
+ 			<arg value="info"/>
+ 			<redirector output="svnInfo"/>
+ 		</exec> 
+
+		<loadfile srcFile="svnInfo" property="svnRevisionNumberString">
+			<filterchain>
+	 		    <linecontainsregexp>
+	 		      <regexp pattern="Revision:" />
+	 		    </linecontainsregexp>
+			</filterchain>			
+		</loadfile>
+
+		<stringutil string="${svnRevisionNumberString}" property="len">
+			<length/>
+		</stringutil>
+		<math result="result" operand1="${len}" operation="-" operand2="2" datatype="int"/>		
+		<stringutil string="${svnRevisionNumberString}" property="svnRevisionNumber">
+			<substring beginindex="10" endindex="${result}"/>
+		</stringutil>
+		<stringutil string="${branchName}" property="revisionPrefix">
+			<substring beginindex="0" endindex="1"/>
+		</stringutil>
+		<property name="binDirLoc" location="${commitPath}"/>
+
+		<echo message="${revisionPrefix}${svnRevisionNumber}" file="${binDirLoc}/revision.txt"/>
+		<echo message="${revisionPrefix}${svnRevisionNumber}" file="./revision.txt"/>
+		<echo message="IN PUSH.XML: ${svnRevisionNumber}"/>
+		
+		<!-- take care of conflicts -->
+		<exec executable="cmd" dir=".">
+ 			<arg value="/c"/>
+ 			<arg value="svn"/>
+ 			<arg value="update"/>
+			<arg value="--force"/>
+			<arg value="--non-interactive"/>			
+			<arg value="${binDirLoc}"/>
+		</exec>
+
+		<exec executable="cmd" dir=".">
+ 			<arg value="/c"/>
+ 			<arg value="svn"/>
+ 			<arg value="update"/>
+			<arg value="--force"/>			
+			<arg value="--non-interactive"/>			
+			<arg value="${guestBinCopyRoot}"/>
+		</exec>
+
+		<exec executable="cmd" dir=".">
+ 			<arg value="/c"/>
+ 			<arg value="svn"/>
+ 			<arg value="update"/>
+			<arg value="--force"/>			
+			<arg value="--non-interactive"/>			
+			<arg value="${binDirLoc}\..\swcs"/>
+		</exec>		
+		
+
+		<exec executable="cmd" dir=".">
+ 			<arg value="/c"/>
+ 			<arg value="svn"/>
+ 			<arg value="resolve"/>
+ 			<arg value="--recursive"/>			
+ 			<arg value="--accept"/>
+ 			<arg value="mine-full"/>						
+			<arg value="--non-interactive"/>
+			<arg value="${binDirLoc}"/>
+		</exec>
+
+		<exec executable="cmd" dir=".">
+ 			<arg value="/c"/>
+ 			<arg value="svn"/>
+ 			<arg value="resolve"/>
+ 			<arg value="--recursive"/>			
+ 			<arg value="--accept"/>
+ 			<arg value="mine-full"/>						
+			<arg value="--non-interactive"/>
+			<arg value="${guestBinCopyRoot}"/>			
+		</exec>
+
+		<exec executable="cmd" dir=".">
+ 			<arg value="/c"/>
+ 			<arg value="svn"/>
+ 			<arg value="resolve"/>
+ 			<arg value="--recursive"/>			
+ 			<arg value="--accept"/>
+ 			<arg value="mine-full"/>						
+			<arg value="--non-interactive"/>
+			<arg value="${binDirLoc}\..\swcs"/>			
+		</exec>
+		
+		
+		<!-- Now add any necessary files -->
+		<!--
+		<move file="${rootDir}\battle.swf" tofile="${rootDir}\battle_renameme.swf"/>
+		<delete file="${rootDir}\Battle.swf"/>		
+		<move file="${rootDir}\battle_renameme.swf" tofile="${rootDir}\Battle.swf"/>		
+-->
+		<!-- now submit -->
+		<exec executable="cmd" dir=".">
+ 			<arg value="/c"/>
+ 			<arg value="svn"/>
+ 			<arg value="commit"/>
+			<arg value="--non-interactive"/>			
+			<arg value="--message"/>
+			<arg value="[autobuild] zOMG client checkin after successful build from revision ${svnRevisionNumber}"/>
+			<arg value="${binDirLoc}"/>
+		</exec>
+
+		<exec executable="cmd" dir=".">
+ 			<arg value="/c"/>
+ 			<arg value="svn"/>
+ 			<arg value="commit"/>
+			<arg value="--non-interactive"/>			
+			<arg value="--message"/>
+			<arg value="[autobuild] zOMG client checkin after successful build from revision ${svnRevisionNumber}"/>
+			<arg value="${guestBinCopyRoot}"/>
+		</exec>
+		<property name="swcsDirLoc" location="${binDirLoc}\..\swcs"/>
+<echo message="COMMITTING SWCS IN PUSH.XML: ${swcsDirLoc}"/>			
+		<exec executable="cmd" dir=".">
+ 			<arg value="/c"/>
+ 			<arg value="svn"/>
+ 			<arg value="commit"/>
+			<arg value="--non-interactive"/>			
+			<arg value="--message"/>
+			<arg value="[autobuild] zOMG client checkin after successful build from revision ${svnRevisionNumber}"/>
+			<arg value="${swcsDirLoc}"/>
+		</exec>
+
+		
+	</target>
+
+	<target name="default" depends="svnCommit"/>
+
+ </project>

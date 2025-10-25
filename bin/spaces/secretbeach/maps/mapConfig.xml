@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MapsInfo>
+  <GlobalMapInfo xscale="1.25" yscale="2.50"/>
+  <ZonesInfo>
+    <Zone id="SecretBeach" name="Secret Beach" swf="secret_beach" startRoom="SecretBeach_1" areaname="Z_SecretBeach">
+      <SplashScreen url=""/>
+    </Zone>    
+  </ZonesInfo>
+  
+  <MimiMapsInfo>      
+    <MiniMap id="NoMap" file="nomap.jpg" scale="5" showGlobal="0" showLocal="0">
+      <GlobalPos x="0" y="0"/>
+      <StartPos col="0" row="0"/>
+    </MiniMap>
+  </MimiMapsInfo>
+  
+  <MusicZones>
+    <Zone id="SecretBeach">
+      <Combat/>
+      <Normal>
+      	<!--
+       	 <Song title="Andre Caplet, Children's Corner Suite - Serenade for the Doll" file="lvQt55bxRP.aem"/>        
+        -->
+      </Normal>
+    </Zone>    
+  </MusicZones>
+  
+  <Rooms zoneId="SecretBeach" miniMapId="NoMap" scale="75" musicZoneId="SecretBeach">SecretBeach_1, SecretBeach_101</Rooms>
+
+ 
+</MapsInfo>

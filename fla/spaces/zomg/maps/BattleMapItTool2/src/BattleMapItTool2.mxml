@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute"
+	invoke="onInvoke(event)" 
+	frameRate="60">
+	<mx:VBox id="uiSelectors" width="100%" height="100%" paddingLeft="10" verticalGap="5" >
+		<mx:HBox width="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+			<mx:Button id="browseBtnMapConfig" label="mapConfig.xml location ..." toolTip="Browse for map swfs directory" click="onBrowseMapConfigClick(event)"/>
+			<mx:Text id="filePathMapConfigTxt" y="3" width="100%" text="{browseBtnMapConfig.toolTip}"/>
+		</mx:HBox>
+		<mx:HBox width="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+			<mx:Button id="browseBtnOutput" label="Output location ..." toolTip="Browse for output directory" click="onSaveTo(event)"/>
+			<mx:Text id="filePathOutputTxt" y="3" width="100%" text="{browseBtnOutput.toolTip}"/>
+		</mx:HBox>		
+		<mx:HBox width="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off">		
+			<mx:Button id="mapAllZonesButton" label="Map All Zones" toolTip="Click to map all zones." click="this.startAllZonesFromUi(event)" enabled="false"/>
+			<mx:Button id="mapSelectedZonesButton" label="Map Selected Zone" toolTip="Click to map selected zone." click="this.startSelectedZonesFromUi(event)" enabled="false"/>			
+		</mx:HBox>	
+		<mx:HBox width="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+			<mx:ComboBox id="zonesList" labelFunction="getZonesLabel" rowCount="10" width="200"/>							
+			<mx:List id="roomsList" labelFunction="getRoomsLabel" rowCount="10" width="200" dataProvider="{this.getRoomsForZone(this.zonesList.selectedItem)}"/>										
+		</mx:HBox>
+	</mx:VBox>
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			
+			private var _baseUrl:String = null;
+			private var _outputPath:String = null;
+			private var _zoneIndex:int = -1;
+			private var _commandLineLaunched:Boolean = false;
+			
+			private var _zones:Array = null;
+			private var _map:MapLoader = null;
+			private var _mapConfig:MapConfigLoader = null;
+			private var _areaname:String = null;
+			private var _selectedRoom:XML = null;
+
+	
+			private function onBrowseMapConfigClick(e:MouseEvent):void {
+				var fileToOpen:File = new File();
+				var txtFilter:FileFilter = new FileFilter("Map Config File", "MapConfig.xml");
+			    fileToOpen.browseForOpen("Open", [txtFilter]);
+			    fileToOpen.addEventListener(Event.SELECT, mapConfigSelected, false, 0, true);				
+			}
+			
+			private function mapConfigSelected(event:Event):void  {
+			    var file:File = event.target as File;
+				this.filePathMapConfigTxt.text = file.nativePath;			    			    								
+			    this._baseUrl = File(file.parent).nativePath + File.separator;
+			    this.loadMapConfig();
+			}
+			
+			private function onSaveTo(e:MouseEvent):void {
+				var fileToSaveTo:File = new File();				
+			    fileToSaveTo.browseForDirectory("Save to . . .");
+			    fileToSaveTo.addEventListener(Event.SELECT, onSaveToSelected, false, 0, true);				
+			}
+			
+			private function onSaveToSelected(e:Event):void {
+			    var file:File = e.target as File;
+			    this._outputPath = file.nativePath;
+				this._outputPath = file.resolvePath(this._outputPath).nativePath + File.separator;
+				this.filePathOutputTxt.text = this._outputPath;
+				this.checkMapItBtns();				
+			}
+			
+			private function onInvoke(e:InvokeEvent):void {
+				if (e.arguments.length == 2) {					
+					this._commandLineLaunched = true;
+					this.showUi(false);
+					
+					var mapsUrl:String = e.arguments[0];
+					this._baseUrl = e.currentDirectory.resolvePath(mapsUrl).nativePath + File.separator;
+					
+					this._outputPath = e.arguments[1];
+					this._outputPath = e.currentDirectory.resolvePath(this._outputPath).nativePath + File.separator;
+
+					this.loadMapConfig();
+				}
+			}	
+			
+			private function startAllZonesFromUi(e:MouseEvent):void {
+				this._zones = this._mapConfig.getZoneIds();
+				this.startFromUi();				
+			}
+			
+			private function startSelectedZonesFromUi(e:MouseEvent):void {
+				this._zones = new Array();
+
+				var zone:XML = this.zonesList.selectedItem as XML;
+				this._zones.push({prefix:zone.@id, swf:zone.@swf, areaname:zone.@areaname});				
+
+				var selectedRoom:XML = this.roomsList.selectedItem as XML;
+				this._selectedRoom = selectedRoom;					
+
+				this.startFromUi();				
+			}
+					
+			private function startFromUi():void {
+				this.showUi(false);
+				this.doLoadMap();
+			}
+	
+			private function loadMapConfig():void{
+				this._mapConfig = new MapConfigLoader();
+				this._mapConfig.addEventListener(IOErrorEvent.IO_ERROR, onIOError);
+				this._mapConfig.addEventListener(ErrorEvent.ERROR, onError);
+				this._mapConfig.addEventListener(Event.COMPLETE, onMapConfigLoaded);
+				this._mapConfig.LoadMapConfig(this._baseUrl + "mapConfig.xml");
+			}
+			
+			private function onIOError(e:IOErrorEvent):void {
+				Alert.show("Could not find mapConfig.xml at " + this._baseUrl + "mapConfig.xml: " + e.text);
+			}
+			
+			private function onError(e:Error):void {
+				Alert.show("Could not find mapConfig.xml at " + this._baseUrl + "mapConfig.xml: " + e.message);
+			}			
+			
+			private function onMapConfigLoaded(evt:Event):void{
+				this._mapConfig.removeEventListener(Event.COMPLETE, onMapConfigLoaded);				
+				this._zoneIndex = 0;
+				if (this._commandLineLaunched) {
+					this._zones = this._mapConfig.getZoneIds();
+					this.doLoadMap();					
+				} else {
+					var zoneNodes:XMLList = this._mapConfig.getZoneNodes();
+					zonesList.dataProvider = zoneNodes;
+					this.checkMapItBtns();	
+				}			
+			}
+			
+			private function checkMapItBtns():void {
+				var enabled:Boolean =  this._baseUrl && 
+									   this._outputPath && 
+									   this._zoneIndex >= 0;
+				this.mapAllZonesButton.enabled = enabled;
+				this.mapSelectedZonesButton.enabled = enabled;				
+			}
+			
+			private function doLoadMap():void {
+				this.loadMap(this._zones[this._zoneIndex].prefix, this._baseUrl + this._zones[this._zoneIndex].swf + ".swf");
+			}
+			
+			private function loadMap(prefix:String, url:String):void{
+				while (this.rawChildren.numChildren > 0){
+					this.rawChildren.removeChildAt(0);
+				}			
+				trace("LOAD MAP: ", prefix, url)					
+				this._map = new MapLoader(_outputPath);
+				this._map.addEventListener(Event.COMPLETE, onMapLoaded);
+				this._map.areaName = this._zones[this._zoneIndex].areaname;								
+				this._map.loadMap(prefix, url);	
+			}
+			
+			private function onMapLoaded(evt:Event):void{
+				trace(" BUILD MAP ", this._map.prefix)				
+				this._map.removeEventListener(Event.COMPLETE, onMapLoaded);
+								
+				this.rawChildren.addChild(this._map);						
+				
+				var selectedRoom:XML = this._selectedRoom;
+				var selectedRoomName:String = null;
+				var selectedRoomsArray:Array = null;
+				if (selectedRoom) {
+					selectedRoomsArray = new Array();
+					selectedRoomName = selectedRoom.@id;
+					selectedRoomsArray.push(selectedRoomName);
+				}
+				this._map.buildMapData(selectedRoomsArray);
+				this._map.addEventListener(MapLoader.MAP_BUILD_DONE, onBuildDone);
+								
+							
+			}	
+			private function onBuildDone(evt:Event):void{
+				this._zoneIndex ++;
+				if (this._zoneIndex < this._zones.length){
+					this.loadMap(this._zones[this._zoneIndex].prefix, this._baseUrl + this._zones[this._zoneIndex].swf + ".swf");
+				} else {
+					if (this._commandLineLaunched) {
+						NativeApplication.nativeApplication.exit();
+					} else {
+						this.clearPreviousMapItRun();
+						this.showUi(true);
+					}
+				}
+			}
+				
+			private function getZonesLabel(item:Object):String {
+				return XML(item).@id;
+			}
+				
+			private function getRoomsLabel(item:Object):String {
+				return XML(item).@id;
+			}
+			
+			private function getRoomsForZone(selectedItem:Object):XMLList {
+				if (selectedItem == null) {
+					return null;
+				}
+				var roomsXMLList:XMLList = null;				
+				var zoneNode:XML = selectedItem as XML;
+				var roomsString:String = this._mapConfig.getRoomsForZone(zoneNode.@id);
+				if (roomsString != null) {
+					var roomsArray:Array = roomsString.split(",");
+					var roomsXML:XML = <Rooms/>;
+					for each (var roomName:String in roomsArray) {
+						roomsXML.appendChild(<Room id={roomName}/>);
+					}
+					roomsXMLList = roomsXML.Room;
+				}
+				
+				return roomsXMLList;
+			}
+			
+			private function showUi(show:Boolean):void {
+				if (show && !this.contains(this.uiSelectors)) {
+					this.addChildAt(this.uiSelectors, 0);
+				} else if (this.contains(this.uiSelectors)) {
+					this.removeChild(this.uiSelectors);
+				}					
+			}
+			
+			private function clearPreviousMapItRun():void {
+				// clear stage
+				this._zoneIndex = 0;				
+				while (this.rawChildren.numChildren > 0){
+					this.rawChildren.removeChildAt(0);
+				}				
+			}
+		]]>
+	</mx:Script>
+</mx:WindowedApplication>

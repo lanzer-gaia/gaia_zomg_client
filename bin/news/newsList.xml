@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<News>
+  <Current>
+    <Article Date="07/13/2009" Title="The Animated Invade Aquariums" Links="newUpdates.html"></Article>
+    <Article Date="" Title="Welcome to the zOMG! Open Beta!" Links="welcome.html"></Article>
+  </Current>
+  <Archived>  
+    <Article Date="05/19/2009" Title="Mini-Event Launch!" Links="update_7_2_09.html"></Article>
+    <Article Date="05/19/2009" Title="Ring Optimizations and Kill Counters!" Links="update_5_18_09.html"></Article>
+    <Article Date="05/11/2009" Title="Die Bugs Die!" Links="update_5_11_09.html"></Article>
+    <Article Date="05/07/2009" Title="Latest & Greatest Stuff!" Links="newUpdates.html"></Article>
+    <Article Date="04/29/2009" Title="Lag Be Gone & Willpower Fix" Links="update_4_29_09.html"></Article>
+    <Article Date="04/15/2009" Title="Recent Bug Fixes" Links="update_4_15_09.html"></Article>
+    <Article Date="04/09/2009" Title="The Easter Bunny Goes High-Tech" Links="easter09.html"></Article>
+    <Article Date="04/01/2009" Title="OmniDrink Presents (April Fool's)" Links="omniDrink.html"></Article>
+  </Archived>
+</News>

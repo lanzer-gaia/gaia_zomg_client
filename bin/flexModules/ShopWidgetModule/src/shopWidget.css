@@ -1,0 +1,252 @@
+/* CSS file */
+.shopWidget {
+	backgroundSize: "100%";
+    borderColor: #7C7C7C;
+    borderThickness: 1;
+    borderSkin: ClassReference("ShopWidgetModule.src.BorderWithTabGap");
+	backgroundImage : Embed("../flexAssets/shop_ui.swf#shop_bg_pattern");
+}
+
+.shopItemInfo {
+	backgroundSize: "100%"; 
+	backgroundImage : Embed("../flexAssets/shop_ui.swf#shop_info_bg");
+}
+
+.shopItemLabelStuff {
+	backgroundSize: "100%"; 
+	backgroundImage : Embed("../flexAssets/shop_ui.swf#buy_dialog_highlight");
+}
+
+.npcImageContainer {
+	borderColor: #7C7C7C;
+	borderStyle: solid;
+	borderThickness: 1;
+	borderSides: right;
+}
+/*
+.scanLines {
+	backgroundSize: "100%"; 
+	backgroundImage : Embed("../flexAssets/shop_ui.swf#shop_portrait_scanlines_anim");	
+}
+*/
+.npcImage {
+	borderColor: #3C3C3C;
+	borderStyle: solid;
+	borderThickness: 1;
+	borderSides: left top bottom right;
+	backgroundSize: "100%";
+	backgroundImage : Embed("../flexAssets/shop_ui.swf#portrait_bg");	
+}
+
+.npcLabel{
+	backgroundSize: "100%";
+	backgroundImage : Embed("../flexAssets/shop_ui.swf#portrait_name_border");	
+	borderStyle: none;
+}
+
+.footer {
+	borderColor: #7C7C7C;  
+	borderStyle: solid;
+	borderThickness: 1;
+	backgroundSize: "100%";	
+	backgroundImage : Embed("../flexAssets/shop_ui.swf#shop_bottom_bar");	
+	/*borderSides: left top bottom right;  SEEMS TO BE BROKEN--I PUT THIS ON THE COMPONENT ITSELF*/
+}
+
+.pinEntry {
+	backgroundImage : Embed("../flexAssets/shop_ui.swf#redeem_box");
+	backgroundSize: "100%";
+}		
+
+.redeemConfirmButton {
+	upSkin:	Embed("../flexAssets/shop_ui.swf#redeem_confirm_button");
+	overSkin: Embed("../flexAssets/shop_ui.swf#redeem_confirm_button");
+	downSkin: Embed("../flexAssets/shop_ui.swf#redeem_confirm_button");
+	disabledSkin: Embed("../flexAssets/shop_ui.swf#redeem_confirm_button");	
+}
+
+.galleryLeftButton {
+	upSkin:	Embed("../flexAssets/shop_ui.swf#left_arrow_up");
+	overSkin: Embed("../flexAssets/shop_ui.swf#left_arrow_over");
+	downSkin: Embed("../flexAssets/shop_ui.swf#left_arrow_down");
+	disabledSkin: Embed("../flexAssets/shop_ui.swf#left_arrow_disabled");	
+}
+
+.galleryRightButton {
+	upSkin:	Embed("../flexAssets/shop_ui.swf#right_arrow_up");
+	overSkin: Embed("../flexAssets/shop_ui.swf#right_arrow_over");
+	downSkin: Embed("../flexAssets/shop_ui.swf#right_arrow_down");
+	disabledSkin: Embed("../flexAssets/shop_ui.swf#right_arrow_disabled");	
+}
+
+.closeButton {
+	upSkin:	Embed("../flexAssets/shop_ui.swf#_btnClose");
+	overSkin: Embed("../flexAssets/shop_ui.swf#_btnClose_over");
+	downSkin: Embed("../flexAssets/shop_ui.swf#_btnClose_down");
+	top: 10;
+	right: 10;
+}
+
+.buyButton {		   
+  fontWeight: bold;
+  fontSize: 12;
+  fontFamily: myArialBold;
+  color: #000000;
+  
+  upSkin:	Embed("../flexAssets/shop_ui.swf#_btn_buy_up");
+  overSkin: Embed("../flexAssets/shop_ui.swf#_btn_buy_over");
+  downSkin: Embed("../flexAssets/shop_ui.swf#_btn_buy_down");
+  disabledSkin: Embed("../flexAssets/shop_ui.swf#_btn_buy_disable");  
+}
+
+.gCashButton {
+  fontWeight: bold;
+  fontSize: 12;
+  fontFamily: myArialBold;  
+  color: #FFFFFF;
+  disabledColor: #888888;  
+  textAlign: center;
+  textRollOverColor: #FFFFFF;
+  textSelectedColor: #FFFFFF;  
+  upSkin:	Embed("../flexAssets/shop_ui.swf#_btn_getgcash_up");
+  overSkin: Embed("../flexAssets/shop_ui.swf#_btn_getgcash_over");
+  downSkin: Embed("../flexAssets/shop_ui.swf#_btn_getgcash_down");
+  disabledSkin: Embed("../flexAssets/shop_ui.swf#_btn_getgcash_disable");  	
+  icon: Embed("../flexAssets/shop_ui.swf#gcash_btn_icon");  
+}
+
+.refreshButton {
+  fontWeight: bold;
+  fontSize: 12;
+  fontFamily: myArialBold;  
+  color: #FFFFFF;
+  disabledColor: #888888;  
+  textRollOverColor: #FFFFFF;
+  textSelectedColor: #FFFFFF;    
+  textAlign: center;
+  upSkin:	Embed("../flexAssets/shop_ui.swf#_btn_refresh_up");
+  overSkin: Embed("../flexAssets/shop_ui.swf#_btn_refresh_over");
+  downSkin: Embed("../flexAssets/shop_ui.swf#_btn_refresh_down");
+  disabledSkin: Embed("../flexAssets/shop_ui.swf#_btn_refresh_disable");  	
+  icon: Embed("../flexAssets/shop_ui.swf#refresh_btn_icon_up");
+  downIcon: Embed("../flexAssets/shop_ui.swf#refresh_btn_icon_down");
+  overIcon: Embed("../flexAssets/shop_ui.swf#refresh_btn_icon_over");
+  disabledIcon: Embed("../flexAssets/shop_ui.swf#refresh_btn_icon_disable");        
+}
+
+.voipPlayButton {
+  fontWeight: bold;
+  fontSize: 12;
+  fontFamily: myArialBold;  
+  color: #000000;  
+  disabledColor: #888888;  
+  textAlign: center;
+  textRollOverColor: #000000;
+  textSelectedColor: #000000;
+  upSkin:	Embed("../flexAssets/shop_ui.swf#_btn_voip_play_up");
+  overSkin: Embed("../flexAssets/shop_ui.swf#_btn_voip_play_over");
+  downSkin: Embed("../flexAssets/shop_ui.swf#_btn_voip_play_down");
+  disabledSkin: Embed("../flexAssets/shop_ui.swf#_btn_voip_play_disable");  	
+  icon: Embed("../flexAssets/shop_ui.swf#voip_play_symbol");  
+}
+
+.voipRecordButton {
+  fontWeight: bold;
+  fontSize: 12;
+  fontFamily: myArialBold;  
+  textAlign: center;
+  color: #000000;
+  disabledColor: #888888;
+  textRollOverColor: #000000;
+  textSelectedColor: #000000;
+  upSkin:	Embed("../flexAssets/shop_ui.swf#_btn_voip_record_up");
+  overSkin: Embed("../flexAssets/shop_ui.swf#_btn_voip_record_over");
+  downSkin: Embed("../flexAssets/shop_ui.swf#_btn_voip_record_down");
+  disabledSkin: Embed("../flexAssets/shop_ui.swf#_btn_voip_record_disable");  	
+  recordIcon: Embed("../flexAssets/shop_ui.swf#voip_record_symbol");  
+  stopIcon: Embed("../flexAssets/shop_ui.swf#voip_stop_symbol");    
+}
+
+.footerLabel {
+	fontSize: 12;
+  	fontFamily: myArial;	
+	color: #FFFFFF;
+}
+
+.npcName {
+	fontFamily: myArialBold;	
+	fontWeight: bold;
+	textAlign: center;
+	color: #FFFFFF;
+	fontSize: 14;
+}	
+
+.itemInfoName {
+  	fontFamily: myArialBold;	
+	fontWeight: bold;
+	fontSize: 13;
+	color: #000000;	
+}
+
+.itemInfoLabelBold {
+	fontSize: 12;
+	fontWeight: bold;
+  	fontFamily: myArialBold;	
+	color: #000000;	
+}
+
+
+.itemInfoLabelPlain {
+	fontSize: 12;
+  	fontFamily: myArial;	
+	color: #000000;	
+}
+
+.itemInfoDescription {
+	fontSize: 12;
+	fontWeight: normal;
+	textAlign: left;
+  	fontFamily: myArial;	
+	color: #000000;	
+}
+
+.itemOver {
+	backgroundImage: Embed("../flexAssets/shop_ui.swf#shop_item_border_over");
+	borderColor: #7C7C7C;
+}
+
+.itemUp {
+	backgroundImage: Embed("../flexAssets/shop_ui.swf#shop_item_border_up");
+	borderColor: #323232;
+}
+
+.itemSelected {
+	backgroundImage: Embed("../flexAssets/shop_ui.swf#shop_item_border_selected");
+	borderColor: #FFFFFF;
+}
+
+.wordBubble {
+	backgroundSize: "100%";
+	backgroundImage : Embed("../flexAssets/shop_ui.swf#shop_info_bg");
+}
+
+.wordBubbleText {
+	fontSize: 12;
+  	fontFamily: myArial;	
+	color: #000000;		
+}
+
+.itemInfoImage {
+	backgroundSize: "100%";
+	backgroundImage : Embed("../flexAssets/shop_ui.swf#shop_item_bg");
+	width: 42;
+	height: 42;	
+	borderStyle: none;
+}
+
+.galleryLabel {
+	fontSize: 12;
+  	fontFamily: myArial;	
+	color: #000000;		
+}
+

@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application horizontalAlign="center" verticalAlign="middle" styleName="plain" xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="initApp();">
+
+	<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300">
+		<mx:Text x="146" y="45" text="" width="125" height="48" id="desiredLevel" enabled="false" fontSize="32" textAlign="left" fontFamily="Courier New"/>
+		<mx:Button x="245" y="262" label="Cancel" id="cancelButton" enabled="true" click="onCancelClicked()"/>
+		<mx:Button x="316" y="262" label="OK" id="okButton" width="63" enabled="false" click="onOKClicked()"/>
+		<mx:Label x="87" y="10" text="Please enter your desired CL" width="256" height="32" fontSize="16" id="headerLabel" enabled="false"/>
+		<mx:Text x="87" y="101" width="292" height="75" id="staticHelpText" enabled="false" fontSize="16" alpha="1.0" text="(Delete to erase)"/>
+		<mx:Text x="87" y="184" width="292" height="70" id="hintText" enabled="false" fontSize="16" alpha="1.0"/>
+	</mx:Canvas>
+	
+    <mx:Script><![CDATA[
+    
+	    import mx.controls.Alert;
+    	import flash.utils.Timer;
+    	import com.gaiaonline.mmo.battle.ChangeLevelValidationResult;
+	
+		private static const blankValue:String = "_";
+	    private var max:Number = 8.2; // TODO: this is a test value, should be dynamically passed in somewhere.
+	    private var min:Number = 1.0; // TODO: hard-coded assumption.
+	    private var enteredSoFar:String = "";
+	    private var validators:Array = [ validateEmptyDefault, validateNotNaN, validateWholePart, validateDecimalPart, validateGreaterTOETMin, validateLessTOETMax ];
+	    private var cursorBlinkTimer:Timer;
+	    private var cursorOn:Boolean;
+    
+        private function initApp():void
+        {
+            application.addEventListener( KeyboardEvent.KEY_UP, keyHandler );
+
+			// TODO: make it say "1.0" not "1".
+			staticHelpText.text = "Range: " + min + " to " + max + "\n" + staticHelpText.text;
+			            
+            desiredLevel.text = blankValue;
+            okButton.enabled = false;
+            cancelButton.enabled = true;
+            
+            cursorBlinkTimer = new Timer( 500, 0 );
+            cursorBlinkTimer.addEventListener( TimerEvent.TIMER, onCursorBlink );
+            cursorBlinkTimer.start();
+                                    
+            // this isn't working? suck.
+			application.setFocus();
+        }
+        
+        public function onCursorBlink( event:TimerEvent ) : void
+        {
+        	cursorOn = ! cursorOn;
+        	updateDisplayedLevel( enteredSoFar );
+        }
+
+        private function keyHandler(event:KeyboardEvent):void
+        {
+        	var candidate:String = processEvent( event, getEnteredSoFar() );
+        	
+        	if( candidate == "" )
+        	{
+        		candidate = blankValue;
+        	}
+        	
+			pushCandidate( candidate );
+        }
+        
+        // TODO: when they press OK, get the level and commit it.
+        private function getEnteredSoFar() : String
+        {
+        	var filtered:String;
+        	if( enteredSoFar == blankValue )
+        	{
+        		filtered = "";
+        	}
+        	else
+        	{
+	        	filtered = enteredSoFar;
+	        }
+	        return filtered;
+        }
+        
+        private function processEvent( event:KeyboardEvent, candidate:String ) : String
+        {
+        	// http://lowendmac.com/mail/07/0502.html#6
+        	if( event.keyCode == Keyboard.BACKSPACE )
+			{
+				if( candidate.length > 0 )
+ 				{
+ 					candidate = candidate.substr( 0, candidate.length-1 );
+ 				}
+ 			}
+ 			else
+ 			{
+				var keyStr:String = String.fromCharCode( event.charCode );
+				if( isNumberAllowed( candidate, keyStr ) || isDecimalSeperatorAllowed( candidate, keyStr ) )
+				{
+					candidate += keyStr;
+				}
+ 			}
+ 			
+ 			return candidate;     	
+        }
+        
+        private function pushCandidate( candidate:String ) : void
+        {
+        	var result:ChangeLevelValidationResult = runValidations( candidate );
+        
+			if( result.valid )
+        	{
+        		afterValid( candidate, result );
+	        }
+	        else
+	        {
+	        	afterNotValid( candidate, result );
+	        }
+        }
+        
+        private function updateDisplayedLevel( str:String ) : void
+        {
+        	var toDisplay:String;
+        	
+        	var lastChar:String = str.charAt( str.length-1 ); 
+        	if( cursorOn && lastChar != blankValue )        	
+        	{
+				toDisplay = str + blankValue;
+        	}
+        	else if( ! cursorOn && lastChar == blankValue )
+        	{
+        		toDisplay = str.substr( 0, str.length-1 );
+        	}
+        	else
+        	{
+        		toDisplay = str;
+        	}
+        	
+        	desiredLevel.text = toDisplay;
+        }
+        
+        private function afterValid( candidate:String, result:ChangeLevelValidationResult ) : void
+        {
+        	enteredSoFar = candidate;
+        	updateDisplayedLevel( enteredSoFar );
+        	updateHintText( "" );
+        	okButton.enabled = true;
+        }
+        
+        private function afterNotValid( candidate:String, result:ChangeLevelValidationResult ) : void
+        {
+	        if( result.showPolicy == ChangeLevelValidationResult.failButShow )
+	        {
+	        	enteredSoFar = candidate;
+	        	updateDisplayedLevel( enteredSoFar );
+	        }
+        	updateHintText( result.message );
+        	okButton.enabled = false;
+        }
+        
+        private function updateHintText( text:String ) : void
+        {
+			hintText.text = text;
+        }
+        
+        private function isNumberAllowed( candidate:String, keyStr:String ) : Boolean
+        {
+        	var allowed:Boolean;
+        	
+    		var dec:Number = parseDecimalPart( candidate + keyStr );
+    		if( ! isNaN( dec ) )
+    		{
+    			allowed = dec < 10;
+    		}
+    		else
+    		{
+				allowed = (keyStr == "0" && candidate.length > 0) ||
+							keyStr == "1" ||
+							keyStr == "2" ||
+							keyStr == "3" ||
+							keyStr == "4" ||
+							keyStr == "5" ||
+							keyStr == "6" ||
+							keyStr == "7" ||
+							keyStr == "8" ||
+							keyStr == "9";
+    		}
+        	
+        	return allowed;
+		}
+		
+		private function parseWholePart( str:String ) : Number
+		{
+        	var wholeStr:String = str.replace( /[,\.].*$/, "" );
+        	var wholeNum:Number = parseInt( wholeStr );
+        	return wholeNum;
+		}
+		
+		private function parseDecimalPart( str:String ) : Number
+		{
+        	var decimalStr:String = str.replace( /^.*[,\.]/, "" );
+        	var decimalNum:Number = parseInt( decimalStr );
+        	return decimalNum;
+		}
+		
+		private function hasDecimalSeperator( candidate:String ) : Boolean
+		{
+			return( candidate.lastIndexOf( "." ) != -1 &&
+					candidate.lastIndexOf( "," ) != -1 );
+		}
+		
+		private function isDecimalSeperatorAllowed( candidate:String, keyStr:String ) : Boolean
+		{
+			return( (keyStr == "." || keyStr == ",") && ! hasDecimalSeperator( candidate ) );
+		}
+        
+        private function numToChar(num:int):String {
+	        if (num > 47 && num < 58) {
+	            var strNums:String = "0123456789";
+	            return strNums.charAt(num - 48);
+	        }
+	        else {
+	        	return "";
+	        }
+	    }   
+        
+        private function runValidations( candidate:String ) : ChangeLevelValidationResult
+        {
+        	var result:ChangeLevelValidationResult = new ChangeLevelValidationResult( true, "", ChangeLevelValidationResult.stopOnFail, ChangeLevelValidationResult.failButShow );
+        	
+        	for each( var validator:* in validators )
+        	{
+        		var vs:ChangeLevelValidationResult = validator( candidate );
+        		if( (vs.stopPolicy == ChangeLevelValidationResult.stopOnFail && ! vs.valid) ||
+					(vs.stopPolicy == ChangeLevelValidationResult.stopOnPass && vs.valid ) )
+        		{
+        			result = vs;
+        			break;
+        		}
+        	}
+        	
+        	return result;
+        }
+        
+        private function validateEmptyDefault( candidate:String ) : ChangeLevelValidationResult
+        {
+        	return new ChangeLevelValidationResult(
+        					candidate == blankValue,
+        					"",
+        					ChangeLevelValidationResult.stopOnPass,
+        					ChangeLevelValidationResult.failAndHide
+        				);
+        }
+        
+        private function validateNotNaN( candidate:String ) : ChangeLevelValidationResult
+        {
+        	var asNumber:Number = parseFloat( candidate );        	
+        	return new ChangeLevelValidationResult(
+        					! isNaN( asNumber ),
+        					"Couldn't parse your number.",
+        					ChangeLevelValidationResult.stopOnFail,
+        					ChangeLevelValidationResult.failButShow
+        				);
+        }
+        
+        private function validateWholePart( candidate:String ) : ChangeLevelValidationResult
+        {
+        	var wholeNum:Number = parseWholePart( candidate );
+        	return new ChangeLevelValidationResult(
+        					! isNaN( wholeNum ),
+        					"Whole part must be" +
+        					"\nat least " + min + " and" +
+        					"\nno more than " + max,
+        					ChangeLevelValidationResult.stopOnFail,
+        					ChangeLevelValidationResult.failButShow
+        				);
+        }
+        
+        private function validateDecimalPart( candidate:String ) : ChangeLevelValidationResult
+        {
+        	if( candidate.lastIndexOf( "." ) != -1 ||
+        		candidate.lastIndexOf( "," ) != -1 )
+        	{
+	        	var decimalNum:Number = parseDecimalPart( candidate );
+	        	return new ChangeLevelValidationResult(
+								decimalNum <= 9,
+								"",
+								ChangeLevelValidationResult.stopOnFail,
+								ChangeLevelValidationResult.failAndHide
+							);
+        	}
+        	else
+        	{
+        		return new ChangeLevelValidationResult(
+        						true,
+        						"",
+        						ChangeLevelValidationResult.stopOnFail,
+								ChangeLevelValidationResult.failButShow
+							);
+        	}
+        }
+        
+        private function validateGreaterTOETMin( candidate:String ) : ChangeLevelValidationResult
+        {
+        	var asNumber:Number = parseFloat( candidate );        	
+        	return new ChangeLevelValidationResult(
+        					asNumber >= min,
+        					"Enforced minimum is " + min,
+        					ChangeLevelValidationResult.stopOnFail,
+        					ChangeLevelValidationResult.failButShow
+        				);
+        }
+        
+        private function validateLessTOETMax( candidate:String ) : ChangeLevelValidationResult
+        {
+        	var asNumber:Number = parseFloat( candidate );        	
+        	return new ChangeLevelValidationResult(
+        					asNumber <= max,
+        					"Enforced maximum is " + max,
+        					ChangeLevelValidationResult.stopOnFail,
+        					ChangeLevelValidationResult.failButShow
+        				);
+        }
+
+		protected function onCancelClicked() : void
+		{
+			// TODO: implement me.
+			Alert.show( "cancel!" );
+		}
+	
+		protected function onOKClicked() : void
+		{
+			// TODO: implement me.
+			Alert.show( "OK!" );
+		}
+    ]]></mx:Script>
+</mx:Application>
